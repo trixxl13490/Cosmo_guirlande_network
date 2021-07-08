@@ -29,13 +29,7 @@ class Server(threading.Thread):
         self.timer.start()
 
     def recurring_timer(self):
-        '''print("message_1: " + self.message_1)
-        print("message_2: " + self.message_2)
-        print("message_3: " + self.message_3)
-        print("message_4: " + self.message_4)
-        print("message_5: " + self.message_5)'''
         self.ticks_clock = not(self.ticks_clock)
-        print(self.ticks_clock)
 
     def run(self):
         while (1):

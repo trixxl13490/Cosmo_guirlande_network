@@ -8,7 +8,7 @@ import sys
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt
 from PyQt5.QtGui import QPixmap, QImage
-from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QDesktopWidget, QCheckBox, QMessageBox, QSlider, QPushButton
+from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QDesktopWidget, QCheckBox, QMessageBox, QSlider, QPushButton, QInputDialog, QLineEdit
 
 
 
@@ -23,7 +23,7 @@ class MainWin(QWidget):
         super().__init__()
         #Window configuration
 
-        self.setFixedSize(1000, 500)
+        self.setFixedSize(1900, 920)
         qtRectangle = self.frameGeometry()
         centerPoint = QDesktopWidget().availableGeometry().center()
         qtRectangle.moveCenter(centerPoint)
@@ -56,31 +56,102 @@ class MainWin(QWidget):
 
 
     def initUI(self):
-        self.cb = QCheckBox('Auto Exposure', self)
-        #self.cb.stateChanged.connect(self.changeAutoExposure)
-        ##
-        self.cb1 = QCheckBox('Auto Focus', self)
-        #self.cb1.stateChanged.connect(self.changeAutoFocus)
-        self.cb1.setGeometry(150, 0, 300, 25)
-        ##
-        self.button = QPushButton('Capture', self)
-        self.button.setToolTip('Capture')
-        self.button.setGeometry(300, 0, 100, 25)
-        #self.button.clicked.connect(self.capture_demand)
-        ##
-        self.button1 = QPushButton('AutofocusCal', self)
-        self.button1.setToolTip('Capture')
-        self.button1.setGeometry(400, 0, 100, 25)
-        #self.button1.clicked.connect(self.autofocus_calib_demand)
-        ##
-        self.sl = QSlider(Qt.Horizontal, self)
-        self.sl.setFocusPolicy(Qt.StrongFocus)
-        self.sl.setTickPosition(QSlider.TicksBothSides)
-        self.sl.setTickInterval(25)
-        self.sl.setSingleStep(1)
-        self.sl.setGeometry(650, 0, 300, 25)
-        self.sl.setMinimum(0)
-        self.sl.setMaximum(854)
+
+        #Entree adresse IP
+        # Create textbox
+        self.textbox_IP = QLineEdit(self)
+        self.textbox_IP.setGeometry(10, 10, 50, 20)
+        # Create a button in the window
+        self.button_IP= QPushButton('IP', self)
+        self.button_IP.setGeometry(60, 10, 50, 20)
+        # connect button to function on_click
+        self.button_IP.clicked.connect(self.on_click_ip)
+
+        #Entree Port
+        # Create textbox
+        self.textbox_port = QLineEdit(self)
+        self.textbox_port.setGeometry(10, 60, 50, 20)
+        # Create a button in the window
+        self.button_port = QPushButton('Port', self)
+        self.button_port.setGeometry(60, 50, 50, 20)
+        # connect button to function on_click
+        self.button_port.clicked.connect(self.on_click_port)
+
+        #Checkbox de synchronisation
+        self.cb_sync = QCheckBox('Sync Commands', self)
+        self.cb_sync.setToolTip('Click if you wanna sync colors / effects')
+        #self.cb_sync.stateChanged.connect(self.changeAutoExposure)
+        self.cb_sync.setGeometry(10, 420, 300, 25)
+
+        #Checkbox Stromboscope
+        self.cb_strombo_1 = QCheckBox('Strombo_1', self)
+        self.cb_strombo_1.setToolTip('Click if you wannause strombo effect')
+        #self.cb_strombo_1.stateChanged.connect(self.changeAutoFocus)
+        self.cb_strombo_1.setGeometry(10, 450, 300, 25)
+
+        #Entree Frequence Strombo
+        # Create textbox
+        self.textbox_strombo = QLineEdit(self)
+        self.textbox_strombo.setGeometry(100, 450, 50, 20)
+        # Create a button in the window
+        self.button_strombo= QPushButton('Strombo Frequency', self)
+        self.button_strombo.setGeometry(150, 450, 100, 20)
+        # connect button to function on_click
+        self.button_strombo.clicked.connect(self.on_click_strombo_frequency)
+
+        #Bouton effet rainbow 1 Loop
+        self.button_rainbow_1 = QPushButton('Rainbow effect', self)
+        self.button_rainbow_1.setToolTip('Click if you wanna use rainbow effect')
+        self.button_rainbow_1.setGeometry(10, 480, 100, 25)
+        #self.button_rainbow_1.clicked.connect(self.capture_demand)
+
+        #Bouton Blackout
+        self.button_blackout_1 = QPushButton('Blackout', self)
+        self.button_blackout_1.setToolTip('Turn off LEDs')
+        self.button_blackout_1.setGeometry(10, 510, 100, 25)
+        #self.button_blackout_1.clicked.connect(self.autofocus_calib_demand)
+
+        # Slider Red 1
+        self.sl_R1 = QSlider(Qt.Vertical, self)
+        self.sl_R1.setFocusPolicy(Qt.StrongFocus)
+        self.sl_R1.setTickPosition(QSlider.TicksBothSides)
+        self.sl_R1.setTickInterval(25)
+        self.sl_R1.setSingleStep(1)
+        self.sl_R1.setGeometry(10, 200, 20, 200)
+        self.sl_R1.setMinimum(0)
+        self.sl_R1.setMaximum(255)
+
+        # Slider Green 1
+        self.sl_G1 = QSlider(Qt.Vertical, self)
+        self.sl_G1.setFocusPolicy(Qt.StrongFocus)
+        self.sl_G1.setTickPosition(QSlider.TicksBothSides)
+        self.sl_G1.setTickInterval(25)
+        self.sl_G1.setSingleStep(1)
+        self.sl_G1.setGeometry(60, 200, 20, 200)
+        self.sl_G1.setMinimum(0)
+        self.sl_G1.setMaximum(255)
+
+        # Slider Blue 1
+        self.sl_B1 = QSlider(Qt.Vertical, self)
+        self.sl_B1.setFocusPolicy(Qt.StrongFocus)
+        self.sl_B1.setTickPosition(QSlider.TicksBothSides)
+        self.sl_B1.setTickInterval(25)
+        self.sl_B1.setSingleStep(1)
+        self.sl_B1.setGeometry(110, 200, 20, 200)
+        self.sl_B1.setMinimum(0)
+        self.sl_B1.setMaximum(255)
+        # self.sl.setValue()
+        #self.sl.valueChanged[int].connect(self.changeAbsoluteAutoFocus)
+
+        # Slider WHite 1
+        self.sl_W1 = QSlider(Qt.Vertical, self)
+        self.sl_W1.setFocusPolicy(Qt.StrongFocus)
+        self.sl_W1.setTickPosition(QSlider.TicksBothSides)
+        self.sl_W1.setTickInterval(25)
+        self.sl_W1.setSingleStep(1)
+        self.sl_W1.setGeometry(160, 200, 20, 200)
+        self.sl_W1.setMinimum(0)
+        self.sl_W1.setMaximum(255)
         # self.sl.setValue()
         #self.sl.valueChanged[int].connect(self.changeAbsoluteAutoFocus)
         ##
@@ -88,6 +159,32 @@ class MainWin(QWidget):
         self.label.setScaledContents(True)
         self.label.move(0, 30)
         self.label.resize(self.geometry().width(), self.geometry().height())
+
+        # Buttons functions
+        #def slider_R1():
+        #def slider_G1():
+        #def slider_B1():
+        #def slider_W1():
+
+    @pyqtSlot()
+    def on_click_ip(self):
+        IPValue = self.textbox_IP.text()
+        QMessageBox.question(self, 'Message - pythonspot.com', "You typed: " + IPValue, QMessageBox.Ok, QMessageBox.Ok)
+        self.textbox.setText("")
+
+    @pyqtSlot()
+    def on_click_port(self):
+        PortValue = self.textbox_port.text()
+        QMessageBox.question(self, 'Message - pythonspot.com', "You typed: " + PortValue, QMessageBox.Ok,
+                             QMessageBox.Ok)
+        self.textbox.setText("")
+
+    @pyqtSlot()
+    def on_click_strombo_frequency(self):
+        Strombo_frequency = self.textbox_port.text()
+        QMessageBox.question(self, 'Message - pythonspot.com', "You typed: " + Strombo_frequency, QMessageBox.Ok,
+                             QMessageBox.Ok)
+        self.textbox.setText("")
 
 
 if __name__ == '__main__':
