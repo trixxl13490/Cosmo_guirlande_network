@@ -5,31 +5,28 @@ import time
 from PyQt5 import QtCore
 
 
-
 ############################################
 # Server
 ############################################
 class Server(threading.Thread):
 
-    def __init__(self,TCP_IP,TCP_PORT,BUFFER_SIZE):
+    def __init__(self, TCP_IP, TCP_PORT, BUFFER_SIZE):
         threading.Thread.__init__(self)
         self.TCP_IP = TCP_IP
         self.TCP_PORT = TCP_PORT
         self.BUFFER_SIZE = BUFFER_SIZE
-        self.message_1 = 'message_1'
-        self.message_2 = 'message_2'
-        self.message_3 = 'message_3'
-        self.message_4 = 'message_4'
-        self.message_5 = 'message_5'
+        self.message = 'message'
+        self.to_send = 'cosmoguirlande'
         self.ticks = 200
         self.ticks_clock = False
         self.timer = QtCore.QTimer()
         self.timer.setInterval(100)
         self.timer.timeout.connect(self.recurring_timer)
         self.timer.start()
+        self.checkup = ''
 
     def recurring_timer(self):
-        self.ticks_clock = not(self.ticks_clock)
+        self.ticks_clock = not (self.ticks_clock)
 
     def run(self):
         while (1):
@@ -80,27 +77,11 @@ class Server(threading.Thread):
                             msg_recu = client.recv(self.BUFFER_SIZE)
                             # Peut planter si le message contient des caractères spéciaux
                             msg_recu = msg_recu.decode()
-                            print(msg_recu)
-                            client.send(b"5 / 5")
-                            if msg_recu.startswith("cosmoguirlande_1"):
-                                self.message_1 = msg_recu
-                                print("message_1: " + self.message_1)
-
-                            elif msg_recu.startswith("cosmoguirlande_2"):
-                                self.message_2 = msg_recu
-                                print("message_2: " + self.message_2)
-
-                            elif msg_recu.startswith("cosmoguirlande_3"):
-                                self.message_3 = msg_recu
-                                print("message_3: " + self.message_3)
-
-                            elif msg_recu.startswith("cosmoguirlande_4"):
-                                self.message_4 = msg_recu
-                                print("message_4: " + self.message_4)
-
-                            elif msg_recu.startswith("cosmoguirlande_5"):
-                                self.message_5 = msg_recu
-                                print("message_5: " + self.message_5)
+                            self.message = msg_recu
+                            msg = bytes(self.to_send, encoding='utf8')
+                            if self.to_send != self.checkup:
+                                self.checkup = msg
+                                client.send(msg)
 
                 # fermeture des connexions client en premier serveur en second
                 print("Fermeture des connexions")
