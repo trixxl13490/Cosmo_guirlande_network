@@ -14,7 +14,7 @@ from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QDesktopWidget, QChec
 
 
 ############################################
-# GUI avec Sequenceur
+# GUI
 ############################################
 
 class MainWin(QWidget):
@@ -34,6 +34,12 @@ class MainWin(QWidget):
     # Create Server5 object
     newServer5 = Server.Server('192.168.0.16', 50005, 1024)
     newServer5.start()
+    #Sync Thread
+    timer = QtCore.QTimer()
+    timer.setInterval(100)
+    timer.start()
+
+    #Create message to communicate with sensors
     msg1 = ''
     msg2 = ''
     msg3 = ''
@@ -109,12 +115,29 @@ class MainWin(QWidget):
         self.button_rainbow_1.clicked.connect(self.rainbow_demand)
 
 
-        #Bouton Blackout
+        #Bouton Blackout 1
         self.button_blackout_1 = QPushButton('Blackout', self)
         self.button_blackout_1.setToolTip('Turn off LEDs')
         self.button_blackout_1.setGeometry(10, 510, 100, 25)
         self.button_blackout_1.clicked.connect(self.blackout_demand)
 
+        # Bouton theaterChase 1
+        self.button_theaterChase_1 = QPushButton('theaterChase', self)
+        self.button_theaterChase_1.setToolTip('theaterChase')
+        self.button_theaterChase_1.setGeometry(10, 540, 100, 25)
+        self.button_theaterChase_1.clicked.connect(self.theaterChase_demand_1)
+
+        # Bouton theaterChaseRainbow 1
+        self.button_theaterChaseRainbow_1 = QPushButton('theaterChaseRainbow', self)
+        self.button_theaterChaseRainbow_1.setToolTip('theaterChaseRainbow')
+        self.button_theaterChaseRainbow_1.setGeometry(10, 570, 100, 25)
+        self.button_theaterChaseRainbow_1.clicked.connect(self.theaterChaseRainbow_demand_1)
+
+        # Bouton multiColorWipe 1
+        self.button_multiColorWipe_1 = QPushButton('multiColorWipe', self)
+        self.button_multiColorWipe_1.setToolTip('multiColorWipe')
+        self.button_multiColorWipe_1.setGeometry(10, 600, 100, 25)
+        self.button_multiColorWipe_1.clicked.connect(self.multiColorWipe_demand_1)
 
         # Slider Red 1
         self.sl_R1 = QSlider(Qt.Vertical, self)
@@ -193,6 +216,24 @@ class MainWin(QWidget):
         self.button_blackout_2.setGeometry(310, 510, 100, 25)
         self.button_blackout_2.clicked.connect(self.blackout_demand_2)
 
+        #Bouton theaterChase 2
+        self.button_theaterChase_2 = QPushButton('theaterChase', self)
+        self.button_theaterChase_2.setToolTip('theaterChase')
+        self.button_theaterChase_2.setGeometry(310, 540, 100, 25)
+        self.button_theaterChase_2.clicked.connect(self.theaterChase_demand_2)
+
+        #Bouton theaterChaseRainbow 2
+        self.button_theaterChaseRainbow_2 = QPushButton('theaterChaseRainbow', self)
+        self.button_theaterChaseRainbow_2.setToolTip('theaterChaseRainbow')
+        self.button_theaterChaseRainbow_2.setGeometry(310, 570, 100, 25)
+        self.button_theaterChaseRainbow_2.clicked.connect(self.theaterChaseRainbow_demand_2)
+
+        #Bouton multiColorWipe 2
+        self.button_multiColorWipe_2 = QPushButton('multiColorWipe', self)
+        self.button_multiColorWipe_2.setToolTip('multiColorWipe')
+        self.button_multiColorWipe_2.setGeometry(310, 600, 100, 25)
+        self.button_multiColorWipe_2.clicked.connect(self.multiColorWipe_demand_2)
+
 
         # Slider Red 2
         self.sl_R2 = QSlider(Qt.Vertical, self)
@@ -243,17 +284,109 @@ class MainWin(QWidget):
 
 
         #########################################################################################################Strip 3
+        #Entree Frequence Strombo 3
+        # Create textbox
+        self.textbox_strombo_3 = QLineEdit(self)
+        self.textbox_strombo_3.setGeometry(700, 450, 50, 20)
+        # Create a button in the window
+        self.button_strombo_3= QPushButton('Strombo Frequency', self)
+        self.button_strombo_3.setGeometry(750, 450, 100, 20)
+        # connect button to function on_click
+        self.button_strombo_3.clicked.connect(self.on_click_strombo_3_frequency)
 
+        #Checkbox Stromboscope 3
+        self.cb_strombo_3 = QCheckBox('Strombo_3', self)
+        self.cb_strombo_3.setToolTip('Click if you wanna use strombo effect')
+        self.cb_strombo_3.stateChanged.connect(self.strombo_demand_3)
+        self.cb_strombo_3.setGeometry(610, 450, 300, 25)
+
+
+        #Bouton effet rainbow 3 Loop
+        self.button_rainbow_3 = QPushButton('Rainbow effect', self)
+        self.button_rainbow_3.setToolTip('Click if you wanna use rainbow effect')
+        self.button_rainbow_3.setGeometry(610, 480, 100, 25)
+        self.button_rainbow_3.clicked.connect(self.rainbow_demand_3)
+
+
+        #Bouton Blackout 3
+        self.button_blackout_3 = QPushButton('Blackout', self)
+        self.button_blackout_3.setToolTip('Turn off LEDs')
+        self.button_blackout_3.setGeometry(610, 510, 100, 25)
+        self.button_blackout_3.clicked.connect(self.blackout_demand_3)
+
+        #Bouton theaterChase 3
+        self.button_theaterChase_3 = QPushButton('theaterChase', self)
+        self.button_theaterChase_3.setToolTip('theaterChase')
+        self.button_theaterChase_3.setGeometry(610, 540, 100, 25)
+        self.button_theaterChase_3.clicked.connect(self.theaterChase_demand_3)
+
+        #Bouton theaterChaseRainbow 3
+        self.button_theaterChaseRainbow_3 = QPushButton('theaterChaseRainbow', self)
+        self.button_theaterChaseRainbow_3.setToolTip('theaterChaseRainbow')
+        self.button_theaterChaseRainbow_3.setGeometry(610, 570, 100, 25)
+        self.button_theaterChaseRainbow_3.clicked.connect(self.theaterChaseRainbow_demand_3)
+
+        #Bouton multiColorWipe 3
+        self.button_multiColorWipe_3 = QPushButton('multiColorWipe', self)
+        self.button_multiColorWipe_3.setToolTip('multiColorWipe')
+        self.button_multiColorWipe_3.setGeometry(610, 600, 100, 25)
+        self.button_multiColorWipe_3.clicked.connect(self.multiColorWipe_demand_3)
+
+
+        # Slider Red 3
+        self.sl_R3 = QSlider(Qt.Vertical, self)
+        self.sl_R3.setFocusPolicy(Qt.StrongFocus)
+        self.sl_R3.setTickPosition(QSlider.TicksLeft)
+        self.sl_R3.setTickInterval(1)
+        self.sl_R3.setSingleStep(1)
+        self.sl_R3.setGeometry(610, 200, 20, 200)
+        self.sl_R3.setMinimum(0)
+        self.sl_R3.setMaximum(255)
+        self.sl_R3.valueChanged[int].connect(self.slider_R3)
+
+
+        # Slider Green 3
+        self.sl_G3 = QSlider(Qt.Vertical, self)
+        self.sl_G3.setFocusPolicy(Qt.StrongFocus)
+        self.sl_G3.setTickPosition(QSlider.TicksLeft)
+        self.sl_G3.setTickInterval(1)
+        self.sl_G3.setSingleStep(1)
+        self.sl_G3.setGeometry(660, 200, 20, 200)
+        self.sl_G3.setMinimum(0)
+        self.sl_G3.setMaximum(255)
+        self.sl_G3.valueChanged[int].connect(self.slider_G3)
+
+
+        # Slider Blue 3
+        self.sl_B3 = QSlider(Qt.Vertical, self)
+        self.sl_B3.setFocusPolicy(Qt.StrongFocus)
+        self.sl_B3.setTickPosition(QSlider.TicksLeft)
+        self.sl_B3.setTickInterval(1)
+        self.sl_B3.setSingleStep(1)
+        self.sl_B3.setGeometry(710, 200, 20, 200)
+        self.sl_B3.setMinimum(0)
+        self.sl_B3.setMaximum(255)
+        self.sl_B3.valueChanged[int].connect(self.slider_B3)
+
+
+        # Slider White 3
+        self.sl_W3 = QSlider(Qt.Vertical, self)
+        self.sl_W3.setFocusPolicy(Qt.StrongFocus)
+        self.sl_W3.setTickPosition(QSlider.TicksLeft)
+        self.sl_W3.setTickInterval(1)
+        self.sl_W3.setSingleStep(1)
+        self.sl_W3.setGeometry(760, 200, 20, 200)
+        self.sl_W3.setMinimum(0)
+        self.sl_W3.setMaximum(255)
+        self.sl_W3.valueChanged[int].connect(self.slider_W3)
         #########################################################################################################Strip 4
 
         #########################################################################################################Strip 5
 
-
-
     #########################################################################################################Strip 1
 
     def blackout_demand(self):
-        self.msg1 =  'cosmoguirlande,blackout'
+        self.msg1 = 'cosmoguirlande,blackout'
         self.newServer1.to_send = self.msg1
 
     def rainbow_demand(self):
@@ -264,12 +397,23 @@ class MainWin(QWidget):
         self.msg1 = 'cosmoguirlande,strombo'
         self.newServer1.to_send = self.msg1
 
+    def theaterChase_demand_1(self):
+        self.msg1 = 'cosmoguirlande,theaterChase'
+        self.newServer1.to_send = self.msg1
+
+    def theaterChaseRainbow_demand_1(self):
+        self.msg1 = 'cosmoguirlande,theaterChaseRainbow'
+        self.newServer1.to_send = self.msg1
+
+    def multiColorWipe_demand_1(self):
+        self.msg1 = 'cosmoguirlande,multiColorWipe'
+        self.newServer1.to_send = self.msg1
+
     def sync_demand(self, state):
-        if(QtCore.Qt.Checked == state):
+        if self.cb_sync.isEnabled():
+            self.newServer1.to_send = self.newServer2.to_send = 'cosmoguirlande,blackout'
+
             self.newServer1.to_send = self.newServer2.to_send = self.msg1
-        else:
-            self.newServer1.to_send = self.msg1
-            self.newServer2.to_send = self.msg2
 
     # Slider Buttons functions
     def slider_R1(self, R1):
@@ -325,6 +469,18 @@ class MainWin(QWidget):
         self.msg2 = 'cosmoguirlande,strombo'
         self.newServer2.to_send = self.msg2
 
+    def theaterChase_demand_2(self):
+        self.msg2 = 'cosmoguirlande,theaterChase'
+        self.newServer2.to_send = self.msg2
+
+    def theaterChaseRainbow_demand_2(self):
+        self.msg2 = 'cosmoguirlande,theaterChaseRainbow'
+        self.newServer2.to_send = self.msg2
+
+    def multiColorWipe_demand_2(self):
+        self.msg2 = 'cosmoguirlande,multiColorWipe'
+        self.newServer2.to_send = self.msg2
+
     def sync_demand_2(self):
         self.msg2 = 'cosmoguirlande,sync'
         self.newServer2.to_send = self.msg2
@@ -345,7 +501,58 @@ class MainWin(QWidget):
     def slider_W2(self, W2):
         self.msg2 = 'cosmoguirlande,W,' + str((W2))
         self.newServer2.to_send = self.msg2
+    #########################################################################################################Strip 3
 
+    def on_click_strombo_3_frequency(self):
+        Strombo_frequency = self.textbox_port.text()
+        QMessageBox.question(self, 'Message - pythonspot.com', "You typed: " + Strombo_frequency, QMessageBox.Ok,
+                             QMessageBox.Ok)
+        self.textbox.setText("")
+
+    def blackout_demand_3(self):
+        self.msg3 ='cosmoguirlande,blackout'
+        self.newServer3.to_send = self.msg3
+
+    def rainbow_demand_3(self):
+        self.msg3 = 'cosmoguirlande,rainbow'
+        self.newServer3.to_send = self.msg3
+
+    def strombo_demand_3(self):
+        self.msg3 = 'cosmoguirlande,strombo'
+        self.newServer3.to_send = self.msg3
+
+    def theaterChase_demand_3(self):
+        self.msg3 = 'cosmoguirlande,theaterChase'
+        self.newServer3.to_send = self.msg3
+
+    def theaterChaseRainbow_demand_3(self):
+        self.msg3 = 'cosmoguirlande,theaterChaseRainbow'
+        self.newServer3.to_send = self.msg3
+
+    def multiColorWipe_demand_3(self):
+        self.msg3 = 'cosmoguirlande,multiColorWipe'
+        self.newServer3.to_send = self.msg3
+
+    def sync_demand_3(self):
+        self.msg3 = 'cosmoguirlande,sync'
+        self.newServer3.to_send = self.msg3
+
+    # Slider Buttons functions
+    def slider_R3(self, R3):
+        self.msg3 = 'cosmoguirlande,R,' + str((R3))
+        self.newServer3.to_send =self.msg3
+
+    def slider_G3(self, G3):
+        self.msg3 = 'cosmoguirlande,G,' + str((G3))
+        self.newServer3.to_send = self.msg3
+
+    def slider_B3(self, B3):
+        self.msg3 = 'cosmoguirlande,B,' + str((B3))
+        self.newServer3.to_send = self.msg3
+
+    def slider_W3(self, W3):
+        self.msg3 = 'cosmoguirlande,W,' + str((W3))
+        self.newServer3.to_send = self.msg3
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)

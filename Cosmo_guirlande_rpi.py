@@ -8,6 +8,7 @@ import socket
 
 
 class Cosmo_guirlande_rpi():
+
     def __init__(self, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
         self.guirlande_number = guirlande_number
         self.pixel_number = pixel_number
@@ -54,17 +55,6 @@ class Cosmo_guirlande_rpi():
             pixels.show()
             time.sleep(wait)
 
-    def theaterChase(self, color, wait_ms=50, iterations=10):
-        """Movie theater light style chaser animation."""
-        for j in range(iterations):
-            for q in range(3):
-                for i in range(0, self.pixel_number, 3):
-                    pixels[i] = (i + q, color)
-                pixels.show()
-                time.sleep(wait_ms / 1000.0)
-                for i in range(0, self.pixel_number, 3):
-                    pixels[i] = (i + q, 0)
-
     def stromboscope(self, color, wait_s):
         pixels.fill(color)
         pixels.show()
@@ -83,49 +73,43 @@ class Cosmo_guirlande_rpi():
         pixels.show()
         time.sleep(0.3)
 
-    '''
-    def theaterChase(self, strip, color, wait_ms=50, iterations=10):
+    def theaterChase(self, color, wait_ms=50, iterations=10):
         """Movie theater light style chaser animation."""
         for j in range(iterations):
             for q in range(3):
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i + q, color)
-                strip.show()
+                for i in range(0, self.pixel_number, 3):
+                    pixel_index = i + q
+                    pixels[pixel_index] = color
+                pixels.show()
                 time.sleep(wait_ms / 1000.0)
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i + q, 0)
-    
-    def theaterChaseRainbow(self, strip, wait_ms=50):
+                for i in range(0, self.pixel_number, 3):
+                    pixels[i] = 0
+
+    def theaterChaseRainbow(self, wait_ms=50):
         """Rainbow movie theater light style chaser animation."""
         for j in range(256):
             for q in range(3):
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i + q, wheel((i + j) % 255))
-                strip.show()
+                for i in range(0, self.pixel_number, 3):
+                    pixel_index = (i * 256 // self.pixel_number) + j
+                    pixels[pixel_index] = (self.wheel((i + j) % 255))
+                pixels.show()
                 time.sleep(wait_ms / 1000.0)
-                for i in range(0, strip.numPixels(), 3):
-                    strip.setPixelColor(i + q, 0)
-    
-    
+                for i in range(0, self.pixel_number, 3):
+                    pixels[i] = (i + q, 0)
+
     def multiColorWipe(self, color1, color2, wait_ms=5):
         """Wipe color across multiple LED strips a pixel at a time."""
-        global strip
-    
-        for i in range(strip.numPixels()):
+        for i in range(self.pixel_number):
             if i % 2:
                 # even number
-                strip.setPixelColor(i, color1)
-                strip.show()
+                pixels[i] = color1
+                pixels.show()
                 time.sleep(wait_ms / 1000.0)
-    
             else:
                 # odd number
-                strip.setPixelColor(i, color1)
-                strip.show()
+                pixels[i] = color1
+                pixels.show()
                 time.sleep(wait_ms / 1000.0)
-    
-        time.sleep(1)
-        '''
 
     def run(self):
         try:
@@ -145,6 +129,8 @@ class Cosmo_guirlande_rpi():
                 print(line)
                 line = line.encode()
                 connexion_serveur.send(line)
+
+                #Receive message
                 data_rcv = connexion_serveur.recv(self.buffer_size)
                 data_rcv = data_rcv.decode()
                 print("data_rcv : ", data_rcv)
@@ -153,9 +139,8 @@ class Cosmo_guirlande_rpi():
                 connexion_serveur.close()
 
                 if data_rcv.startswith("cosmoguirlande,strombo"):
-                    for j in range(10):
-                        self.stromboscope((int(self.r), int(self.g), int(self.b), int(self.w)), 0.01)
-                        time.sleep(0.1)
+                    self.stromboscope((int(self.r), int(self.g), int(self.b), int(self.w)), 0.01)
+                    time.sleep(0.1)
                 elif data_rcv.startswith("cosmoguirlande,rainbow"):
                     for j in range(2):
                         self.rainbow_cycle(0.01)
@@ -163,17 +148,29 @@ class Cosmo_guirlande_rpi():
                 elif data_rcv.startswith("cosmoguirlande,blackout"):
                     self.blackout()
 
+                elif data_rcv.startswith("cosmoguirlande,theaterChase"):
+                    self.theaterChase((int(self.r), int(self.g), int(self.b), int(self.w)))
+
+                elif data_rcv.startswith("cosmoguirlande,theaterChaseRainbow"):
+                    self.theaterChaseRainbow()
+
+                elif data_rcv.startswith("cosmoguirlande,multiColorWipe"):
+                    self.multiColorWipe((int(self.r), int(self.g), int(self.b), int(self.w)), (int(self.r)+256, int(self.g)+256, int(self.b)+256, int(self.w)+256))
+
                 elif data_rcv.startswith("cosmoguirlande,R"):
                     function_type, function, self.r = data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
+                    time.sleep(0.5)
 
                 elif data_rcv.startswith("cosmoguirlande,G"):
                     function_type, function, self.g = data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
+                    time.sleep(0.5)
 
                 elif data_rcv.startswith("cosmoguirlande,B"):
                     function_type, function, self.b = data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
+                    time.sleep(0.5)
 
                 elif data_rcv.startswith("cosmoguirlande,W"):
                     function_type, function, self.w = data_rcv.split(',')
@@ -184,6 +181,11 @@ class Cosmo_guirlande_rpi():
                     print("nothing")
                     time.sleep(1)
                     pass
+
+        except ConnectionResetError:
+            print("connection reset")
+            time.sleep(1)
+            self.run()
 
         except KeyboardInterrupt:
             if args.clear:
