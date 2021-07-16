@@ -5,26 +5,91 @@ import board
 import neopixel
 import threading
 import socket
+from adafruit_led_animation.animation.comet import Comet # sudo pip3 install adafruit-circuitpython-led-animation
+from adafruit_led_animation.animation.blink import Blink
+from adafruit_led_animation.animation.sparklepulse import SparklePulse
+from adafruit_led_animation.animation.chase import Chase
+from adafruit_led_animation.animation.pulse import Pulse
+from adafruit_led_animation.animation.sparkle import Sparkle
+from adafruit_led_animation.animation.rainbowchase import RainbowChase
+from adafruit_led_animation.animation.rainbowsparkle import RainbowSparkle
+from adafruit_led_animation.animation.rainbowcomet import RainbowComet
+from adafruit_led_animation.animation.solid import Solid
+from adafruit_led_animation.animation.colorcycle import ColorCycle
+from adafruit_led_animation.animation.rainbow import Rainbow
+from adafruit_led_animation.animation.customcolorchase import CustomColorChase
+from adafruit_led_animation.sequence import AnimationSequence
+from adafruit_led_animation.color import PURPLE, WHITE, AMBER, JADE, MAGENTA, ORANGE
 
-
-class Cosmo_guirlande_rpi():
+class Cosmo_Communication(threading.Thread):
 
     def __init__(self, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
+        threading.Thread.__init__(self)
         self.guirlande_number = guirlande_number
         self.pixel_number = pixel_number
         self.tcp_ip = str(tcp_ip)
         self.tcp_port = tcp_port
         self.buffer_size = buffer_size
-        self.r = '0'
-        self.g = '0'
-        self.b = '0'
-        self.w = '0'
-        self.fixed_color = False
+        self.data_rcv = ""
 
         print("Cosmo Guirlande Number: " + str(self.guirlande_number))
         print("TCP ip server: " + str(self.tcp_ip))
         print("TCP port : " + str(self.tcp_port))
         print("TCP buffer size: " + str(self.buffer_size))
+
+    def run(self):
+        try:
+            while True:
+                ##construction socket
+                connexion_serveur = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+                ##connexion socket avec connect et tuple parametre
+                connexion_serveur.connect((self.tcp_ip, self.tcp_port))
+
+                ##message confirmation
+                print("Connexion etablie avec le serveur sur le port {}".format(self.tcp_port))
+
+                # Send message
+                line = str("cosmoguirlande_" + str(self.guirlande_number) + "," + str(
+                    self.pixel_number) + "," + self.tcp_ip + "," + str(self.tcp_port))
+                print(line)
+                line = line.encode()
+                connexion_serveur.send(line)
+
+                #Receive message
+                self.data_rcv = connexion_serveur.recv(self.buffer_size)
+                self.data_rcv = self.data_rcv.decode()
+                print("data_rcv : ", self.data_rcv)
+
+                ##fermeture connexion
+                connexion_serveur.close()
+                time.sleep(0.5)
+
+        except ConnectionResetError:
+            print("connection reset")
+            time.sleep(1)
+            self.run()
+
+        except TimeoutError:
+            print("Timeout Error, start again thread")
+            time.sleep(1)
+            self.run()
+
+        except KeyboardInterrupt:
+            print("keyboard interrupt, blackout LED")
+            connexion_serveur.close()
+
+class Cosmo_guirlande_rpi():
+    def __init__(self, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
+        self.pixel_number = pixel_number
+        self.r = '0'
+        self.g = '0'
+        self.b = '0'
+        self.w = '0'
+        self.fixed_color = False
+        #Create Socket to communicate
+        self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
+        self.newSocket.start()
 
     def wheel(self, pos):
         # Input a value 0 to 255 to get a color value.
@@ -47,21 +112,15 @@ class Cosmo_guirlande_rpi():
             b = int(255 - pos * 3)
         return (r, g, b) if neopixel.RGBW in (neopixel.RGB, neopixel.GRB) else (r, g, b, 0)
 
-    def rainbow_cycle(self, wait):
-        for j in range(255):
-            for i in range(self.pixel_number):
-                pixel_index = (i * 256 // self.pixel_number) + j
-                pixels[i] = self.wheel(pixel_index & 255)
-            pixels.show()
-            time.sleep(wait)
 
     def stromboscope(self, color, wait_s):
-        pixels.fill(color)
-        pixels.show()
-        time.sleep(wait_s)
-        pixels.fill((0, 0, 0, 0))
-        pixels.show()
-        time.sleep(wait_s)
+        while self.newSocket.data_rcv.startswith('cosmoguirlande,strombo'):
+            pixels.fill(color)
+            pixels.show()
+            time.sleep(wait_s)
+            pixels.fill((0, 0, 0, 0))
+            pixels.show()
+            time.sleep(wait_s)
 
     def blackout(self):
         pixels.fill((0, 0, 0, 0))
@@ -73,107 +132,121 @@ class Cosmo_guirlande_rpi():
         pixels.show()
         time.sleep(0.3)
 
-    def theaterChase(self, color, wait_ms=50, iterations=10):
-        """Movie theater light style chaser animation."""
-        for j in range(iterations):
-            for q in range(3):
-                for i in range(0, self.pixel_number, 3):
-                    pixel_index = i + q
-                    pixels[pixel_index] = color
-                pixels.show()
-                time.sleep(wait_ms / 1000.0)
-                for i in range(0, self.pixel_number, 3):
-                    pixels[i] = 0
+    def rainbow_cycle(self, wait):
+        for j in range(255):
+            for i in range(self.pixel_number):
+                pixel_index = (i * 256 // self.pixel_number) + j
+                pixels[i] = self.wheel(pixel_index & 255)
+            pixels.show()
+            time.sleep(wait)
 
-    def theaterChaseRainbow(self, wait_ms=50):
-        """Rainbow movie theater light style chaser animation."""
-        for j in range(256):
-            for q in range(3):
-                for i in range(0, self.pixel_number, 3):
-                    pixel_index = (i * 256 // self.pixel_number) + j
-                    pixels[pixel_index] = (self.wheel((i + j) % 255))
-                pixels.show()
-                time.sleep(wait_ms / 1000.0)
-                for i in range(0, self.pixel_number, 3):
-                    pixels[i] = (i + q, 0)
+    def comet(self):
+        comet = Comet(pixels, speed=0.01, color=PURPLE, tail_length=10, bounce=True)
+        animations = AnimationSequence(
+            comet,
+            advance_interval=5,
+            auto_clear=True,
+        )
+        while self.newSocket.data_rcv.startswith('cosmoguirlande,comet'):
+            animations.animate()
 
-    def multiColorWipe(self, color1, color2, wait_ms=5):
-        """Wipe color across multiple LED strips a pixel at a time."""
-        for i in range(self.pixel_number):
-            if i % 2:
-                # even number
-                pixels[i] = color1
-                pixels.show()
-                time.sleep(wait_ms / 1000.0)
-            else:
-                # odd number
-                pixels[i] = color1
-                pixels.show()
-                time.sleep(wait_ms / 1000.0)
+    def chase(self):
+        chase = Chase(pixels, speed=0.1, size=3, spacing=6, color=WHITE)
+        animations = AnimationSequence(
+            chase,
+            advance_interval=5,
+            auto_clear=True,
+        )
+        while self.newSocket.data_rcv.startswith('cosmoguirlande,chase'):
+            animations.animate()
+
+    def pulse(self):
+        pulse = Pulse(pixels, speed=0.1, period=1, color=AMBER)
+        animations = AnimationSequence(
+            pulse,
+            advance_interval=5,
+            auto_clear=True,
+        )
+        while self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
+            animations.animate()
+    def sparkle(self):
+        sparkle = Sparkle(pixels, speed=0.1, color=PURPLE, num_sparkles=10)
+        animations = AnimationSequence(
+            sparkle,
+            advance_interval=5,
+            auto_clear=True,
+        )
+        while self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle'):
+            animations.animate()
+
+
+    def solid(self):
+        solid = Solid(pixels, color=JADE)
+        animations = AnimationSequence(
+            solid,
+            advance_interval=5,
+            auto_clear=True,
+        )
+        animations.animate()
+
+    def colorcycle(self):
+        colorcycle = ColorCycle(pixels, speed=0.4, colors=[MAGENTA, ORANGE])
+        animations = AnimationSequence(
+            colorcycle,
+            advance_interval=5,
+            auto_clear=True,
+        )
+        while self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle'):
+            animations.animate()
 
     def run(self):
         try:
             while True:
-                ##construction socket
-                connexion_serveur = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-                ##connexion socket avec connect et tuple parametre
-                connexion_serveur.connect((self.tcp_ip, self.tcp_port))
-
-                ##message confirmation
-                print("Connexion etablie avec le serveur sur le port {}".format(self.tcp_port))
-
-                # Send message
-                line = str("cosmoguirlande_" + str(self.guirlande_number) + "," + str(
-                    self.pixel_number) + "," + self.tcp_ip + "," + str(self.tcp_port))
-                print(line)
-                line = line.encode()
-                connexion_serveur.send(line)
-
-                #Receive message
-                data_rcv = connexion_serveur.recv(self.buffer_size)
-                data_rcv = data_rcv.decode()
-                print("data_rcv : ", data_rcv)
-
-                ##fermeture connexion
-                connexion_serveur.close()
-
-                if data_rcv.startswith("cosmoguirlande,strombo"):
+                if self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
                     self.stromboscope((int(self.r), int(self.g), int(self.b), int(self.w)), 0.01)
-                    time.sleep(0.1)
-                elif data_rcv.startswith("cosmoguirlande,rainbow"):
+                    time.sleep(0.3)
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbow"):
                     for j in range(2):
                         self.rainbow_cycle(0.01)
 
-                elif data_rcv.startswith("cosmoguirlande,blackout"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,blackout"):
                     self.blackout()
 
-                elif data_rcv.startswith("cosmoguirlande,theaterChase"):
-                    self.theaterChase((int(self.r), int(self.g), int(self.b), int(self.w)))
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase'):
+                    self.chase()
 
-                elif data_rcv.startswith("cosmoguirlande,theaterChaseRainbow"):
-                    self.theaterChaseRainbow()
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet'):
+                    self.comet()
 
-                elif data_rcv.startswith("cosmoguirlande,multiColorWipe"):
-                    self.multiColorWipe((int(self.r), int(self.g), int(self.b), int(self.w)), (int(self.r)+256, int(self.g)+256, int(self.b)+256, int(self.w)+256))
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle'):
+                    self.sparkle()
 
-                elif data_rcv.startswith("cosmoguirlande,R"):
-                    function_type, function, self.r = data_rcv.split(',')
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
+                    self.pulse()
+
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,solid'):
+                    self.solid()
+
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle'):
+                    self.colorcycle()
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,R"):
+                    function_type, function, self.r = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
-                elif data_rcv.startswith("cosmoguirlande,G"):
-                    function_type, function, self.g = data_rcv.split(',')
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,G"):
+                    function_type, function, self.g = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
-                elif data_rcv.startswith("cosmoguirlande,B"):
-                    function_type, function, self.b = data_rcv.split(',')
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,B"):
+                    function_type, function, self.b = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
-                elif data_rcv.startswith("cosmoguirlande,W"):
-                    function_type, function, self.w = data_rcv.split(',')
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,W"):
+                    function_type, function, self.w = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
@@ -182,12 +255,8 @@ class Cosmo_guirlande_rpi():
                     time.sleep(1)
                     pass
 
-        except ConnectionResetError:
-            print("connection reset")
-            time.sleep(1)
-            self.run()
-
         except KeyboardInterrupt:
+            print("keyboard interrupt, blackout LED")
             if args.clear:
                 pixels.fill((0, 0, 0, 0))
 
@@ -210,6 +279,6 @@ if __name__ == '__main__':
     print('Press Ctrl-C to quit.')
 
     # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0. 50001 1024
-    cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port,
-                                          args.buffer_size)
+
+    cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
     cosmo_guirlande.run()
