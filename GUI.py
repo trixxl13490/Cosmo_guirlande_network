@@ -38,6 +38,9 @@ class MainWin(QWidget):
     msg4 = ''
     msg5 = ''
 
+    #Synchronize message if True
+    sync = False
+
     def __init__(self):
         #Init parent
         super().__init__()
@@ -696,59 +699,128 @@ class MainWin(QWidget):
     def blackout_demand(self):
         self.msg1 = 'cosmoguirlande,blackout'
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def rainbow_demand(self):
         self.msg1 = 'cosmoguirlande,rainbow'
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def strombo_demand(self):
         self.msg1 = 'cosmoguirlande,strombo'
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def chase_demand_1(self):
         self.msg1 = 'cosmoguirlande,chase'
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def comet_demand_1(self):
         self.msg1 = 'cosmoguirlande,comet'
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def sparkle_demand_1(self):
         self.msg1 = 'cosmoguirlande,sparkle'
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def pulse_demand_1(self):
         self.msg1 = 'cosmoguirlande,pulse'
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def solid_demand_1(self):
         self.msg1 = 'cosmoguirlande,solid'
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def colorcycle_demand_1(self):
         self.msg1 = 'cosmoguirlande,colorcycle'
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def sync_demand(self, state):
-        if self.cb_sync.isEnabled():
-            self.newServer1.to_send = self.newServer2.to_send = self.newServer3.to_send = self.msg1
+        self.sync = not self.sync
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     # Slider Buttons functions
     def slider_R1(self, R1):
         self.msg1 = 'cosmoguirlande,R,' + str((R1))
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def slider_G1(self, G1):
         self.msg1 = 'cosmoguirlande,G,' + str((G1))
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def slider_B1(self, B1):
         self.msg1 = 'cosmoguirlande,B,' + str((B1))
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def slider_W1(self, W1):
         self.msg1 = 'cosmoguirlande,W,' + str((W1))
         self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
 
     def on_click_ip(self):
         IPValue = self.textbox_IP.text()
