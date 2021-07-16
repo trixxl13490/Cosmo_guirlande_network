@@ -8,7 +8,7 @@ import sys
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt
 from PyQt5.QtGui import QPixmap, QImage
-from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QDesktopWidget, QCheckBox, QMessageBox, QSlider, QPushButton, QInputDialog, QLineEdit
+from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QDesktopWidget, QCheckBox, QMessageBox, QSlider, QPushButton, QInputDialog, QLineEdit, QComboBox
 
 ############################################
 # GUI
@@ -71,9 +71,25 @@ class MainWin(QWidget):
         self.textbox_port.setGeometry(10, 60, 50, 20)
         # Create a button in the window
         self.button_port = QPushButton('Port', self)
-        self.button_port.setGeometry(60, 50, 50, 20)
+        self.button_port.setGeometry(60, 60, 50, 20)
         # connect button to function on_click
         self.button_port.clicked.connect(self.on_click_port)
+
+        #Couleur 1
+        self.type_color11 = QComboBox(self)
+        self.type_color11.setGeometry(10, 110, 100, 20)
+        self.type_color11.addItems(["AMBER","AQUA","BLACK","BLUE", "CYAN","GOLD","GREEN","JADE","MAGENTA","OLD_LACE"
+                                       ,"ORANGE", "PINK","PURPLE","RAINBOW","RED",
+                                    "RGBW_WHITE_RGB" ,"RGBW_WHITE_RGBW","RGBW_WHITE_W", "TEAL", "WHITE","YELLOW" ])
+        self.type_color11.currentIndexChanged.connect(self.color1_change_demand1)
+
+        #Couleur 2
+        self.type_color21 = QComboBox(self)
+        self.type_color21.setGeometry(60, 110, 100, 20)
+        self.type_color21.addItems(["AMBER","AQUA","BLACK","BLUE", "CYAN","GOLD","GREEN","JADE","MAGENTA","OLD_LACE"
+                                       ,"ORANGE", "PINK","PURPLE","RAINBOW","RED",
+                                    "RGBW_WHITE_RGB" ,"RGBW_WHITE_RGBW","RGBW_WHITE_W", "TEAL", "WHITE","YELLOW" ])
+        self.type_color21.currentIndexChanged.connect(self.color2_change_demand1)
 
         #Entree Frequence Strombo
         # Create textbox
@@ -427,10 +443,255 @@ class MainWin(QWidget):
         self.sl_W3.setMaximum(255)
         self.sl_W3.valueChanged[int].connect(self.slider_W3)
         #########################################################################################################Strip 4
+        #########################################################################################################Strip 4
+        #Entree Frequence Strombo 4
+        # Create textbox
+        self.textbox_strombo_4 = QLineEdit(self)
+        self.textbox_strombo_4.setGeometry(1000, 450, 50, 20)
+        # Create a button in the window
+        self.button_strombo_4= QPushButton('Strombo Frequency', self)
+        self.button_strombo_4.setGeometry(1050, 450, 100, 20)
+        # connect button to function on_click
+        self.button_strombo_4.clicked.connect(self.on_click_strombo_4_frequency)
 
+        #Checkbox Stromboscope 4
+        self.cb_strombo_4 = QCheckBox('Strombo_4', self)
+        self.cb_strombo_4.setToolTip('Click if you wanna use strombo effect')
+        self.cb_strombo_4.stateChanged.connect(self.strombo_demand_4)
+        self.cb_strombo_4.setGeometry(910, 450, 400, 25)
+
+
+        #Bouton effet rainbow 4 Loop
+        self.button_rainbow_4 = QPushButton('Rainbow effect', self)
+        self.button_rainbow_4.setToolTip('Click if you wanna use rainbow effect')
+        self.button_rainbow_4.setGeometry(910, 480, 100, 25)
+        self.button_rainbow_4.clicked.connect(self.rainbow_demand_4)
+
+
+        #Bouton Blackout 4
+        self.button_blackout_4 = QPushButton('Blackout', self)
+        self.button_blackout_4.setToolTip('Turn off LEDs')
+        self.button_blackout_4.setGeometry(910, 510, 100, 25)
+        self.button_blackout_4.clicked.connect(self.blackout_demand_4)
+
+        # Bouton chase 4
+        self.button_chase_4 = QPushButton('chase', self)
+        self.button_chase_4.setToolTip('chase')
+        self.button_chase_4.setGeometry(910, 540, 100, 25)
+        self.button_chase_4.clicked.connect(self.chase_demand_4)
+
+        # Bouton comet 4
+        self.button_comet_4 = QPushButton('comet', self)
+        self.button_comet_4.setToolTip('comet')
+        self.button_comet_4.setGeometry(910, 570, 100, 25)
+        self.button_comet_4.clicked.connect(self.comet_demand_4)
+
+        # Bouton pulse 4
+        self.button_pulse_4 = QPushButton('pulse', self)
+        self.button_pulse_4.setToolTip('pulse')
+        self.button_pulse_4.setGeometry(910, 600, 100, 25)
+        self.button_pulse_4.clicked.connect(self.pulse_demand_4)
+
+        # Bouton sparkle 4
+        self.button_sparkle_4 = QPushButton('sparkle', self)
+        self.button_sparkle_4.setToolTip('sparkle')
+        self.button_sparkle_4.setGeometry(910, 630, 100, 25)
+        self.button_sparkle_4.clicked.connect(self.sparkle_demand_4)
+
+
+        # Bouton solid 4
+        self.button_solid_4 = QPushButton('solid', self)
+        self.button_solid_4.setToolTip('solid')
+        self.button_solid_4.setGeometry(910, 660, 100, 25)
+        self.button_solid_4.clicked.connect(self.solid_demand_4)
+
+        # Bouton colorcycle 1
+        self.button_colorcycle_4 = QPushButton('colorcycle', self)
+        self.button_colorcycle_4.setToolTip('colorcycle')
+        self.button_colorcycle_4.setGeometry(910, 690, 100, 25)
+        self.button_colorcycle_4.clicked.connect(self.colorcycle_demand_4)
+
+        # Slider Red 4
+        self.sl_R4 = QSlider(Qt.Vertical, self)
+        self.sl_R4.setFocusPolicy(Qt.StrongFocus)
+        self.sl_R4.setTickPosition(QSlider.TicksLeft)
+        self.sl_R4.setTickInterval(1)
+        self.sl_R4.setSingleStep(1)
+        self.sl_R4.setGeometry(910, 200, 20, 200)
+        self.sl_R4.setMinimum(0)
+        self.sl_R4.setMaximum(255)
+        self.sl_R4.valueChanged[int].connect(self.slider_R4)
+
+
+        # Slider Green 4
+        self.sl_G4 = QSlider(Qt.Vertical, self)
+        self.sl_G4.setFocusPolicy(Qt.StrongFocus)
+        self.sl_G4.setTickPosition(QSlider.TicksLeft)
+        self.sl_G4.setTickInterval(1)
+        self.sl_G4.setSingleStep(1)
+        self.sl_G4.setGeometry(960, 200, 20, 200)
+        self.sl_G4.setMinimum(0)
+        self.sl_G4.setMaximum(255)
+        self.sl_G4.valueChanged[int].connect(self.slider_G4)
+
+
+        # Slider Blue 4
+        self.sl_B4 = QSlider(Qt.Vertical, self)
+        self.sl_B4.setFocusPolicy(Qt.StrongFocus)
+        self.sl_B4.setTickPosition(QSlider.TicksLeft)
+        self.sl_B4.setTickInterval(1)
+        self.sl_B4.setSingleStep(1)
+        self.sl_B4.setGeometry(1010, 200, 20, 200)
+        self.sl_B4.setMinimum(0)
+        self.sl_B4.setMaximum(255)
+        self.sl_B4.valueChanged[int].connect(self.slider_B4)
+
+
+        # Slider White 4
+        self.sl_W4 = QSlider(Qt.Vertical, self)
+        self.sl_W4.setFocusPolicy(Qt.StrongFocus)
+        self.sl_W4.setTickPosition(QSlider.TicksLeft)
+        self.sl_W4.setTickInterval(1)
+        self.sl_W4.setSingleStep(1)
+        self.sl_W4.setGeometry(1060, 200, 20, 200)
+        self.sl_W4.setMinimum(0)
+        self.sl_W4.setMaximum(255)
+        self.sl_W4.valueChanged[int].connect(self.slider_W4)
         #########################################################################################################Strip 5
+        #Entree Frequence Strombo 5
+        # Create textbox
+        self.textbox_strombo_5 = QLineEdit(self)
+        self.textbox_strombo_5.setGeometry(1300, 450, 50, 20)
+        # Create a button in the window
+        self.button_strombo_5= QPushButton('Strombo Frequency', self)
+        self.button_strombo_5.setGeometry(1350, 450, 100, 20)
+        # connect button to function on_click
+        self.button_strombo_5.clicked.connect(self.on_click_strombo_5_frequency)
+
+        #Checkbox Stromboscope 5
+        self.cb_strombo_5 = QCheckBox('Strombo_5', self)
+        self.cb_strombo_5.setToolTip('Click if you wanna use strombo effect')
+        self.cb_strombo_5.stateChanged.connect(self.strombo_demand_5)
+        self.cb_strombo_5.setGeometry(1210, 450, 500, 25)
+
+
+        #Bouton effet rainbow 5 Loop
+        self.button_rainbow_5 = QPushButton('Rainbow effect', self)
+        self.button_rainbow_5.setToolTip('Click if you wanna use rainbow effect')
+        self.button_rainbow_5.setGeometry(1210, 480, 100, 25)
+        self.button_rainbow_5.clicked.connect(self.rainbow_demand_5)
+
+
+        #Bouton Blackout 5
+        self.button_blackout_5 = QPushButton('Blackout', self)
+        self.button_blackout_5.setToolTip('Turn off LEDs')
+        self.button_blackout_5.setGeometry(1210, 510, 100, 25)
+        self.button_blackout_5.clicked.connect(self.blackout_demand_5)
+
+        # Bouton chase 5
+        self.button_chase_5 = QPushButton('chase', self)
+        self.button_chase_5.setToolTip('chase')
+        self.button_chase_5.setGeometry(1210, 540, 100, 25)
+        self.button_chase_5.clicked.connect(self.chase_demand_5)
+
+        # Bouton comet 5
+        self.button_comet_5 = QPushButton('comet', self)
+        self.button_comet_5.setToolTip('comet')
+        self.button_comet_5.setGeometry(1210, 570, 100, 25)
+        self.button_comet_5.clicked.connect(self.comet_demand_5)
+
+        # Bouton pulse 5
+        self.button_pulse_5 = QPushButton('pulse', self)
+        self.button_pulse_5.setToolTip('pulse')
+        self.button_pulse_5.setGeometry(1210, 600, 100, 25)
+        self.button_pulse_5.clicked.connect(self.pulse_demand_5)
+
+        # Bouton sparkle 5
+        self.button_sparkle_5 = QPushButton('sparkle', self)
+        self.button_sparkle_5.setToolTip('sparkle')
+        self.button_sparkle_5.setGeometry(1210, 630, 100, 25)
+        self.button_sparkle_5.clicked.connect(self.sparkle_demand_5)
+
+
+        # Bouton solid 5
+        self.button_solid_5 = QPushButton('solid', self)
+        self.button_solid_5.setToolTip('solid')
+        self.button_solid_5.setGeometry(1210, 660, 100, 25)
+        self.button_solid_5.clicked.connect(self.solid_demand_5)
+
+        # Bouton colorcycle 1
+        self.button_colorcycle_5 = QPushButton('colorcycle', self)
+        self.button_colorcycle_5.setToolTip('colorcycle')
+        self.button_colorcycle_5.setGeometry(1210, 690, 100, 25)
+        self.button_colorcycle_5.clicked.connect(self.colorcycle_demand_5)
+
+        # Slider Red 5
+        self.sl_R5 = QSlider(Qt.Vertical, self)
+        self.sl_R5.setFocusPolicy(Qt.StrongFocus)
+        self.sl_R5.setTickPosition(QSlider.TicksLeft)
+        self.sl_R5.setTickInterval(1)
+        self.sl_R5.setSingleStep(1)
+        self.sl_R5.setGeometry(1210, 200, 20, 200)
+        self.sl_R5.setMinimum(0)
+        self.sl_R5.setMaximum(255)
+        self.sl_R5.valueChanged[int].connect(self.slider_R5)
+
+
+        # Slider Green 5
+        self.sl_G5 = QSlider(Qt.Vertical, self)
+        self.sl_G5.setFocusPolicy(Qt.StrongFocus)
+        self.sl_G5.setTickPosition(QSlider.TicksLeft)
+        self.sl_G5.setTickInterval(1)
+        self.sl_G5.setSingleStep(1)
+        self.sl_G5.setGeometry(1260, 200, 20, 200)
+        self.sl_G5.setMinimum(0)
+        self.sl_G5.setMaximum(255)
+        self.sl_G5.valueChanged[int].connect(self.slider_G5)
+
+
+        # Slider Blue 5
+        self.sl_B5 = QSlider(Qt.Vertical, self)
+        self.sl_B5.setFocusPolicy(Qt.StrongFocus)
+        self.sl_B5.setTickPosition(QSlider.TicksLeft)
+        self.sl_B5.setTickInterval(1)
+        self.sl_B5.setSingleStep(1)
+        self.sl_B5.setGeometry(1310, 200, 20, 200)
+        self.sl_B5.setMinimum(0)
+        self.sl_B5.setMaximum(255)
+        self.sl_B5.valueChanged[int].connect(self.slider_B5)
+
+
+        # Slider White 5
+        self.sl_W5 = QSlider(Qt.Vertical, self)
+        self.sl_W5.setFocusPolicy(Qt.StrongFocus)
+        self.sl_W5.setTickPosition(QSlider.TicksLeft)
+        self.sl_W5.setTickInterval(1)
+        self.sl_W5.setSingleStep(1)
+        self.sl_W5.setGeometry(1360, 200, 20, 200)
+        self.sl_W5.setMinimum(0)
+        self.sl_W5.setMaximum(255)
+        self.sl_W5.valueChanged[int].connect(self.slider_W5)
 
     #########################################################################################################Strip 1
+
+    def color1_change_demand1(self):
+        print("selection changed ", self.type_color11.currentText())
+        self.msg1 = 'cosmoguirlande,color1,' + str(( self.type_color11.currentText()))
+        self.newServer1.to_send = self.msg1
+        self.newServer2.to_send = self.msg1
+        self.newServer3.to_send = self.msg1
+        self.newServer4.to_send = self.msg1
+        self.newServer5.to_send = self.msg1
+
+    def color2_change_demand1(self):
+        print("selection changed ", self.type_color21.currentText())
+        self.msg1 = 'cosmoguirlande,color2,' + str(( self.type_color21.currentText()))
+        self.newServer1.to_send = self.msg1
+        self.newServer2.to_send = self.msg1
+        self.newServer3.to_send = self.msg1
+        self.newServer4.to_send = self.msg1
+        self.newServer5.to_send = self.msg1
+
 
     def blackout_demand(self):
         self.msg1 = 'cosmoguirlande,blackout'
@@ -655,7 +916,248 @@ class MainWin(QWidget):
         self.msg3 = 'cosmoguirlande,W,' + str((W3))
         self.newServer3.to_send = self.msg3
 
+    #########################################################################################################Strip 4
 
+    def on_click_strombo_4_frequency(self):
+        Strombo_frequency = self.textbox_port.text()
+        QMessageBox.question(self, 'Message - pythonspot.com', "You typed: " + Strombo_frequency, QMessageBox.Ok,
+                             QMessageBox.Ok)
+        self.textbox.setText("")
+
+    def blackout_demand_4(self):
+        self.msg4 = 'cosmoguirlande,blackout'
+        self.newServer4.to_send = self.msg4
+
+    def rainbow_demand_4(self):
+        self.msg4 = 'cosmoguirlande,rainbow'
+        self.newServer4.to_send = self.msg4
+
+    def strombo_demand_4(self):
+        self.msg4 = 'cosmoguirlande,strombo'
+        self.newServer4.to_send = self.msg4
+
+    def theaterChase_demand_4(self):
+        self.msg4 = 'cosmoguirlande,theaterChase'
+        self.newServer4.to_send = self.msg4
+
+    def theaterChaseRainbow_demand_4(self):
+        self.msg4 = 'cosmoguirlande,theaterChaseRainbow'
+        self.newServer4.to_send = self.msg4
+
+    def multiColorWipe_demand_4(self):
+        self.msg4 = 'cosmoguirlande,multiColorWipe'
+        self.newServer4.to_send = self.msg4
+
+    def sync_demand_4(self):
+        self.msg4 = 'cosmoguirlande,sync'
+        self.newServer4.to_send = self.msg4
+
+    def strombo_demand_4(self):
+        self.msg4 = 'cosmoguirlande,strombo'
+        self.newServer4.to_send = self.msg4
+
+    def chase_demand_4(self):
+        self.msg4 = 'cosmoguirlande,chase'
+        self.newServer4.to_send = self.msg4
+
+    def comet_demand_4(self):
+        self.msg4 = 'cosmoguirlande,comet'
+        self.newServer4.to_send = self.msg4
+
+    def sparkle_demand_4(self):
+        self.msg4 = 'cosmoguirlande,sparkle'
+        self.newServer4.to_send = self.msg4
+
+    def pulse_demand_4(self):
+        self.msg4 = 'cosmoguirlande,pulse'
+        self.newServer4.to_send = self.msg4
+
+    def solid_demand_4(self):
+        self.msg4 = 'cosmoguirlande,solid'
+        self.newServer4.to_send = self.msg4
+
+    def colorcycle_demand_4(self):
+        self.msg4 = 'cosmoguirlande,colorcycle'
+        self.newServer4.to_send = self.msg4
+
+    # Slider Buttons functions
+    def slider_R4(self, R4):
+        self.msg4 = 'cosmoguirlande,R,' + str((R4))
+        self.newServer4.to_send = self.msg4
+
+    def slider_G4(self, G4):
+        self.msg4 = 'cosmoguirlande,G,' + str((G4))
+        self.newServer4.to_send = self.msg4
+
+    def slider_B4(self, B4):
+        self.msg4 = 'cosmoguirlande,B,' + str((B4))
+        self.newServer4.to_send = self.msg4
+
+    def slider_W4(self, W4):
+        self.msg4 = 'cosmoguirlande,W,' + str((W4))
+        self.newServer4.to_send = self.msg4
+
+    #########################################################################################################Strip 5
+
+    def on_click_strombo_5_frequency(self):
+        Strombo_frequency = self.textbox_port.text()
+        QMessageBox.question(self, 'Message - pythonspot.com', "You typed: " + Strombo_frequency, QMessageBox.Ok,
+                             QMessageBox.Ok)
+        self.textbox.setText("")
+
+    def blackout_demand_5(self):
+        self.msg5 = 'cosmoguirlande,blackout'
+        self.newServer5.to_send = self.msg5
+
+    def rainbow_demand_5(self):
+        self.msg5 = 'cosmoguirlande,rainbow'
+        self.newServer5.to_send = self.msg5
+
+    def strombo_demand_5(self):
+        self.msg5 = 'cosmoguirlande,strombo'
+        self.newServer5.to_send = self.msg5
+
+    def theaterChase_demand_5(self):
+        self.msg5 = 'cosmoguirlande,theaterChase'
+        self.newServer5.to_send = self.msg5
+
+    def theaterChaseRainbow_demand_5(self):
+        self.msg5 = 'cosmoguirlande,theaterChaseRainbow'
+        self.newServer5.to_send = self.msg5
+
+    def multiColorWipe_demand_5(self):
+        self.msg5 = 'cosmoguirlande,multiColorWipe'
+        self.newServer5.to_send = self.msg5
+
+    def sync_demand_5(self):
+        self.msg5 = 'cosmoguirlande,sync'
+        self.newServer5.to_send = self.msg5
+
+    def strombo_demand_5(self):
+        self.msg5 = 'cosmoguirlande,strombo'
+        self.newServer5.to_send = self.msg5
+
+    def chase_demand_5(self):
+        self.msg5 = 'cosmoguirlande,chase'
+        self.newServer5.to_send = self.msg5
+
+    def comet_demand_5(self):
+        self.msg5 = 'cosmoguirlande,comet'
+        self.newServer5.to_send = self.msg5
+
+    def sparkle_demand_5(self):
+        self.msg5 = 'cosmoguirlande,sparkle'
+        self.newServer5.to_send = self.msg5
+
+    def pulse_demand_5(self):
+        self.msg5 = 'cosmoguirlande,pulse'
+        self.newServer5.to_send = self.msg5
+
+    def solid_demand_5(self):
+        self.msg5 = 'cosmoguirlande,solid'
+        self.newServer5.to_send = self.msg5
+
+    def colorcycle_demand_5(self):
+        self.msg5 = 'cosmoguirlande,colorcycle'
+        self.newServer5.to_send = self.msg5
+
+    # Slider Buttons functions
+    def slider_R5(self, R5):
+        self.msg5 = 'cosmoguirlande,R,' + str((R5))
+        self.newServer5.to_send = self.msg5
+
+    def slider_G5(self, G5):
+        self.msg5 = 'cosmoguirlande,G,' + str((G5))
+        self.newServer5.to_send = self.msg5
+
+    def slider_B5(self, B5):
+        self.msg5 = 'cosmoguirlande,B,' + str((B5))
+        self.newServer5.to_send = self.msg3
+
+    def slider_W5(self, W5):
+        self.msg5 = 'cosmoguirlande,W,' + str((W5))
+        self.newServer5.to_send = self.msg5
+
+    #########################################################################################################Strip 6
+
+    def on_click_strombo_6_frequency(self):
+        Strombo_frequency = self.textbox_port.text()
+        QMessageBox.question(self, 'Message - pythonspot.com', "You typed: " + Strombo_frequency, QMessageBox.Ok,
+                             QMessageBox.Ok)
+        self.textbox.setText("")
+
+    def blackout_demand_6(self):
+        self.msg6 = 'cosmoguirlande,blackout'
+        self.newServer6.to_send = self.msg6
+
+    def rainbow_demand_6(self):
+        self.msg6 = 'cosmoguirlande,rainbow'
+        self.newServer6.to_send = self.msg6
+
+    def strombo_demand_6(self):
+        self.msg6 = 'cosmoguirlande,strombo'
+        self.newServer6.to_send = self.msg6
+
+    def theaterChase_demand_6(self):
+        self.msg6 = 'cosmoguirlande,theaterChase'
+        self.newServer6.to_send = self.msg6
+
+    def theaterChaseRainbow_demand_6(self):
+        self.msg6 = 'cosmoguirlande,theaterChaseRainbow'
+        self.newServer6.to_send = self.msg6
+
+    def multiColorWipe_demand_6(self):
+        self.msg6 = 'cosmoguirlande,multiColorWipe'
+        self.newServer6.to_send = self.msg6
+
+    def sync_demand_6(self):
+        self.msg6 = 'cosmoguirlande,sync'
+        self.newServer6.to_send = self.msg6
+
+    def strombo_demand_6(self):
+        self.msg6 = 'cosmoguirlande,strombo'
+        self.newServer6.to_send = self.msg6
+
+    def chase_demand_6(self):
+        self.msg6 = 'cosmoguirlande,chase'
+        self.newServer6.to_send = self.msg6
+
+    def comet_demand_6(self):
+        self.msg6 = 'cosmoguirlande,comet'
+        self.newServer6.to_send = self.msg6
+
+    def sparkle_demand_6(self):
+        self.msg6 = 'cosmoguirlande,sparkle'
+        self.newServer6.to_send = self.msg6
+
+    def pulse_demand_6(self):
+        self.msg6 = 'cosmoguirlande,pulse'
+        self.newServer6.to_send = self.msg6
+
+    def solid_demand_6(self):
+        self.msg6 = 'cosmoguirlande,solid'
+        self.newServer6.to_send = self.msg6
+
+    def colorcycle_demand_6(self):
+        self.msg6 = 'cosmoguirlande,colorcycle'
+        self.newServer6.to_send = self.msg6
+
+    # Slider Buttons functions
+    def slider_R6(self, R6):
+        self.msg6 = 'cosmoguirlande,R,' + str((R6))
+        self.newServer6.to_send = self.msg6
+
+    def slider_G6(self, G6):
+        self.msg6 = 'cosmoguirlande,G,' + str((G6))
+        self.newServer6.to_send = self.msg6
+
+    def slider_B6(self, B6):
+        self.msg6 = 'cosmoguirlande,B,' + str((B6))
+        self.newServer6.to_send = self.msg6
+
+    def slider_W6(self, W6):
+        self.msg6 = 'cosmoguirlande,W,' + str((W6))
+        self.newServer6.to_send = self.msg6
 
 
 if __name__ == '__main__':
