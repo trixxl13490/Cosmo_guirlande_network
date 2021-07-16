@@ -6,20 +6,22 @@ import neopixel
 import threading
 import socket
 from adafruit_led_animation.animation.comet import Comet # sudo pip3 install adafruit-circuitpython-led-animation
-from adafruit_led_animation.animation.blink import Blink
-from adafruit_led_animation.animation.sparklepulse import SparklePulse
 from adafruit_led_animation.animation.chase import Chase
 from adafruit_led_animation.animation.pulse import Pulse
 from adafruit_led_animation.animation.sparkle import Sparkle
+from adafruit_led_animation.animation.solid import Solid
+from adafruit_led_animation.animation.colorcycle import ColorCycle
+from adafruit_led_animation.animation.blink import Blink
+from adafruit_led_animation.animation.sparklepulse import SparklePulse
+from adafruit_led_animation.animation.rainbow import Rainbow
+from adafruit_led_animation.animation.customcolorchase import CustomColorChase
 from adafruit_led_animation.animation.rainbowchase import RainbowChase
 from adafruit_led_animation.animation.rainbowsparkle import RainbowSparkle
 from adafruit_led_animation.animation.rainbowcomet import RainbowComet
-from adafruit_led_animation.animation.solid import Solid
-from adafruit_led_animation.animation.colorcycle import ColorCycle
-from adafruit_led_animation.animation.rainbow import Rainbow
-from adafruit_led_animation.animation.customcolorchase import CustomColorChase
 from adafruit_led_animation.sequence import AnimationSequence
-from adafruit_led_animation.color import PURPLE, WHITE, AMBER, JADE, MAGENTA, ORANGE
+from adafruit_led_animation.color import AMBER, AQUA, BLACK,BLUE,CYAN,GOLD,GREEN
+from adafruit_led_animation.color import JADE,MAGENTA,OLD_LACE,ORANGE,PINK,PURPLE,RAINBOW,RED,RGBW_WHITE_RGB
+from adafruit_led_animation.color import RGBW_WHITE_RGBW,RGBW_WHITE_W,TEAL,WHITE,YELLOW
 
 class Cosmo_Communication(threading.Thread):
 
@@ -87,6 +89,8 @@ class Cosmo_guirlande_rpi():
         self.b = '0'
         self.w = '0'
         self.fixed_color = False
+        self.color1 = AMBER
+        self.color2 = AMBER
         #Create Socket to communicate
         self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
         self.newSocket.start()
@@ -128,9 +132,32 @@ class Cosmo_guirlande_rpi():
         time.sleep(1)
 
     def changeColor(self, r, g, b, w):
+        self.color1 = (r,g,b,w)
         pixels.fill((int(r), int(g), int(b), int(w)))
         pixels.show()
         time.sleep(0.3)
+
+    def changeColor1String(self, color):
+        self.color1 = color
+        solid = Solid(pixels, color=self.color1)
+        animations = AnimationSequence(
+            solid,
+            advance_interval=5,
+            auto_clear=True,
+        )
+        while self.newSocket.data_rcv.startswith('cosmoguirlande,color1'):
+            animations.animate()
+
+    def changeColor2String(self, color):
+        self.color2 = color
+        solid = Solid(pixels, color=self.color2)
+        animations = AnimationSequence(
+            solid,
+            advance_interval=5,
+            auto_clear=True,
+        )
+        while self.newSocket.data_rcv.startswith('cosmoguirlande,color2'):
+            animations.animate()
 
     def rainbow_cycle(self, wait):
         for j in range(255):
@@ -141,7 +168,7 @@ class Cosmo_guirlande_rpi():
             time.sleep(wait)
 
     def comet(self):
-        comet = Comet(pixels, speed=0.01, color=PURPLE, tail_length=10, bounce=True)
+        comet = Comet(pixels, speed=0.01, color=self.color1, tail_length=10, bounce=True)
         animations = AnimationSequence(
             comet,
             advance_interval=5,
@@ -151,7 +178,7 @@ class Cosmo_guirlande_rpi():
             animations.animate()
 
     def chase(self):
-        chase = Chase(pixels, speed=0.1, size=3, spacing=6, color=WHITE)
+        chase = Chase(pixels, speed=0.1, size=3, spacing=6, color=self.color1)
         animations = AnimationSequence(
             chase,
             advance_interval=5,
@@ -161,7 +188,7 @@ class Cosmo_guirlande_rpi():
             animations.animate()
 
     def pulse(self):
-        pulse = Pulse(pixels, speed=0.1, period=1, color=AMBER)
+        pulse = Pulse(pixels, speed=0.1, period=1, color=self.color1)
         animations = AnimationSequence(
             pulse,
             advance_interval=5,
@@ -170,7 +197,7 @@ class Cosmo_guirlande_rpi():
         while self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
             animations.animate()
     def sparkle(self):
-        sparkle = Sparkle(pixels, speed=0.1, color=PURPLE, num_sparkles=10)
+        sparkle = Sparkle(pixels, speed=0.1, color=self.color1, num_sparkles=10)
         animations = AnimationSequence(
             sparkle,
             advance_interval=5,
@@ -181,7 +208,7 @@ class Cosmo_guirlande_rpi():
 
 
     def solid(self):
-        solid = Solid(pixels, color=JADE)
+        solid = Solid(pixels, color=self.color1)
         animations = AnimationSequence(
             solid,
             advance_interval=5,
@@ -190,7 +217,7 @@ class Cosmo_guirlande_rpi():
         animations.animate()
 
     def colorcycle(self):
-        colorcycle = ColorCycle(pixels, speed=0.4, colors=[MAGENTA, ORANGE])
+        colorcycle = ColorCycle(pixels, speed=0.4, colors=[self.color1, self.color2])
         animations = AnimationSequence(
             colorcycle,
             advance_interval=5,
@@ -203,8 +230,97 @@ class Cosmo_guirlande_rpi():
         try:
             while True:
                 if self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
-                    self.stromboscope((int(self.r), int(self.g), int(self.b), int(self.w)), 0.01)
+                    self.stromboscope(self.color1, 0.05)
                     time.sleep(0.3)
+
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,color1'):
+                    function_type, function, self.color1 = self.newSocket.data_rcv.split(',')
+                    print("color1 :", self.color1)
+                    self.w = 0
+                    if self.color1 =='AMBER':
+                        self.changeColor1String(AMBER)
+                    elif self.color1 =='AQUA':
+                        self.changeColor1String(AQUA)
+                    elif self.color1 == 'YELLOW':
+                        self.changeColor1String(YELLOW)
+                    elif self.color1 == 'WHITE':
+                        self.changeColor1String(WHITE)
+                    elif self.color1 == 'TEAL':
+                        self.changeColor1String(TEAL)
+                    elif self.color1 == 'RGBW_WHITE_W':
+                        self.changeColor1String(RGBW_WHITE_W)
+                    elif self.color1 == 'RGBW_WHITE_RGBW':
+                        self.changeColor1String(RGBW_WHITE_RGBW)
+                    elif self.color1 == 'RGBW_WHITE_RGB':
+                        self.changeColor1String(RGBW_WHITE_RGB)
+                    elif self.color1 == 'RED':
+                        self.changeColor1String(RED)
+                    elif self.color1 == 'PURPLE':
+                        self.changeColor1String(PURPLE)
+                    elif self.color1 == 'PINK':
+                        self.changeColor1String(PINK)
+                    elif self.color1 == 'ORANGE':
+                        self.changeColor1String(ORANGE)
+                    elif self.color1 =='OLD_LACE':
+                        self.changeColor1String(OLD_LACE)
+                    elif self.color1 == 'MAGENTA':
+                        self.changeColor1String(MAGENTA)
+                    elif self.color1 == 'JADE':
+                        self.changeColor1String(JADE)
+                    elif self.color1 == 'GREEN':
+                        self.changeColor1String(GREEN)
+                    elif self.color1 =='GOLD':
+                        self.changeColor1String(GOLD)
+                    elif self.color1 == 'CYAN':
+                        self.changeColor1String(CYAN)
+                    elif self.color1 == 'BLUE':
+                        self.changeColor1String(BLUE)
+                    elif self.color1 == 'BLACK':
+                        self.changeColor1String(BLACK)
+
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,color2'):
+                    function_type, function, self.color2 = self.newSocket.data_rcv.split(',')
+                    if self.color2 =='AMBER':
+                        self.changeColor2String(AMBER)
+                    elif self.color2 =='AQUA':
+                        self.changeColor2String(AQUA)
+                    elif self.color2 == 'YELLOW':
+                        self.changeColor2String(YELLOW)
+                    elif self.color2 == 'WHITE':
+                        self.changeColor2String(WHITE)
+                    elif self.color2 == 'TEAL':
+                        self.changeColor2String(TEAL)
+                    elif self.color2 == 'RGBW_WHITE_W':
+                        self.changeColor2String(RGBW_WHITE_W)
+                    elif self.color2 == 'RGBW_WHITE_RGBW':
+                        self.changeColor2String(RGBW_WHITE_RGBW)
+                    elif self.color2 == 'RGBW_WHITE_RGB':
+                        self.changeColor2String(RGBW_WHITE_RGB)
+                    elif self.color2 == 'RED':
+                        self.changeColor2String(RED)
+                    elif self.color2 == 'PURPLE':
+                        self.changeColor2String(PURPLE)
+                    elif self.color2 == 'PINK':
+                        self.changeColor2String(PINK)
+                    elif self.color2 == 'ORANGE':
+                        self.changeColor2String(ORANGE)
+                    elif self.color2 =='OLD_LACE':
+                        self.changeColor2String(OLD_LACE)
+                    elif self.color2 == 'MAGENTA':
+                        self.changeColor2String(MAGENTA)
+                    elif self.color2 == 'JADE':
+                        self.changeColor2String(JADE)
+                    elif self.color2 == 'GREEN':
+                        self.changeColor2String(GREEN)
+                    elif self.color2 =='GOLD':
+                        self.changeColor2String(GOLD)
+                    elif self.color2 == 'CYAN':
+                        self.changeColor2String(CYAN)
+                    elif self.color2 == 'BLUE':
+                        self.changeColor2String(BLUE)
+                    elif self.color2 == 'BLACK':
+                        self.changeColor2String(BLACK)
+
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbow"):
                     for j in range(2):
                         self.rainbow_cycle(0.01)
