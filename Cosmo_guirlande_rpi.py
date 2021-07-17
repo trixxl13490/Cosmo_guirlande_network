@@ -3,6 +3,7 @@ import argparse
 import time
 import board
 import neopixel
+import os
 import threading
 import socket
 from adafruit_led_animation.animation.comet import Comet # sudo pip3 install adafruit-circuitpython-led-animation
@@ -127,9 +128,14 @@ class Cosmo_guirlande_rpi():
             time.sleep(wait_s)
 
     def blackout(self):
-        pixels.fill((0, 0, 0, 0))
-        pixels.show()
-        time.sleep(1)
+        solid = Solid(pixels, color=BLACK)
+        animations = AnimationSequence(
+            solid,
+            advance_interval=5,
+            auto_clear=True,
+        )
+        while self.newSocket.data_rcv.startswith('cosmoguirlande,blackout'):
+            animations.animate()
 
     def changeColor(self, r, g, b, w):
         self.color1 = (r,g,b,w)
@@ -196,6 +202,7 @@ class Cosmo_guirlande_rpi():
         )
         while self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
             animations.animate()
+
     def sparkle(self):
         sparkle = Sparkle(pixels, speed=0.1, color=self.color1, num_sparkles=10)
         animations = AnimationSequence(
@@ -225,6 +232,24 @@ class Cosmo_guirlande_rpi():
         )
         while self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle'):
             animations.animate()
+
+    def dancingPiScroll(self):
+        os.system("sudo python3 /home/pi/dancyPi-audio-reactive-led/python/visualization.py scroll")
+
+    def stop_dancingPiScroll(self):
+        os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
+
+    def dancingPiEnergy(self):
+        os.system("sudo python3 /home/pi/dancyPi-audio-reactive-led/python/visualization.py energy")
+
+    def stop_dancingPiEnergy(self):
+        os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
+
+    def dancingPiSpectrum(self):
+        os.system("sudo python3 /home/pi/dancyPi-audio-reactive-led/python/visualization.py spectrum")
+
+    def stop_dancingPiSpectrum(self):
+        os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
 
     def run(self):
         try:
@@ -346,6 +371,24 @@ class Cosmo_guirlande_rpi():
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle'):
                     self.colorcycle()
 
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiScroll'):
+                    self.dancingPiScroll()
+
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiEnergy'):
+                    self.dancingPiEnergy()
+
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum'):
+                    self.dancingPiSpectrum()
+
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll'):
+                    self.stop_dancingPiScroll()
+
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiEnergy'):
+                    self.stop_dancingPiEnergy()
+
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum'):
+                    self.stop_dancingPiSpectrum()
+
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,R"):
                     function_type, function, self.r = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
@@ -370,6 +413,10 @@ class Cosmo_guirlande_rpi():
                     print("nothing")
                     time.sleep(1)
                     pass
+
+
+        except TypeError:
+            self.run()
 
         except KeyboardInterrupt:
             print("keyboard interrupt, blackout LED")

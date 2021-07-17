@@ -169,6 +169,48 @@ class MainWin(QWidget):
         self.button_colorcycle_1.setGeometry(10, 690, 100, 25)
         self.button_colorcycle_1.clicked.connect(self.colorcycle_demand_1)
 
+        # Bouton Dancing Pi Sroll 1
+        self.button_dancingPiScroll = QPushButton('dancingPiSroll', self)
+        self.button_dancingPiScroll.setToolTip('dancingPiSroll')
+        self.button_dancingPiScroll.setGeometry(10, 720, 100, 25)
+        self.button_dancingPiScroll.clicked.connect(self.dancingPiScroll_demand_1)
+
+        # Bouton stop_Dancing Pi Sroll 1
+        self.button_stop_dancingPiScroll = QPushButton('stop_dancingPiSroll', self)
+        self.button_stop_dancingPiScroll.setToolTip('stop_dancingPiSroll')
+        self.button_stop_dancingPiScroll.setGeometry(110, 720, 100, 25)
+        self.button_stop_dancingPiScroll.clicked.connect(self.stop_dancingPiScroll_demand_1)
+
+        # Bouton Dancing Pi Spectrum 1
+        self.button_dancingPiSpectrum = QPushButton('dancingPiSpectrum', self)
+        self.button_dancingPiSpectrum.setToolTip('dancingPiSpectrum')
+        self.button_dancingPiSpectrum.setGeometry(10, 750, 100, 25)
+        self.button_dancingPiSpectrum.clicked.connect(self.dancingPiSpectrum_demand_1)
+
+        # Bouton stop_Dancing Pi Spectrum 1
+        self.button_stop_dancingPiSpectrum = QPushButton('stop_dancingPiSpectrum', self)
+        self.button_stop_dancingPiSpectrum.setToolTip('stop_dancingPiSpectrum')
+        self.button_stop_dancingPiSpectrum.setGeometry(110, 750, 100, 25)
+        self.button_stop_dancingPiSpectrum.clicked.connect(self.stop_dancingPiSpectrum_demand_1)
+
+        # Bouton Dancing Pi Energy 1
+        self.button_dancingPiEnergy = QPushButton('dancingPiEnergy', self)
+        self.button_dancingPiEnergy.setToolTip('dancingPiEnergy')
+        self.button_dancingPiEnergy.setGeometry(10, 780, 100, 25)
+        self.button_dancingPiEnergy.clicked.connect(self.dancingPiEnergy_demand_1)
+
+        # Bouton stop_Dancing Pi Energy 1
+        self.button_stop_dancingPiEnergy = QPushButton('stop_dancingPiEnergy', self)
+        self.button_stop_dancingPiEnergy.setToolTip('stop_dancingPiEnergy')
+        self.button_stop_dancingPiEnergy.setGeometry(110, 780, 100, 25)
+        self.button_stop_dancingPiEnergy.clicked.connect(self.stop_dancingPiEnergy_demand_1)
+
+        # Bouton Cosmo Ball 1
+        self.button_cosmoBall = QPushButton('cosmoBall', self)
+        self.button_cosmoBall.setToolTip('cosmoBall')
+        self.button_cosmoBall.setGeometry(10,810, 100, 25)
+        #self.button_dancingPi.clicked.connect(self.cosmoBall_demand_1)
+
         # Slider Red 1
         self.sl_R1 = QSlider(Qt.Vertical, self)
         self.sl_R1.setFocusPolicy(Qt.StrongFocus)
@@ -622,7 +664,7 @@ class MainWin(QWidget):
         self.button_solid_5.setGeometry(1210, 660, 100, 25)
         self.button_solid_5.clicked.connect(self.solid_demand_5)
 
-        # Bouton colorcycle 1
+        # Bouton colorcycle 5
         self.button_colorcycle_5 = QPushButton('colorcycle', self)
         self.button_colorcycle_5.setToolTip('colorcycle')
         self.button_colorcycle_5.setGeometry(1210, 690, 100, 25)
@@ -779,6 +821,63 @@ class MainWin(QWidget):
 
     def sync_demand(self, state):
         self.sync = not self.sync
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+
+
+    def dancingPiScroll_demand_1(self):
+        self.msg1 = 'cosmoguirlande,dancingPiScroll'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+
+
+    def dancingPiEnergy_demand_1(self):
+        self.msg1 = 'cosmoguirlande,dancingPiEnergy'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+
+
+    def dancingPiSpectrum_demand_1(self):
+        self.msg1 = 'cosmoguirlande,dancingPiSpectrum'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+
+    def stop_dancingPiEnergy_demand_1(self):
+        self.msg1 = 'cosmoguirlande,stop_dancingPiEnergy'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+
+    def stop_dancingPiSpectrum_demand_1(self):
+        self.msg1 = 'cosmoguirlande,stop_dancingPiSpectrum'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+
+    def stop_dancingPiScroll_demand_1(self):
+        self.msg1 = 'cosmoguirlande,stop_dancingPiScroll'
+        self.newServer1.to_send = self.msg1
         if self.sync:
             self.newServer2.to_send = self.msg1
             self.newServer3.to_send = self.msg1
