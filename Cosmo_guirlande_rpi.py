@@ -119,13 +119,21 @@ class Cosmo_guirlande_rpi():
 
 
     def stromboscope(self, color, wait_s):
-        while self.newSocket.data_rcv.startswith('cosmoguirlande,strombo'):
+        '''while self.newSocket.data_rcv.startswith('cosmoguirlande,strombo'):
             pixels.fill(color)
             pixels.show()
             time.sleep(wait_s)
             pixels.fill((0, 0, 0, 0))
             pixels.show()
-            time.sleep(wait_s)
+            time.sleep(wait_s)'''
+        blink = Blink(pixels, speed=wait_s, color=self.color1)
+        animations = AnimationSequence(
+            blink,
+            advance_interval=5,
+            auto_clear=True,
+        )
+        while self.newSocket.data_rcv.startswith('cosmoguirlande,strombo'):
+            animations.animate()
 
     def blackout(self):
         solid = Solid(pixels, color=BLACK)
@@ -144,6 +152,11 @@ class Cosmo_guirlande_rpi():
         time.sleep(0.3)
 
     def changeColor1String(self, color):
+        self.r = '0'
+        self.g = '0'
+        self.b = '0'
+        self.w = '0'
+        pixels.fill((int(self.r), int(self.g), int(self.b), int(self.w)))
         self.color1 = color
         solid = Solid(pixels, color=self.color1)
         animations = AnimationSequence(
@@ -250,6 +263,7 @@ class Cosmo_guirlande_rpi():
 
     def stop_dancingPiSpectrum(self):
         os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
+        # os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
 
     def run(self):
         try:
@@ -445,3 +459,5 @@ if __name__ == '__main__':
 
     cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
     cosmo_guirlande.run()
+
+    #Check if main class is style alive
