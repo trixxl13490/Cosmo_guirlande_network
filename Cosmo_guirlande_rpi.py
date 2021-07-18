@@ -24,7 +24,6 @@ from adafruit_led_animation.color import AMBER, AQUA, BLACK,BLUE,CYAN,GOLD,GREEN
 from adafruit_led_animation.color import JADE,MAGENTA,OLD_LACE,ORANGE,PINK,PURPLE,RAINBOW,RED,RGBW_WHITE_RGB
 from adafruit_led_animation.color import RGBW_WHITE_RGBW,RGBW_WHITE_W,TEAL,WHITE,YELLOW
 
-global restart
 restart = False
 
 class Cosmo_Communication(threading.Thread):
@@ -44,6 +43,8 @@ class Cosmo_Communication(threading.Thread):
         print("TCP buffer size: " + str(self.buffer_size))
 
     def run(self):
+        global restart
+
         try:
             while True:
                 ##construction socket
@@ -78,8 +79,8 @@ class Cosmo_Communication(threading.Thread):
                 elif self.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum'):
                     os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")'''
                 if self.data_rcv.startswith('cosmoguirlande,restart'):
-                    global restart
                     restart = True
+                    connexion_serveur.close()
 
 
         except ConnectionResetError:
