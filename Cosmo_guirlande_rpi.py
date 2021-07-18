@@ -24,6 +24,9 @@ from adafruit_led_animation.color import AMBER, AQUA, BLACK,BLUE,CYAN,GOLD,GREEN
 from adafruit_led_animation.color import JADE,MAGENTA,OLD_LACE,ORANGE,PINK,PURPLE,RAINBOW,RED,RGBW_WHITE_RGB
 from adafruit_led_animation.color import RGBW_WHITE_RGBW,RGBW_WHITE_W,TEAL,WHITE,YELLOW
 
+global restart
+restart = False
+
 class Cosmo_Communication(threading.Thread):
 
     def __init__(self, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
@@ -67,6 +70,17 @@ class Cosmo_Communication(threading.Thread):
                 ##fermeture connexion
                 connexion_serveur.close()
                 time.sleep(0.5)
+
+                '''if self.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll'):
+                    os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
+                elif self.data_rcv.startswith('cosmoguirlande,stop_dancingPiEnergy'):
+                    os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
+                elif self.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum'):
+                    os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")'''
+                if self.data_rcv.startswith('cosmoguirlande,restart'):
+                    global restart
+                    restart = True
+
 
         except ConnectionResetError:
             print("connection reset")
@@ -119,14 +133,9 @@ class Cosmo_guirlande_rpi():
 
 
     def stromboscope(self, color, wait_s):
-        '''while self.newSocket.data_rcv.startswith('cosmoguirlande,strombo'):
-            pixels.fill(color)
-            pixels.show()
-            time.sleep(wait_s)
-            pixels.fill((0, 0, 0, 0))
-            pixels.show()
-            time.sleep(wait_s)'''
-        blink = Blink(pixels, speed=wait_s, color=self.color1)
+        print("self.color1",color)
+        print("type self.color1", type(color))
+        blink = Blink(pixels, speed=wait_s, color=color)
         animations = AnimationSequence(
             blink,
             advance_interval=5,
@@ -146,7 +155,7 @@ class Cosmo_guirlande_rpi():
             animations.animate()
 
     def changeColor(self, r, g, b, w):
-        self.color1 = (r,g,b,w)
+        self.color1 = (int(r), int(g), int(b), int(w))
         pixels.fill((int(r), int(g), int(b), int(w)))
         pixels.show()
         time.sleep(0.3)
@@ -268,6 +277,7 @@ class Cosmo_guirlande_rpi():
     def run(self):
         try:
             while True:
+                print("Cosmoguirlande class run")
                 if self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
                     self.stromboscope(self.color1, 0.05)
                     time.sleep(0.3)
@@ -432,11 +442,11 @@ class Cosmo_guirlande_rpi():
         except TypeError:
             self.run()
 
+
         except KeyboardInterrupt:
             print("keyboard interrupt, blackout LED")
             if args.clear:
                 pixels.fill((0, 0, 0, 0))
-
 
 if __name__ == '__main__':
     # Process arguments
@@ -460,4 +470,13 @@ if __name__ == '__main__':
     cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
     cosmo_guirlande.run()
 
-    #Check if main class is style alive
+    #Check if main class is style alive - to be run on a thread
+    #def amIalive():
+
+    while True:
+        if restart:
+            print("restart cosmo guirlaned class")
+            cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port,
+                                                  args.buffer_size)
+            cosmo_guirlande.run()
+            restart = False
