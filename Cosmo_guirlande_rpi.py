@@ -80,7 +80,7 @@ class Cosmo_Communication(threading.Thread):
                     os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")'''
                 if self.data_rcv.startswith('cosmoguirlande,restart'):
                     restart = True
-                    connexion_serveur.close()
+                    #self.is_alive()
 
 
         except ConnectionResetError:
@@ -279,6 +279,8 @@ class Cosmo_guirlande_rpi():
         try:
             while True:
                 print("Cosmoguirlande class run")
+                # wait for animation type and threshold
+                #if (self.newSocket.data_rcv.startswith("cosmoguirlande,strombo") and :
                 if self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
                     self.stromboscope(self.color1, 0.05)
                     time.sleep(0.3)
@@ -449,6 +451,23 @@ class Cosmo_guirlande_rpi():
             if args.clear:
                 pixels.fill((0, 0, 0, 0))
 
+#Check if main class is style alive - to be run on a thread
+class AmIalive(threading.Thread):
+    def __init__(self):
+        threading.Thread.__init__(self)
+
+    def run(self):
+        global restart
+        print('Am I alive ?')
+        while True:
+            if cosmo_guirlande.mnewSocket.data_rcv.startswith("cosmoguirlande,restart"):
+                del(cosmo_guirlande)
+                print("restart cosmo guirlande class, kill it before")
+                cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port,
+                                                      args.buffer_size)
+                cosmo_guirlande.run()
+                restart = False
+
 if __name__ == '__main__':
     # Process arguments
     parser = argparse.ArgumentParser()
@@ -469,15 +488,8 @@ if __name__ == '__main__':
     # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0. 50001 1024
 
     cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
+    amIalive_thread1 = AmIalive()
     cosmo_guirlande.run()
+    amIalive_thread1.run()
 
-    #Check if main class is style alive - to be run on a thread
-    #def amIalive():
 
-    while True:
-        if restart:
-            print("restart cosmo guirlaned class")
-            cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port,
-                                                  args.buffer_size)
-            cosmo_guirlande.run()
-            restart = False

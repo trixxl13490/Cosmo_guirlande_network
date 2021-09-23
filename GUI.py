@@ -144,6 +144,16 @@ class MainWin(QWidget):
         self.button_chase_1.setGeometry(10, 540, 100, 25)
         self.button_chase_1.clicked.connect(self.chase_demand_1)
 
+        #Entree chase param speed
+        # Create textbox
+        self.textbox_chase_speed= QLineEdit(self)
+        self.textbox_chase_speed.setGeometry(110, 540, 50, 20)
+        # Create a button in the window
+        self.button_chase_speed= QPushButton('speed', self)
+        self.button_chase_speed.setGeometry(160, 540, 50, 20)
+        # connect button to function on_click
+        self.button_chase_speed.clicked.connect(self.on_click_ip)
+
         # Bouton comet 1
         self.button_comet_1 = QPushButton('comet', self)
         self.button_comet_1.setToolTip('comet')
