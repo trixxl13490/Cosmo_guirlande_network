@@ -116,6 +116,8 @@ class Cosmo_guirlande_rpi():
         self.sparkle_speed = 0.1
         self.sparkle_num = 10
         self.color_cycle_speed = 0.4
+        self.color1 = AMBER
+        self.color2 = AMBER
 
         #Create Socket to communicate
         self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
