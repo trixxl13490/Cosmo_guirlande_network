@@ -393,19 +393,27 @@ class Cosmo_guirlande_rpi():
                     self.blackout()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase'):
-                    function_type, function, self.chase_speed, self.chase_size = self.newSocket.data_rcv.split(',')
+                    function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
+                    self.chase_speed = float(chase_speed)
+                    self.chase_size = float(chase_size)
                     self.chase()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet'):
-                    function_type, function, self.comet_speed, self.comet_tail = self.newSocket.data_rcv.split(',')
+                    function_type, function, comet_speed, comet_tail = self.newSocket.data_rcv.split(',')
+                    self.comet_speed = float(comet_speed)
+                    self.comet_tail = float(comet_tail)
                     self.comet()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle'):
-                    function_type, function, self.sparkle_speed, self.sparkle_num = self.newSocket.data_rcv.split(',')
+                    function_type, function, sparkle_speed, sparkle_num = self.newSocket.data_rcv.split(',')
+                    self.sparkle_speed = float(sparkle_speed)
+                    self.sparkle_num = float(sparkle_num)
                     self.sparkle()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
-                    function_type, function, self.pulse_period, self.pulse_speed = self.newSocket.data_rcv.split(',')
+                    function_type, function, pulse_period, pulse_speed = self.newSocket.data_rcv.split(',')
+                    self.pulse_period = float(pulse_period)
+                    self.pulse_speed = float(pulse_speed)
                     self.pulse()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,solid'):
