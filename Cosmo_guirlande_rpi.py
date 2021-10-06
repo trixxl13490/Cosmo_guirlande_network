@@ -391,21 +391,26 @@ class Cosmo_guirlande_rpi():
                     self.blackout()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase'):
+                    function_type, function, self.chase_speed, self.chase_size = self.newSocket.data_rcv.split(',')
                     self.chase()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet'):
+                    function_type, function, self.comet_speed, self.comet_tail = self.newSocket.data_rcv.split(',')
                     self.comet()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle'):
+                    function_type, function, self.sparkle_speed, self.sparkle_num = self.newSocket.data_rcv.split(',')
                     self.sparkle()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
+                    function_type, function, self.pulse_period, self.pulse_speed = self.newSocket.data_rcv.split(',')
                     self.pulse()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,solid'):
                     self.solid()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle'):
+                    function_type, function, self.color2 = self.newSocket.data_rcv.split(',')
                     self.colorcycle()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiScroll'):
