@@ -51,6 +51,7 @@ class MainWin(QWidget):
 
         #Window configuration
         self.setFixedSize(1900, 1000)
+        self.setWindowTitle("Cosmo Guirlandes Network GUI")
         qtRectangle = self.frameGeometry()
         centerPoint = QDesktopWidget().availableGeometry().center()
         qtRectangle.moveCenter(centerPoint)
@@ -1007,7 +1008,7 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
 
     def chase_demand_1(self):
-        self.msg1 = 'cosmoguirlande,chase'
+        self.msg1 = 'cosmoguirlande,chase,' + self.textbox_chase_size.text() + ',' + self.textbox_chase_speed.text()
         self.newServer1.to_send = self.msg1
         if self.sync:
             self.newServer2.to_send = self.msg1
@@ -1017,7 +1018,7 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
 
     def comet_demand_1(self):
-        self.msg1 = 'cosmoguirlande,comet'
+        self.msg1 = 'cosmoguirlande,comet,' + self.textbox_comet_speed.text() + ',' + self.textbox_comet_tail.text()
         self.newServer1.to_send = self.msg1
         if self.sync:
             self.newServer2.to_send = self.msg1
@@ -1027,7 +1028,7 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
 
     def sparkle_demand_1(self):
-        self.msg1 = 'cosmoguirlande,sparkle'
+        self.msg1 = 'cosmoguirlande,sparkle,' + self.textbox_sparkle_speed.text() + ',' + self.textbox_sparkle_num_sparkles.text()
         self.newServer1.to_send = self.msg1
         if self.sync:
             self.newServer2.to_send = self.msg1
@@ -1037,7 +1038,7 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
 
     def pulse_demand_1(self):
-        self.msg1 = 'cosmoguirlande,pulse'
+        self.msg1 = 'cosmoguirlande,pulse,'+ self.textbox_pulse_period.text() + ',' + self.textbox_pulse_speed.text()
         self.newServer1.to_send = self.msg1
         if self.sync:
             self.newServer2.to_send = self.msg1
@@ -1057,7 +1058,7 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
 
     def colorcycle_demand_1(self):
-        self.msg1 = 'cosmoguirlande,colorcycle'
+        self.msg1 = 'cosmoguirlande,colorcycle,'++ self.textbox_color_cycle_speed.text()
         self.newServer1.to_send = self.msg1
         if self.sync:
             self.newServer2.to_send = self.msg1
