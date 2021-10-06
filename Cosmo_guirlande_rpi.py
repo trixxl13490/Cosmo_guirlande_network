@@ -23,6 +23,8 @@ from adafruit_led_animation.sequence import AnimationSequence
 from adafruit_led_animation.color import AMBER, AQUA, BLACK,BLUE,CYAN,GOLD,GREEN
 from adafruit_led_animation.color import JADE,MAGENTA,OLD_LACE,ORANGE,PINK,PURPLE,RAINBOW,RED,RGBW_WHITE_RGB
 from adafruit_led_animation.color import RGBW_WHITE_RGBW,RGBW_WHITE_W,TEAL,WHITE,YELLOW
+#Recorder for beat detection
+#from recorder import *
 
 restart = False
 
@@ -481,7 +483,7 @@ if __name__ == '__main__':
 
     # Configuration des LED
     pixels = neopixel.NeoPixel(
-        board.D18, args.num_pixel, brightness=0.2, auto_write=False, pixel_order=neopixel.RGBW
+        board.D18, args.num_pixel, brightness=0.2, auto_write=False, pixel_order=neopixel.GRBW
     )
     print('Press Ctrl-C to quit.')
 
