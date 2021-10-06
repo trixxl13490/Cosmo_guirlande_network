@@ -107,8 +107,16 @@ class Cosmo_guirlande_rpi():
         self.b = '0'
         self.w = '0'
         self.fixed_color = False
-        self.color1 = AMBER
-        self.color2 = AMBER
+        self.chase_speed = 0.1
+        self.chase_size = 10
+        self.comet_speed = 0.01
+        self.comet_tail = 3
+        self.pulse_speed = 0.1
+        self.pulse_period = 1
+        self.sparkle_speed = 0.1
+        self.sparkle_num = 10
+        self.color_cycle_speed = 0.4
+
         #Create Socket to communicate
         self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
         self.newSocket.start()
@@ -209,7 +217,7 @@ class Cosmo_guirlande_rpi():
             animations.animate()
 
     def chase(self):
-        chase = Chase(pixels, speed=0.1, size=3, spacing=6, color=self.color1)
+        chase = Chase(pixels, speed=self.chase_speed, size=self.chase_size, spacing=6, color=self.color1)
         animations = AnimationSequence(
             chase,
             advance_interval=5,
@@ -219,7 +227,7 @@ class Cosmo_guirlande_rpi():
             animations.animate()
 
     def pulse(self):
-        pulse = Pulse(pixels, speed=0.1, period=1, color=self.color1)
+        pulse = Pulse(pixels, speed=self.pulse_speed, period=self.pulse_period, color=self.color1)
         animations = AnimationSequence(
             pulse,
             advance_interval=5,
@@ -229,7 +237,7 @@ class Cosmo_guirlande_rpi():
             animations.animate()
 
     def sparkle(self):
-        sparkle = Sparkle(pixels, speed=0.1, color=self.color1, num_sparkles=10)
+        sparkle = Sparkle(pixels, speed=self.sparkle_speed, color=self.color1, num_sparkles=self.sparkle_num)
         animations = AnimationSequence(
             sparkle,
             advance_interval=5,
@@ -249,7 +257,7 @@ class Cosmo_guirlande_rpi():
         animations.animate()
 
     def colorcycle(self):
-        colorcycle = ColorCycle(pixels, speed=0.4, colors=[self.color1, self.color2])
+        colorcycle = ColorCycle(pixels, speed=self.color_cycle_speed, colors=[self.color1, self.color2])
         animations = AnimationSequence(
             colorcycle,
             advance_interval=5,

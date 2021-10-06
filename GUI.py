@@ -121,6 +121,7 @@ class MainWin(QWidget):
         self.cb_sync.stateChanged.connect(self.sync_demand)
         self.cb_sync.setGeometry(10, 420, 300, 25)
 
+        #--------------------------------------------------------------------
 
         #Checkbox Stromboscope
         self.cb_strombo_1 = QCheckBox('Strombo_1', self)
@@ -128,6 +129,7 @@ class MainWin(QWidget):
         self.cb_strombo_1.stateChanged.connect(self.strombo_demand)
         self.cb_strombo_1.setGeometry(10, 450, 300, 25)
 
+        #--------------------------------------------------------------------
 
         #Bouton Rainbow 1 Loop
         self.button_rainbow_1 = QPushButton('Rainbow effect', self)
@@ -135,13 +137,14 @@ class MainWin(QWidget):
         self.button_rainbow_1.setGeometry(10, 480, 100, 25)
         self.button_rainbow_1.clicked.connect(self.rainbow_demand)
 
+        #--------------------------------------------------------------------
 
         #Bouton Blackout 1
         self.button_blackout_1 = QPushButton('Blackout', self)
         self.button_blackout_1.setToolTip('Turn off LEDs')
         self.button_blackout_1.setGeometry(10, 510, 100, 25)
         self.button_blackout_1.clicked.connect(self.blackout_demand)
-
+        #--------------------------------------------------------------------
         # Bouton chase 1
         self.button_chase_1 = QPushButton('chase', self)
         self.button_chase_1.setToolTip('chase')
@@ -158,11 +161,43 @@ class MainWin(QWidget):
         # connect button to function on_click
         self.button_chase_speed.clicked.connect(self.on_click_ip)
 
+        #Entree chase param size
+        # Create textbox
+        self.textbox_chase_size= QLineEdit(self)
+        self.textbox_chase_size.setGeometry(210, 540, 50, 20)
+        # Create a button in the window
+        self.button_chase_size= QPushButton('size', self)
+        self.button_chase_size.setGeometry(260, 540, 50, 20)
+        # connect button to function on_click
+        self.button_chase_size.clicked.connect(self.on_click_ip)
+        #--------------------------------------------------------------------
+
         # Bouton comet 1
         self.button_comet_1 = QPushButton('comet', self)
         self.button_comet_1.setToolTip('comet')
         self.button_comet_1.setGeometry(10, 570, 100, 25)
         self.button_comet_1.clicked.connect(self.comet_demand_1)
+
+        #Entree comet param speed
+        # Create textbox
+        self.textbox_comet_speed= QLineEdit(self)
+        self.textbox_comet_speed.setGeometry(110, 570, 50, 20)
+        # Create a button in the window
+        self.button_comet_speed= QPushButton('speed', self)
+        self.button_comet_speed.setGeometry(160, 570, 50, 20)
+        # connect button to function on_click
+        self.button_comet_speed.clicked.connect(self.on_click_ip)
+
+        #Entree comet param tail
+        # Create textbox
+        self.textbox_comet_tail= QLineEdit(self)
+        self.textbox_comet_tail.setGeometry(210, 570, 50, 20)
+        # Create a button in the window
+        self.button_comet_tail= QPushButton('tail', self)
+        self.button_comet_tail.setGeometry(260, 570, 50, 20)
+        # connect button to function on_click
+        self.button_comet_tail.clicked.connect(self.on_click_ip)
+        #--------------------------------------------------------------------
 
         # Bouton pulse 1
         self.button_pulse_1 = QPushButton('pulse', self)
@@ -170,24 +205,78 @@ class MainWin(QWidget):
         self.button_pulse_1.setGeometry(10, 600, 100, 25)
         self.button_pulse_1.clicked.connect(self.pulse_demand_1)
 
+        #Entree pulse param speed
+        # Create textbox
+        self.textbox_pulse_speed= QLineEdit(self)
+        self.textbox_pulse_speed.setGeometry(110, 600, 50, 20)
+        # Create a button in the window
+        self.button_pulse_speed= QPushButton('speed', self)
+        self.button_pulse_speed.setGeometry(160, 600, 50, 20)
+        # connect button to function on_click
+        self.button_pulse_speed.clicked.connect(self.on_click_ip)
+
+        #Entree pulse param period
+        # Create textbox
+        self.textbox_pulse_period= QLineEdit(self)
+        self.textbox_pulse_period.setGeometry(210, 600, 50, 20)
+        # Create a button in the window
+        self.button_pulse_period= QPushButton('period', self)
+        self.button_pulse_period.setGeometry(260, 600, 50, 20)
+        # connect button to function on_click
+        self.button_pulse_period.clicked.connect(self.on_click_ip)
+        #--------------------------------------------------------------------
+
         # Bouton sparkle 1
         self.button_sparkle_1 = QPushButton('sparkle', self)
         self.button_sparkle_1.setToolTip('sparkle')
         self.button_sparkle_1.setGeometry(10, 630, 100, 25)
         self.button_sparkle_1.clicked.connect(self.sparkle_demand_1)
 
+        #Entree sparkle param speed
+        # Create textbox
+        self.textbox_sparkle_speed= QLineEdit(self)
+        self.textbox_sparkle_speed.setGeometry(110, 630, 50, 20)
+        # Create a button in the window
+        self.button_sparkle_speed= QPushButton('speed', self)
+        self.button_sparkle_speed.setGeometry(160, 630, 50, 20)
+        # connect button to function on_click
+        self.button_sparkle_speed.clicked.connect(self.on_click_ip)
+
+        #Entree sparkle param num_sparkles
+        # Create textbox
+        self.textbox_sparkle_num_sparkles= QLineEdit(self)
+        self.textbox_sparkle_num_sparkles.setGeometry(210, 630, 50, 20)
+        # Create a button in the window
+        self.button_sparkle_num_sparkles= QPushButton('num_sparkles', self)
+        self.button_sparkle_num_sparkles.setGeometry(260, 630, 50, 20)
+        # connect button to function on_click
+        self.button_sparkle_num_sparkles.clicked.connect(self.on_click_ip)
+        #--------------------------------------------------------------------
 
         # Bouton solid 1
         self.button_solid_1 = QPushButton('solid', self)
         self.button_solid_1.setToolTip('solid')
         self.button_solid_1.setGeometry(10, 660, 100, 25)
         self.button_solid_1.clicked.connect(self.solid_demand_1)
+        #--------------------------------------------------------------------
 
         # Bouton colorcycle 1
         self.button_colorcycle_1 = QPushButton('colorcycle', self)
         self.button_colorcycle_1.setToolTip('colorcycle')
         self.button_colorcycle_1.setGeometry(10, 690, 100, 25)
         self.button_colorcycle_1.clicked.connect(self.colorcycle_demand_1)
+
+        #Entree color_cycle param speed
+        # Create textbox
+        self.textbox_color_cycle_speed= QLineEdit(self)
+        self.textbox_color_cycle_speed.setGeometry(110, 690, 50, 20)
+        # Create a button in the window
+        self.button_color_cycle_speed= QPushButton('speed', self)
+        self.button_color_cycle_speed.setGeometry(160, 690, 50, 20)
+        # connect button to function on_click
+        self.button_color_cycle_speed.clicked.connect(self.on_click_ip)
+
+        #--------------------------------------------------------------------
 
         # Bouton Dancing Pi Sroll 1
         self.button_dancingPiScroll = QPushButton('dancingPiSroll', self)
@@ -200,6 +289,7 @@ class MainWin(QWidget):
         self.button_stop_dancingPiScroll.setToolTip('stop_dancingPiSroll')
         self.button_stop_dancingPiScroll.setGeometry(110, 720, 100, 25)
         self.button_stop_dancingPiScroll.clicked.connect(self.stop_dancingPiScroll_demand_1)
+        #--------------------------------------------------------------------
 
         # Bouton Dancing Pi Spectrum 1
         self.button_dancingPiSpectrum = QPushButton('dancingPiSpectrum', self)
@@ -212,6 +302,7 @@ class MainWin(QWidget):
         self.button_stop_dancingPiSpectrum.setToolTip('stop_dancingPiSpectrum')
         self.button_stop_dancingPiSpectrum.setGeometry(110, 750, 100, 25)
         self.button_stop_dancingPiSpectrum.clicked.connect(self.stop_dancingPiSpectrum_demand_1)
+        #--------------------------------------------------------------------
 
         # Bouton Dancing Pi Energy 1
         self.button_dancingPiEnergy = QPushButton('dancingPiEnergy', self)
@@ -224,6 +315,7 @@ class MainWin(QWidget):
         self.button_stop_dancingPiEnergy.setToolTip('stop_dancingPiEnergy')
         self.button_stop_dancingPiEnergy.setGeometry(110, 780, 100, 25)
         self.button_stop_dancingPiEnergy.clicked.connect(self.stop_dancingPiEnergy_demand_1)
+        #--------------------------------------------------------------------
 
         # Bouton Cosmo Ball 1
         self.button_cosmoBall = QPushButton('cosmoBall', self)
