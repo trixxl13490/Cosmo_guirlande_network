@@ -395,7 +395,7 @@ class Cosmo_guirlande_rpi():
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase'):
                     function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
                     self.chase_speed = float(chase_speed)
-                    self.chase_size = float(chase_size)
+                    self.chase_size = int(chase_size)
                     self.chase()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet'):
