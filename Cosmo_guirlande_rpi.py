@@ -401,13 +401,13 @@ class Cosmo_guirlande_rpi():
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet'):
                     function_type, function, comet_speed, comet_tail = self.newSocket.data_rcv.split(',')
                     self.comet_speed = float(comet_speed)
-                    self.comet_tail = float(comet_tail)
+                    self.comet_tail = int(comet_tail)
                     self.comet()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle'):
                     function_type, function, sparkle_speed, sparkle_num = self.newSocket.data_rcv.split(',')
                     self.sparkle_speed = float(sparkle_speed)
-                    self.sparkle_num = float(sparkle_num)
+                    self.sparkle_num = int(sparkle_num)
                     self.sparkle()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):

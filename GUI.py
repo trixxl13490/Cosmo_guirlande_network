@@ -1008,7 +1008,7 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
 
     def chase_demand_1(self):
-        self.msg1 = 'cosmoguirlande,chase,' + self.textbox_chase_size.text() + ',' + self.textbox_chase_speed.text()
+        self.msg1 = 'cosmoguirlande,chase,' + self.textbox_chase_speed.text() + ',' + self.textbox_chase_size.text()
         self.newServer1.to_send = self.msg1
         if self.sync:
             self.newServer2.to_send = self.msg1
