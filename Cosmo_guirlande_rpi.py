@@ -38,7 +38,7 @@ class Cosmo_Communication(threading.Thread):
         self.tcp_port = tcp_port
         self.buffer_size = buffer_size
         self.data_rcv = ""
-        self.state = ""
+
 
         print("Cosmo Guirlande Number: " + str(self.guirlande_number))
         print("TCP ip server: " + str(self.tcp_ip))
@@ -128,6 +128,11 @@ class Cosmo_guirlande_rpi():
         #Create Socket to communicate
         self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
         self.newSocket.start()
+
+        #Watchdog
+        self.watchdog_count = 0
+        self.state = ""
+        self.previous_state = ""
 
     def wheel(self, pos):
         # Input a value 0 to 255 to get a color value.
@@ -297,6 +302,7 @@ class Cosmo_guirlande_rpi():
         try:
             while True:
                 print("Cosmoguirlande class run")
+                self.state = 'main'
                 # wait for animation type and threshold
                 #if (self.newSocket.data_rcv.startswith("cosmoguirlande,strombo") and :
                 if self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
@@ -470,11 +476,24 @@ class Cosmo_guirlande_rpi():
                 elif self.state == "nothing":
                     self.run()
 
+                elif self.state == "main":
+                    #increse count if last states are "main"
+                    if self.state == self.previous_state:
+                        self.watchdog_count = self.watchdog_count +1
+                        print("watchdog_count :",self.watchdog_count)
+                    #if no messages since last 10 sec (10 "main state), start again
+                    if self.watchdog_count == 10:
+                        self.watchdog_count = 0
+                        self.run()
+
                 else:
                     print("nothing")
                     self.state = "nothing"
                     time.sleep(1)
                     pass
+
+                self.previous_state = self.state
+
 
 
         except TypeError:
