@@ -468,7 +468,7 @@ class Cosmo_guirlande_rpi():
                     time.sleep(0.5)
 
                 elif self.state == "nothing":
-
+                    self.run()
 
                 else:
                     print("nothing")
