@@ -97,7 +97,7 @@ class Cosmo_Communication(threading.Thread):
             self.run()
 
         except OSError:
-            print("Timeout Error, start again thread")
+            print("OS Error, start again thread")
             time.sleep(1)
             self.run()
 
