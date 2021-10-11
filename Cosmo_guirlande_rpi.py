@@ -483,8 +483,9 @@ class Cosmo_guirlande_rpi():
                     if self.previous_state == "main":
                         #self.watchdog_count = self.watchdog_count +1
                         print("watchdog_count :",self.watchdog_count)
+                        time.sleep(0.5)
                     #if no messages since last 10 sec (10 "main state), start again
-                    if self.watchdog_count == 10:
+                    elif self.watchdog_count == 10:
                         self.watchdog_count = 0
                         self.run()
 
