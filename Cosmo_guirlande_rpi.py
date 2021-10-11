@@ -469,11 +469,6 @@ class Cosmo_guirlande_rpi():
                     time.sleep(0.5)
 
                 elif self.state == "nothing":
-                    if self.previous_state == "nothing":
-                        self.watchdog_count = self.watchdog_count +1
-                        print("watchdog_count :",self.watchdog_count)
-
-                elif self.state == "main":
                     #increse count if last states are "main"
                     if self.previous_state == "main":
                         #self.watchdog_count = self.watchdog_count +1
