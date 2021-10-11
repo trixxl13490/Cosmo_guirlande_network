@@ -38,6 +38,7 @@ class Cosmo_Communication(threading.Thread):
         self.tcp_port = tcp_port
         self.buffer_size = buffer_size
         self.data_rcv = ""
+        self.state = ""
 
         print("Cosmo Guirlande Number: " + str(self.guirlande_number))
         print("TCP ip server: " + str(self.tcp_ip))
@@ -466,8 +467,12 @@ class Cosmo_guirlande_rpi():
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
+                elif self.state == "nothing":
+
+
                 else:
                     print("nothing")
+                    self.state = "nothing"
                     time.sleep(1)
                     pass
 
@@ -478,11 +483,12 @@ class Cosmo_guirlande_rpi():
 
         except KeyboardInterrupt:
             print("keyboard interrupt, blackout LED")
+            self.state = "keyboard"
             if args.clear:
                 pixels.fill((0, 0, 0, 0))
 
 #Check if main class is style alive - to be run on a thread
-class AmIalive(threading.Thread, classTocheck):
+'''class AmIalive(threading.Thread, classTocheck):
     def __init__(self):
         threading.Thread.__init__(self)
 
@@ -496,7 +502,7 @@ class AmIalive(threading.Thread, classTocheck):
                 cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port,
                                                       args.buffer_size)
                 cosmo_guirlande.run()
-                restart = False
+                restart = False'''
 
 if __name__ == '__main__':
     # Process arguments
@@ -518,8 +524,8 @@ if __name__ == '__main__':
     # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0. 50001 1024
 
     cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
-    amIalive_thread1 = AmIalive(cosmo_guirlande)
+    #amIalive_thread1 = AmIalive(cosmo_guirlande)
     cosmo_guirlande.run()
-    amIalive_thread1.run()
+    #amIalive_thread1.run()
 
 
