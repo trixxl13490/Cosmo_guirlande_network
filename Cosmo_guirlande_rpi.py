@@ -472,7 +472,6 @@ class Cosmo_guirlande_rpi():
                     if self.previous_state == "nothing":
                         self.watchdog_count = self.watchdog_count +1
                         print("watchdog_count :",self.watchdog_count)
-                    self.run()
 
                 elif self.state == "main":
                     #increse count if last states are "main"
