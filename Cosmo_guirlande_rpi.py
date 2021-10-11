@@ -298,6 +298,7 @@ class Cosmo_guirlande_rpi():
         try:
             while True:
                 print("Cosmoguirlande class run")
+                print("state :", self.state)
                 # wait for animation type and threshold
                 #if (self.newSocket.data_rcv.startswith("cosmoguirlande,strombo") and :
                 if self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
@@ -470,7 +471,7 @@ class Cosmo_guirlande_rpi():
 
                 elif self.state == "nothing":
                     #increse count if last states are "main"
-                    if self.previous_state == "main":
+                    if self.previous_state == "nothing":
                         #self.watchdog_count = self.watchdog_count +1
                         print("watchdog_count :",self.watchdog_count)
                         time.sleep(0.5)
@@ -478,6 +479,8 @@ class Cosmo_guirlande_rpi():
                     elif self.watchdog_count == 10:
                         self.watchdog_count = 0
                         self.run()
+                    self.previous_state = self.state
+
 
                 else:
                     print("nothing")
@@ -485,14 +488,8 @@ class Cosmo_guirlande_rpi():
                     time.sleep(1)
                     pass
 
-                self.previous_state = self.state
-                print("state :", self.state)
-
-
-
         except TypeError:
             self.run()
-
 
         except KeyboardInterrupt:
             print("keyboard interrupt, blackout LED")
