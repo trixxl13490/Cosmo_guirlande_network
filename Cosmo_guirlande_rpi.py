@@ -491,7 +491,7 @@ class AmIalive(threading.Thread, classTocheck):
         print('Am I alive ?')
         while True:
             if classTocheck.mnewSocket.data_rcv.startswith("cosmoguirlande,restart"):
-                del(cosmo_guirlande)
+                del(classTocheck)
                 print("restart cosmo guirlande class, kill it before")
                 cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port,
                                                       args.buffer_size)
