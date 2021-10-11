@@ -26,8 +26,6 @@ from adafruit_led_animation.color import RGBW_WHITE_RGBW,RGBW_WHITE_W,TEAL,WHITE
 #Recorder for beat detection
 #from recorder import *
 
-restart = False
-
 class Cosmo_Communication(threading.Thread):
 
     def __init__(self, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
@@ -38,6 +36,7 @@ class Cosmo_Communication(threading.Thread):
         self.tcp_port = tcp_port
         self.buffer_size = buffer_size
         self.data_rcv = ""
+        self.state = ""
 
 
         print("Cosmo Guirlande Number: " + str(self.guirlande_number))
@@ -46,8 +45,6 @@ class Cosmo_Communication(threading.Thread):
         print("TCP buffer size: " + str(self.buffer_size))
 
     def run(self):
-        global restart
-
         try:
             while True:
                 ##construction socket
@@ -82,8 +79,7 @@ class Cosmo_Communication(threading.Thread):
                 elif self.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum'):
                     os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")'''
                 if self.data_rcv.startswith('cosmoguirlande,restart'):
-                    restart = True
-                    #self.is_alive()
+                    self.state = 'restart'
 
 
         except ConnectionResetError:
@@ -496,7 +492,7 @@ class Cosmo_guirlande_rpi():
                     pass
 
                 self.previous_state = self.state
-                self.state = "main"
+                print("state :", self.state)
 
 
 
