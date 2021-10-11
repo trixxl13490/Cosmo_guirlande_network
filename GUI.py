@@ -16,22 +16,22 @@ from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QDesktopWidget, QChec
 
 class MainWin(QWidget):
     # Create Server1 object
-    newServer1 = Server.Server('192.168.0.16', 50001, 1024)
+    newServer1 = Server.Server('192.168.0.17', 50001, 1024)
     newServer1.start()
     # Create Server2 object
-    newServer2 = Server.Server('192.168.0.16', 50002, 1024)
+    newServer2 = Server.Server('192.168.0.17', 50002, 1024)
     newServer2.start()
     # Create Server3 object
-    newServer3 = Server.Server('192.168.0.16', 50003, 1024)
+    newServer3 = Server.Server('192.168.0.17', 50003, 1024)
     newServer3.start()
     # Create Server4 object
-    newServer4 = Server.Server('192.168.0.16', 50004, 1024)
+    newServer4 = Server.Server('192.168.0.17', 50004, 1024)
     newServer4.start()
     # Create Server5 object
-    newServer5 = Server.Server('192.168.0.16', 50005, 1024)
+    newServer5 = Server.Server('192.168.0.17', 50005, 1024)
     newServer5.start()
     # Create Server5 object
-    newServer6 = Server.Server('192.168.0.16', 50006, 1024)
+    newServer6 = Server.Server('192.168.0.17', 50006, 1024)
     newServer6.start()
 
     #Create message to communicate with sensors
@@ -1182,20 +1182,14 @@ class MainWin(QWidget):
 
     def on_click_ip(self):
         IPValue = self.textbox_IP.text()
-        QMessageBox.question(self, 'Message - pythonspot.com', "You typed: " + IPValue, QMessageBox.Ok, QMessageBox.Ok)
-        self.textbox.setText("")
 
     def on_click_port(self):
         PortValue = self.textbox_port.text()
-        QMessageBox.question(self, 'Message - pythonspot.com', "You typed: " + PortValue, QMessageBox.Ok,
-                             QMessageBox.Ok)
-        self.textbox.setText("")
+
 
     def on_click_strombo_frequency(self):
         Strombo_frequency = self.textbox_port.text()
-        QMessageBox.question(self, 'Message - pythonspot.com', "You typed: " + Strombo_frequency, QMessageBox.Ok,
-                             QMessageBox.Ok)
-        self.textbox.setText("")
+
     #########################################################################################################Strip 2
 
     def on_click_strombo_2_frequency(self):

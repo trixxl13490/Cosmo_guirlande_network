@@ -95,6 +95,11 @@ class Cosmo_Communication(threading.Thread):
             time.sleep(1)
             self.run()
 
+        except OSError:
+            print("Timeout Error, start again thread")
+            time.sleep(1)
+            self.run()
+
         except KeyboardInterrupt:
             print("keyboard interrupt, blackout LED")
             connexion_serveur.close()
@@ -477,7 +482,7 @@ class Cosmo_guirlande_rpi():
                 pixels.fill((0, 0, 0, 0))
 
 #Check if main class is style alive - to be run on a thread
-class AmIalive(threading.Thread):
+class AmIalive(threading.Thread, classTocheck):
     def __init__(self):
         threading.Thread.__init__(self)
 
@@ -485,7 +490,7 @@ class AmIalive(threading.Thread):
         global restart
         print('Am I alive ?')
         while True:
-            if cosmo_guirlande.mnewSocket.data_rcv.startswith("cosmoguirlande,restart"):
+            if classTocheck.mnewSocket.data_rcv.startswith("cosmoguirlande,restart"):
                 del(cosmo_guirlande)
                 print("restart cosmo guirlande class, kill it before")
                 cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port,
@@ -513,7 +518,7 @@ if __name__ == '__main__':
     # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0. 50001 1024
 
     cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
-    amIalive_thread1 = AmIalive()
+    amIalive_thread1 = AmIalive(cosmo_guirlande)
     cosmo_guirlande.run()
     amIalive_thread1.run()
 
