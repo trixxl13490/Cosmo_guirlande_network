@@ -472,14 +472,17 @@ class Cosmo_guirlande_rpi():
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiScroll'):
                     self.state = "dancingPiScroll"
+                    self.blackout()
                     self.dancingPiScroll()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiEnergy'):
                     self.state = "dancingPiEnergy"
+                    self.blackout()
                     self.dancingPiEnergy()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum'):
                     self.state = "dancingPiSpectrum"
+                    self.blackout()
                     self.dancingPiSpectrum()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll'):
