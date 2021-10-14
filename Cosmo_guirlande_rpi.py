@@ -291,7 +291,9 @@ class Cosmo_guirlande_rpi():
         os.system("sudo python3 /home/pi/dancyPi-audio-reactive-led/python/visualization.py spectrum")
 
     def stop_dancingPiSpectrum(self):
+        print("before linux cmd")
         os.system("sudo ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
+        print("after linux cmd")
         # os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
 
     def run(self):
