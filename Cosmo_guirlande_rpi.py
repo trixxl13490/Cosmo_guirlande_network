@@ -72,7 +72,7 @@ class Cosmo_Communication(threading.Thread):
                 connexion_serveur.close()
                 time.sleep(0.5)
 
-                if self.data_rcv.find('stop_dancingPi'):
+                if self.data_rcv.find('stop_dancingPi') != 1:
                     print("close dancyPi from cosmo_communication class")
                     os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
                 elif self.data_rcv.startswith('cosmoguirlande,restart'):
