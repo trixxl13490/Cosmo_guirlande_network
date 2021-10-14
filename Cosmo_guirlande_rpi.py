@@ -439,6 +439,7 @@ class Cosmo_guirlande_rpi():
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,solid'):
                     self.state = "solid"
                     self.solid()
+                    time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle'):
                     self.state = "colorcycle"
