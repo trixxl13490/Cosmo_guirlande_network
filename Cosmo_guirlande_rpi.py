@@ -299,6 +299,7 @@ class Cosmo_guirlande_rpi():
             while True:
                 print("Cosmoguirlande class run")
                 print("state :", self.state)
+                print("previous state :", self.state)
                 self.previous_state = self.state
 
                 # wait for animation type and threshold
