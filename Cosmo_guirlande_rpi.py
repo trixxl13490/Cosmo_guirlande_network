@@ -587,7 +587,7 @@ if __name__ == '__main__':
     )
     print('Press Ctrl-C to quit.')
 
-    # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0. 50001 1024
+    # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0.17 50001 1024
 
     cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
     #amIalive_thread1 = AmIalive(cosmo_guirlande)
