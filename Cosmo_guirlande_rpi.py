@@ -411,29 +411,53 @@ class Cosmo_guirlande_rpi():
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase'):
                     self.state = "chase"
                     function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
-                    self.chase_speed = float(chase_speed)
-                    self.chase_size = int(chase_size)
+                    try:
+                        self.chase_speed = float(chase_speed)
+                    except ValueError:
+                        self.chase_speed = 0
+                    try:
+                        self.chase_size = int(chase_size)
+                    except ValueError:
+                        self.chase_size = 0
                     self.chase()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet'):
                     self.state = "comet"
                     function_type, function, comet_speed, comet_tail = self.newSocket.data_rcv.split(',')
-                    self.comet_speed = float(comet_speed)
-                    self.comet_tail = int(comet_tail)
+                    try:
+                        self.comet_speed = float(comet_speed)
+                    except ValueError:
+                        self.comet_speed = 0
+                    try:
+                        self.comet_tail = int(comet_tail)
+                    except ValueError:
+                        self.comet_tail = 0
                     self.comet()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle'):
                     self.state = "sparkle"
                     function_type, function, sparkle_speed, sparkle_num = self.newSocket.data_rcv.split(',')
-                    self.sparkle_speed = float(sparkle_speed)
-                    self.sparkle_num = int(sparkle_num)
+                    try:
+                        self.sparkle_speed = float(sparkle_speed)
+                    except ValueError:
+                        self.sparkle_speed = 0
+                    try:
+                        self.sparkle_num = int(sparkle_num)
+                    except ValueError:
+                        self.sparkle_num = 0
                     self.sparkle()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
                     self.state = "pulse"
                     function_type, function, pulse_period, pulse_speed = self.newSocket.data_rcv.split(',')
-                    self.pulse_period = float(pulse_period)
-                    self.pulse_speed = float(pulse_speed)
+                    try:
+                        self.pulse_period = float(pulse_period)
+                    except ValueError:
+                        self.pulse_period = 0
+                    try:
+                        self.pulse_speed = float(pulse_speed)
+                    except ValueError:
+                        self.pulse_speed = 0
                     self.pulse()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,solid'):
