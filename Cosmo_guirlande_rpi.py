@@ -302,10 +302,12 @@ class Cosmo_guirlande_rpi():
                 # wait for animation type and threshold
                 #if (self.newSocket.data_rcv.startswith("cosmoguirlande,strombo") and :
                 if self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
+                    self.state = "strombo"
                     self.stromboscope(self.color1, 0.05)
                     time.sleep(0.3)
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,color1'):
+                    self.state = 'color1'
                     function_type, function, self.color1 = self.newSocket.data_rcv.split(',')
                     print("color1 :", self.color1)
                     self.w = 0
@@ -351,6 +353,7 @@ class Cosmo_guirlande_rpi():
                         self.changeColor1String(BLACK)
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,color2'):
+                    self.state = 'color2'
                     function_type, function, self.color2 = self.newSocket.data_rcv.split(',')
                     if self.color2 =='AMBER':
                         self.changeColor2String(AMBER)
@@ -394,77 +397,95 @@ class Cosmo_guirlande_rpi():
                         self.changeColor2String(BLACK)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbow"):
+                    self.state = "rainbow"
                     for j in range(2):
                         self.rainbow_cycle(0.01)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,blackout"):
+                    self.state = "blackout"
                     self.blackout()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase'):
+                    self.state = "chase"
                     function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
                     self.chase_speed = float(chase_speed)
                     self.chase_size = int(chase_size)
                     self.chase()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet'):
+                    self.state = "comet"
                     function_type, function, comet_speed, comet_tail = self.newSocket.data_rcv.split(',')
                     self.comet_speed = float(comet_speed)
                     self.comet_tail = int(comet_tail)
                     self.comet()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle'):
+                    self.state = "sparkle"
                     function_type, function, sparkle_speed, sparkle_num = self.newSocket.data_rcv.split(',')
                     self.sparkle_speed = float(sparkle_speed)
                     self.sparkle_num = int(sparkle_num)
                     self.sparkle()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
+                    self.state = "pulse"
                     function_type, function, pulse_period, pulse_speed = self.newSocket.data_rcv.split(',')
                     self.pulse_period = float(pulse_period)
                     self.pulse_speed = float(pulse_speed)
                     self.pulse()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,solid'):
+                    self.state = "solid"
                     self.solid()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle'):
+                    self.state = "colorcycle"
                     function_type, function, self.color2 = self.newSocket.data_rcv.split(',')
                     self.colorcycle()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiScroll'):
+                    self.state = "dancingPiScroll"
                     self.dancingPiScroll()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiEnergy'):
+                    self.state = "dancingPiEnergy"
                     self.dancingPiEnergy()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum'):
+                    self.state = "dancingPiSpectrum"
                     self.dancingPiSpectrum()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll'):
+                    self.state = "stop_dancingPiScroll"
                     self.stop_dancingPiScroll()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiEnergy'):
+                    self.state = "stop_dancingPiEnergy"
                     self.stop_dancingPiEnergy()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum'):
+                    self.state = "stop_dancingPiSpectrum"
                     self.stop_dancingPiSpectrum()
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,R"):
+                    self.state = "R"
                     function_type, function, self.r = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,G"):
+                    self.state = "G"
                     function_type, function, self.g = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,B"):
+                    self.state = "B"
                     function_type, function, self.b = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,W"):
+                    self.state = "W"
                     function_type, function, self.w = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
@@ -482,6 +503,7 @@ class Cosmo_guirlande_rpi():
                     self.previous_state = self.state
 
                 elif self.state == "restart":
+                    self.state = "restart"
                     # Del former, create a new one and start it
                     self.newSocket.connexion_serveur.close()
                     self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
