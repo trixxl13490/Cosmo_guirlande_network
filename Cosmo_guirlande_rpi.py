@@ -469,6 +469,11 @@ class Cosmo_guirlande_rpi():
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
+                else:
+                    print("nothing")
+                    self.state = "nothing"
+                    time.sleep(0.5)
+
                 '''elif self.state == "nothing":
                     #increse count if last states are "main"
                     if self.previous_state == "nothing":
@@ -480,10 +485,7 @@ class Cosmo_guirlande_rpi():
                         self.watchdog_count = 0
                         self.run()
                     self.previous_state = self.state'''
-                else:
-                    print("nothing")
-                    self.state = "nothing"
-                    time.sleep(0.5)
+
 
         except TypeError:
             self.run()
