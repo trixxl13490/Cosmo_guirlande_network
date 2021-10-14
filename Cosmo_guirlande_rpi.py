@@ -72,13 +72,10 @@ class Cosmo_Communication(threading.Thread):
                 connexion_serveur.close()
                 time.sleep(0.5)
 
-                '''if self.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll'):
+                if self.data_rcv.startswith('cosmoguirlande,stop_dancingPil'):
+                    print("close dancyPi from cosmo_communication class")
                     os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
-                elif self.data_rcv.startswith('cosmoguirlande,stop_dancingPiEnergy'):
-                    os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
-                elif self.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum'):
-                    os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")'''
-                if self.data_rcv.startswith('cosmoguirlande,restart'):
+                elif self.data_rcv.startswith('cosmoguirlande,restart'):
                     self.state = 'restart'
 
 
@@ -291,9 +288,7 @@ class Cosmo_guirlande_rpi():
         os.system("sudo python3 /home/pi/dancyPi-audio-reactive-led/python/visualization.py spectrum")
 
     def stop_dancingPiSpectrum(self):
-        print("before linux cmd")
         os.system("sudo ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
-        print("after linux cmd")
         # os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
 
     def run(self):
