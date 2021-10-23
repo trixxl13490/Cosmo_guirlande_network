@@ -387,6 +387,44 @@ class MainWin(QWidget):
         self.cb_strombo_2.stateChanged.connect(self.strombo_demand_2)
         self.cb_strombo_2.setGeometry(310, 450, 300, 25)
 
+        # Entree adresse IP
+        # Create textbox
+        self.textbox_IP_2 = QLineEdit(self)
+        self.textbox_IP_2.setGeometry(320, 10, 50, 20)
+        # Create a button in the window
+        self.button_IP_2 = QPushButton('IP', self)
+        self.button_IP_2.setGeometry(360, 10, 50, 20)
+        # connect button to function on_click
+        self.button_IP_2.clicked.connect(self.on_click_ip_2)
+
+        # Entree Port
+        # Create textbox
+        self.textbox_port_2 = QLineEdit(self)
+        self.textbox_port_2.setGeometry(320, 60, 50, 20)
+        # Create a button in the window
+        self.button_port_2 = QPushButton('Port', self)
+        self.button_port_2.setGeometry(360, 60, 50, 20)
+        # connect button to function on_click
+        self.button_port_2.clicked.connect(self.on_click_port_2)
+
+        # Couleur 2
+        self.type_color22 = QComboBox(self)
+        self.type_color22.setGeometry(320, 110, 100, 20)
+        self.type_color22.addItems(
+            ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
+                , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
+             "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
+        self.type_color22.currentIndexChanged.connect(self.color2_change_demand2)
+
+        # Couleur 2
+        self.type_color22 = QComboBox(self)
+        self.type_color22.setGeometry(360, 110, 100, 20)
+        self.type_color22.addItems(
+            ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
+                , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
+             "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
+        self.type_color22.currentIndexChanged.connect(self.color2_change_demand2)
+
 
         #Bouton effet rainbow 2 Loop
         self.button_rainbow_2 = QPushButton('Rainbow effect', self)
@@ -1920,6 +1958,18 @@ class MainWin(QWidget):
         Strombo_frequency = self.textbox_port.text()
 
     #########################################################################################################Strip 2
+    def color2_change_demand2(self):
+        print("selection changed ", self.type_color22.currentText())
+        self.msg2 = 'cosmoguirlande,color1,' + str(( self.type_color21.currentText()))
+
+    def color2_change_demand2(self):
+        print("selection changed ", self.type_color22.currentText())
+        self.msg2 = 'cosmoguirlande,color2,' + str(( self.type_color22.currentText()))
+    def on_click_ip_2(self):
+        IPValue_2 = self.textbox_IP_2.text()
+
+    def on_click_port_2(self):
+        PortValue_2 = self.textbox_port_2.text()
 
     def on_click_strombo_2_frequency(self):
         Strombo_frequency = self.textbox_port.text()
