@@ -390,7 +390,7 @@ class MainWin(QWidget):
         # Entree adresse IP
         # Create textbox
         self.textbox_IP_2 = QLineEdit(self)
-        self.textbox_IP_2.setGeometry(320, 10, 50, 20)
+        self.textbox_IP_2.setGeometry(310, 10, 50, 20)
         # Create a button in the window
         self.button_IP_2 = QPushButton('IP', self)
         self.button_IP_2.setGeometry(360, 10, 50, 20)
@@ -400,7 +400,7 @@ class MainWin(QWidget):
         # Entree Port
         # Create textbox
         self.textbox_port_2 = QLineEdit(self)
-        self.textbox_port_2.setGeometry(320, 60, 50, 20)
+        self.textbox_port_2.setGeometry(310, 60, 50, 20)
         # Create a button in the window
         self.button_port_2 = QPushButton('Port', self)
         self.button_port_2.setGeometry(360, 60, 50, 20)
@@ -670,6 +670,45 @@ class MainWin(QWidget):
 
 
         #########################################################################################################Strip 3
+
+        # Entree adresse IP
+        # Create textbox
+        self.textbox_IP_3 = QLineEdit(self)
+        self.textbox_IP_3.setGeometry(610, 10, 50, 20)
+        # Create a button in the window
+        self.button_IP_3 = QPushButton('IP', self)
+        self.button_IP_3.setGeometry(660, 10, 50, 20)
+        # connect button to function on_click
+        self.button_IP_3.clicked.connect(self.on_click_ip)
+
+        # Entree Port
+        # Create textbox
+        self.textbox_port_3 = QLineEdit(self)
+        self.textbox_port_3.setGeometry(610, 60, 50, 20)
+        # Create a button in the window
+        self.button_port_3 = QPushButton('Port', self)
+        self.button_port_3.setGeometry(660, 60, 50, 20)
+        # connect button to function on_click
+        self.button_port_3.clicked.connect(self.on_click_port)
+
+        # Couleur 3
+        self.type_color33 = QComboBox(self)
+        self.type_color33.setGeometry(610, 110, 100, 20)
+        self.type_color33.addItems(
+            ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
+                , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
+             "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
+        self.type_color33.currentIndexChanged.connect(self.color3_change_demand3)
+
+        # Couleur 3
+        self.type_color33 = QComboBox(self)
+        self.type_color33.setGeometry(660, 110, 100, 20)
+        self.type_color33.addItems(
+            ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
+                , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
+             "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
+        self.type_color33.currentIndexChanged.connect(self.color3_change_demand3)
+
         #Entree Frequence Strombo 3
         # Create textbox
         self.textbox_strombo_3 = QLineEdit(self)
@@ -928,6 +967,44 @@ class MainWin(QWidget):
         self.sl_W3.valueChanged[int].connect(self.slider_W3)
         #########################################################################################################Strip 4
         #########################################################################################################Strip 4
+        # Entree adresse IP
+        # Create textbox
+        self.textbox_IP_4 = QLineEdit(self)
+        self.textbox_IP_4.setGeometry(910, 10, 50, 20)
+        # Create a button in the window
+        self.button_IP_4 = QPushButton('IP', self)
+        self.button_IP_4.setGeometry(960, 10, 50, 20)
+        # connect button to function on_click
+        self.button_IP_4.clicked.connect(self.on_click_ip)
+
+        # Entree Port
+        # Create textbox
+        self.textbox_port_4 = QLineEdit(self)
+        self.textbox_port_4.setGeometry(910, 60, 50, 20)
+        # Create a button in the window
+        self.button_port_4 = QPushButton('Port', self)
+        self.button_port_4.setGeometry(960, 60, 50, 20)
+        # connect button to function on_click
+        self.button_port_4.clicked.connect(self.on_click_port)
+
+        # Couleur 4
+        self.type_color44 = QComboBox(self)
+        self.type_color44.setGeometry(910, 110, 100, 20)
+        self.type_color44.addItems(
+            ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
+                , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
+             "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
+        self.type_color44.currentIndexChanged.connect(self.color4_change_demand4)
+
+        # Couleur 4
+        self.type_color44 = QComboBox(self)
+        self.type_color44.setGeometry(960, 110, 100, 20)
+        self.type_color44.addItems(
+            ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
+                , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
+             "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
+        self.type_color44.currentIndexChanged.connect(self.color4_change_demand4)
+
         #Entree Frequence Strombo 4
         # Create textbox
         self.textbox_strombo_4 = QLineEdit(self)
@@ -1185,6 +1262,44 @@ class MainWin(QWidget):
         self.sl_W4.setMaximum(255)
         self.sl_W4.valueChanged[int].connect(self.slider_W4)
         #########################################################################################################Strip 5
+        # Entree adresse IP
+        # Create textbox
+        self.textbox_IP_5 = QLineEdit(self)
+        self.textbox_IP_5.setGeometry(1210, 10, 50, 20)
+        # Create a button in the window
+        self.button_IP_5 = QPushButton('IP', self)
+        self.button_IP_5.setGeometry(1260, 10, 50, 20)
+        # connect button to function on_click
+        self.button_IP_5.clicked.connect(self.on_click_ip)
+
+        # Entree Port
+        # Create textbox
+        self.textbox_port_5 = QLineEdit(self)
+        self.textbox_port_5.setGeometry(1210, 60, 50, 20)
+        # Create a button in the window
+        self.button_port_5 = QPushButton('Port', self)
+        self.button_port_5.setGeometry(1260, 60, 50, 20)
+        # connect button to function on_click
+        self.button_port_5.clicked.connect(self.on_click_port)
+
+        # Couleur 5
+        self.type_color55 = QComboBox(self)
+        self.type_color55.setGeometry(1210, 110, 100, 20)
+        self.type_color55.addItems(
+            ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
+                , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
+             "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
+        self.type_color55.currentIndexChanged.connect(self.color5_change_demand5)
+
+        # Couleur 5
+        self.type_color55 = QComboBox(self)
+        self.type_color55.setGeometry(1260, 110, 100, 20)
+        self.type_color55.addItems(
+            ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
+                , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
+             "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
+        self.type_color55.currentIndexChanged.connect(self.color5_change_demand5)
+
         #Entree Frequence Strombo 5
         # Create textbox
         self.textbox_strombo_5 = QLineEdit(self)
@@ -1443,6 +1558,44 @@ class MainWin(QWidget):
         self.sl_W5.valueChanged[int].connect(self.slider_W5)
 
         #########################################################################################################Strip 6
+        # Entree adresse IP
+        # Create textbox
+        self.textbox_IP_6 = QLineEdit(self)
+        self.textbox_IP_6.setGeometry(1510, 10, 50, 20)
+        # Create a button in the window
+        self.button_IP_6 = QPushButton('IP', self)
+        self.button_IP_6.setGeometry(1560, 10, 50, 20)
+        # connect button to function on_click
+        self.button_IP_6.clicked.connect(self.on_click_ip)
+
+        # Entree Port
+        # Create textbox
+        self.textbox_port_6 = QLineEdit(self)
+        self.textbox_port_6.setGeometry(1510, 60, 50, 20)
+        # Create a button in the window
+        self.button_port_6 = QPushButton('Port', self)
+        self.button_port_6.setGeometry(1560, 60, 50, 20)
+        # connect button to function on_click
+        self.button_port_6.clicked.connect(self.on_click_port)
+
+        # Couleur 6
+        self.type_color16 = QComboBox(self)
+        self.type_color16.setGeometry(1510, 110, 100, 20)
+        self.type_color16.addItems(
+            ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
+                , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
+             "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
+        self.type_color16.currentIndexChanged.connect(self.color6_change_demand6)
+
+        # Couleur 2
+        self.type_color26 = QComboBox(self)
+        self.type_color26.setGeometry(1560, 110, 100, 20)
+        self.type_color26.addItems(
+            ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
+                , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
+             "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
+        self.type_color26.currentIndexChanged.connect(self.color6_change_demand6)
+
         #Entree Frequence Strombo 6
         # Create textbox
         self.textbox_strombo_6 = QLineEdit(self)
@@ -2066,6 +2219,20 @@ class MainWin(QWidget):
                              QMessageBox.Ok)
         self.textbox.setText("")
 
+    def color3_change_demand3(self):
+        print("selection changed ", self.type_color33.currentText())
+        self.msg3 = 'cosmoguirlande,color1,' + str(( self.type_color31.currentText()))
+
+    def color3_change_demand3(self):
+        print("selection changed ", self.type_color33.currentText())
+        self.msg3 = 'cosmoguirlande,color2,' + str(( self.type_color32.currentText()))
+
+    def on_click_ip_3(self):
+        IPValue_3 = self.textbox_IP_3.text()
+
+    def on_click_port_3(self):
+        PortValue_3 = self.textbox_port_3.text()
+
 
     def blackout_demand_3(self):
         self.msg3 ='cosmoguirlande,blackout'
@@ -2150,6 +2317,19 @@ class MainWin(QWidget):
         self.newServer3.to_send = self.msg3              
 
     #########################################################################################################Strip 4
+    def color4_change_demand4(self):
+        print("selection changed ", self.type_color44.currentText())
+        self.msg4 = 'cosmoguirlande,color1,' + str((self.type_color41.currentText()))
+
+    def color4_change_demand4(self):
+        print("selection changed ", self.type_color44.currentText())
+        self.msg4 = 'cosmoguirlande,color2,' + str((self.type_color42.currentText()))
+
+    def on_click_ip_4(self):
+        IPValue_4 = self.textbox_IP_4.text()
+
+    def on_click_port_4(self):
+        PortValue_4 = self.textbox_port_4.text()
 
     def on_click_strombo_4_frequency(self):
         Strombo_frequency = self.textbox_port.text()
@@ -2255,6 +2435,18 @@ class MainWin(QWidget):
         self.newServer4.to_send = self.msg4
 
     #########################################################################################################Strip 5
+    def color5_change_demand5(self):
+        print("selection changed ", self.type_color55.currentText())
+        self.msg5 = 'cosmoguirlande,color1,' + str(( self.type_color51.currentText()))
+
+    def color5_change_demand5(self):
+        print("selection changed ", self.type_color55.currentText())
+        self.msg5 = 'cosmoguirlande,color2,' + str(( self.type_color52.currentText()))
+    def on_click_ip_5(self):
+        IPValue_5 = self.textbox_IP_5.text()
+
+    def on_click_port_5(self):
+        PortValue_5 = self.textbox_port_5.text()
 
     def on_click_strombo_5_frequency(self):
         Strombo_frequency = self.textbox_port.text()
@@ -2360,6 +2552,18 @@ class MainWin(QWidget):
         self.newServer5.to_send = self.msg5
 
     #########################################################################################################Strip 6
+    def color6_change_demand6(self):
+        print("selection changed ", self.type_color66.currentText())
+        self.msg6 = 'cosmoguirlande,color1,' + str(( self.type_color61.currentText()))
+
+    def color6_change_demand6(self):
+        print("selection changed ", self.type_color66.currentText())
+        self.msg6 = 'cosmoguirlande,color2,' + str(( self.type_color62.currentText()))
+    def on_click_ip_6(self):
+        IPValue_6 = self.textbox_IP_6.text()
+
+    def on_click_port_6(self):
+        PortValue_6 = self.textbox_port_6.text()
 
     def on_click_strombo_6_frequency(self):
         Strombo_frequency = self.textbox_port.text()
