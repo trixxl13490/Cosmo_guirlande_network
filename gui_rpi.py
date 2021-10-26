@@ -13,7 +13,6 @@ from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QDesktopWidget, QChec
 ############################################
 # GUI
 ############################################
-
 class MainWin(QWidget):
 
     def __init__(self):
