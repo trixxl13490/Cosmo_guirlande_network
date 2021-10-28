@@ -35,6 +35,15 @@ class MainWin(QWidget):
     newServer6 = Server.Server('192.168.43.144', 50006, 1024)
     newServer6.start()
 
+    IPValue = ""
+    IPValue_2 = ""
+    IPValue_3 = ""
+    IPValue_4 = ""
+    IPValue_5 = ""
+    IPValue_6 = ""
+    IPValue_7 = ""
+
+
     #Create message to communicate with sensors
     msg1 = ''
     msg2 = ''
@@ -2106,12 +2115,10 @@ class MainWin(QWidget):
 
     def on_click_ip(self):
         self.IPValue = self.textbox_IP.text()
-        #os.system('cmd /k "C:\Program Files\RealVNC\VNC Viewer\vncviewer.exe" 192.168.43.115' )  #+  self.IPValue)
         os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue))
 
     def on_click_port(self):
         PortValue = self.textbox_port.text()
-
 
     def on_click_strombo_frequency(self):
         Strombo_frequency = self.textbox_port.text()
