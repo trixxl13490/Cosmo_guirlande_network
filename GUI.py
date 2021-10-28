@@ -1,6 +1,7 @@
 import socket
 import select
 import threading
+import os
 import Server
 import time
 from datetime import datetime
@@ -1875,6 +1876,9 @@ class MainWin(QWidget):
             self.newServer4.to_send = self.msg1
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
+        '''os.execv(sys.argv[0], sys.argv)
+        os.execv(__file__, sys.argv)
+        os.execv(sys.executable, ['python'] + sys.argv)'''
 
     def color1_change_demand1(self):
         print("selection changed ", self.type_color11.currentText())
@@ -2101,7 +2105,9 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
 
     def on_click_ip(self):
-        IPValue = self.textbox_IP.text()
+        self.IPValue = self.textbox_IP.text()
+        #os.system('cmd /k "C:\Program Files\RealVNC\VNC Viewer\vncviewer.exe" 192.168.43.115' )  #+  self.IPValue)
+        os.system('cmd /k "vncviewer.exe" 192.168.43.155' )  #+  self.IPValue)
 
     def on_click_port(self):
         PortValue = self.textbox_port.text()
