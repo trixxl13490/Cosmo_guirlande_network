@@ -69,7 +69,7 @@ class MainWin(QWidget):
         self.textbox_IP = QLineEdit(self)
         self.textbox_IP.setGeometry(10, 10, 50, 20)
         # Create a button in the window
-        self.button_IP= QPushButton('IP', self)
+        self.button_IP= QPushButton('VNC', self)
         self.button_IP.setGeometry(60, 10, 50, 20)
         # connect button to function on_click
         self.button_IP.clicked.connect(self.on_click_ip)
@@ -393,7 +393,7 @@ class MainWin(QWidget):
         self.textbox_IP_2 = QLineEdit(self)
         self.textbox_IP_2.setGeometry(310, 10, 50, 20)
         # Create a button in the window
-        self.button_IP_2 = QPushButton('IP', self)
+        self.button_IP_2 = QPushButton('VNC', self)
         self.button_IP_2.setGeometry(360, 10, 50, 20)
         # connect button to function on_click
         self.button_IP_2.clicked.connect(self.on_click_ip_2)
@@ -677,7 +677,7 @@ class MainWin(QWidget):
         self.textbox_IP_3 = QLineEdit(self)
         self.textbox_IP_3.setGeometry(610, 10, 50, 20)
         # Create a button in the window
-        self.button_IP_3 = QPushButton('IP', self)
+        self.button_IP_3 = QPushButton('VNC', self)
         self.button_IP_3.setGeometry(660, 10, 50, 20)
         # connect button to function on_click
         self.button_IP_3.clicked.connect(self.on_click_ip)
@@ -973,7 +973,7 @@ class MainWin(QWidget):
         self.textbox_IP_4 = QLineEdit(self)
         self.textbox_IP_4.setGeometry(910, 10, 50, 20)
         # Create a button in the window
-        self.button_IP_4 = QPushButton('IP', self)
+        self.button_IP_4 = QPushButton('VNC', self)
         self.button_IP_4.setGeometry(960, 10, 50, 20)
         # connect button to function on_click
         self.button_IP_4.clicked.connect(self.on_click_ip)
@@ -1268,7 +1268,7 @@ class MainWin(QWidget):
         self.textbox_IP_5 = QLineEdit(self)
         self.textbox_IP_5.setGeometry(1210, 10, 50, 20)
         # Create a button in the window
-        self.button_IP_5 = QPushButton('IP', self)
+        self.button_IP_5 = QPushButton('VNC', self)
         self.button_IP_5.setGeometry(1260, 10, 50, 20)
         # connect button to function on_click
         self.button_IP_5.clicked.connect(self.on_click_ip)
@@ -1564,7 +1564,7 @@ class MainWin(QWidget):
         self.textbox_IP_6 = QLineEdit(self)
         self.textbox_IP_6.setGeometry(1510, 10, 50, 20)
         # Create a button in the window
-        self.button_IP_6 = QPushButton('IP', self)
+        self.button_IP_6 = QPushButton('VNC', self)
         self.button_IP_6.setGeometry(1560, 10, 50, 20)
         # connect button to function on_click
         self.button_IP_6.clicked.connect(self.on_click_ip)
@@ -2107,7 +2107,7 @@ class MainWin(QWidget):
     def on_click_ip(self):
         self.IPValue = self.textbox_IP.text()
         #os.system('cmd /k "C:\Program Files\RealVNC\VNC Viewer\vncviewer.exe" 192.168.43.115' )  #+  self.IPValue)
-        os.system('cmd /k "vncviewer.exe" 192.168.43.155' )  #+  self.IPValue)
+        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue))
 
     def on_click_port(self):
         PortValue = self.textbox_port.text()
@@ -2125,7 +2125,8 @@ class MainWin(QWidget):
         print("selection changed ", self.type_color22.currentText())
         self.msg2 = 'cosmoguirlande,color2,' + str(( self.type_color22.currentText()))
     def on_click_ip_2(self):
-        IPValue_2 = self.textbox_IP_2.text()
+        self.IPValue_2 = self.textbox_IP_2.text()
+        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue_2))
 
     def on_click_port_2(self):
         PortValue_2 = self.textbox_port_2.text()
@@ -2234,7 +2235,8 @@ class MainWin(QWidget):
         self.msg3 = 'cosmoguirlande,color2,' + str(( self.type_color32.currentText()))
 
     def on_click_ip_3(self):
-        IPValue_3 = self.textbox_IP_3.text()
+        self.IPValue_3 = self.textbox_IP_3.text()
+        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue_3))
 
     def on_click_port_3(self):
         PortValue_3 = self.textbox_port_3.text()
@@ -2332,7 +2334,8 @@ class MainWin(QWidget):
         self.msg4 = 'cosmoguirlande,color2,' + str((self.type_color42.currentText()))
 
     def on_click_ip_4(self):
-        IPValue_4 = self.textbox_IP_4.text()
+        self.IPValue_4 = self.textbox_IP_4.text()
+        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue_4))
 
     def on_click_port_4(self):
         PortValue_4 = self.textbox_port_4.text()
@@ -2448,8 +2451,10 @@ class MainWin(QWidget):
     def color5_change_demand5(self):
         print("selection changed ", self.type_color55.currentText())
         self.msg5 = 'cosmoguirlande,color2,' + str(( self.type_color52.currentText()))
+
     def on_click_ip_5(self):
-        IPValue_5 = self.textbox_IP_5.text()
+        self.IPValue_5 = self.textbox_IP_5.text()
+        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue_5))
 
     def on_click_port_5(self):
         PortValue_5 = self.textbox_port_5.text()
@@ -2565,8 +2570,10 @@ class MainWin(QWidget):
     def color6_change_demand6(self):
         print("selection changed ", self.type_color66.currentText())
         self.msg6 = 'cosmoguirlande,color2,' + str(( self.type_color62.currentText()))
+
     def on_click_ip_6(self):
-        IPValue_6 = self.textbox_IP_6.text()
+        self.IPValue_6 = self.textbox_IP_6.text()
+        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue_6))
 
     def on_click_port_6(self):
         PortValue_6 = self.textbox_port_6.text()
