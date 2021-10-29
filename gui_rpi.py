@@ -43,7 +43,7 @@ from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QDesktopWidget, QChec
 ############################################
 class MainWin(QWidget):
 
-    def __init__(self):
+    def __init__(self, cosmo_guirlande):
         #Init parent
         super().__init__()
 
@@ -54,6 +54,8 @@ class MainWin(QWidget):
         centerPoint = QDesktopWidget().availableGeometry().center()
         qtRectangle.moveCenter(centerPoint)
         self.move(qtRectangle.topLeft())
+        self.cosmo_guirlande = cosmo_guirlande
+        self.cosmo_guirlande.run()
 
         #Start GUI configuration
         self.initUI()
@@ -501,7 +503,6 @@ if __name__ == '__main__':
 
     cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
     # amIalive_thread1 = AmIalive(cosmo_guirlande)
-    cosmo_guirlande.run()
     # amIalive_thread1.run()
 
     app = QApplication(sys.argv)
