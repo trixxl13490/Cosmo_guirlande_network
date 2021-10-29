@@ -31,7 +31,7 @@ from adafruit_led_animation.color import JADE,MAGENTA,OLD_LACE,ORANGE,PINK,PURPL
 from adafruit_led_animation.color import RGBW_WHITE_RGBW,RGBW_WHITE_W,TEAL,WHITE,YELLOW
 #Recorder for beat detection
 #from recorder import *
-import Cosmo_guirlande_rpi
+from Cosmo_guirlande_rpi import Cosmo_guirlande_rpi
 import sys
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt
