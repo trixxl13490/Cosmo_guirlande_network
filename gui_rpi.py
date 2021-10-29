@@ -4,6 +4,34 @@ import threading
 import Server
 import time
 from datetime import datetime
+# Simple test for NeoPixels on Raspberry Pi
+import argparse
+import time
+import board
+import neopixel
+import os
+import threading
+import socket
+from adafruit_led_animation.animation.comet import Comet # sudo pip3 install adafruit-circuitpython-led-animation
+from adafruit_led_animation.animation.chase import Chase
+from adafruit_led_animation.animation.pulse import Pulse
+from adafruit_led_animation.animation.sparkle import Sparkle
+from adafruit_led_animation.animation.solid import Solid
+from adafruit_led_animation.animation.colorcycle import ColorCycle
+from adafruit_led_animation.animation.blink import Blink
+from adafruit_led_animation.animation.sparklepulse import SparklePulse
+from adafruit_led_animation.animation.rainbow import Rainbow
+from adafruit_led_animation.animation.customcolorchase import CustomColorChase
+from adafruit_led_animation.animation.rainbowchase import RainbowChase
+from adafruit_led_animation.animation.rainbowsparkle import RainbowSparkle
+from adafruit_led_animation.animation.rainbowcomet import RainbowComet
+from adafruit_led_animation.sequence import AnimationSequence
+from adafruit_led_animation.color import AMBER, AQUA, BLACK,BLUE,CYAN,GOLD,GREEN
+from adafruit_led_animation.color import JADE,MAGENTA,OLD_LACE,ORANGE,PINK,PURPLE,RAINBOW,RED,RGBW_WHITE_RGB
+from adafruit_led_animation.color import RGBW_WHITE_RGBW,RGBW_WHITE_W,TEAL,WHITE,YELLOW
+#Recorder for beat detection
+#from recorder import *
+import Cosmo_guirlande_rpi
 import sys
 from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt
@@ -453,6 +481,29 @@ class MainWin(QWidget):
 
 
 if __name__ == '__main__':
+    # Process arguments
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+    parser.add_argument('guirlande_number', metavar='guirlande_number', type=int, help='Cosmo Guirlande NUmber')
+    parser.add_argument('num_pixel', metavar='num_pixel', type=int, help='Number of pixel')
+    parser.add_argument('server_tcp_ip', metavar='server_tcp_ip', type=str, help='Server IP')
+    parser.add_argument('tcp_port', metavar='tcp_port', type=int, help='Tcp Port')
+    parser.add_argument('buffer_size', metavar='buffer_size', type=int, help='Buffer Size')
+    args = parser.parse_args()
+
+    # Configuration des LED
+    pixels = neopixel.NeoPixel(
+        board.D18, args.num_pixel, brightness=0.2, auto_write=False, pixel_order=neopixel.GRBW
+    )
+    print('Press Ctrl-C to quit.')
+
+    # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0.17 50001 1024
+
+    cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port,
+                                          args.buffer_size)
+    # amIalive_thread1 = AmIalive(cosmo_guirlande)
+    cosmo_guirlande.run()
+    # amIalive_thread1.run()
     app = QApplication(sys.argv)
     win = MainWin()
     win.show()

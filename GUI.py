@@ -14,6 +14,15 @@ from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QDesktopWidget, QChec
 ############################################
 # GUI
 ############################################
+class VNC_Window(threading.Thread):
+    def __init__(self, IP):
+        threading.Thread.__init__(self)
+        self.IP = IP
+
+    def run(self):
+        os.system('cmd /k "vncviewer.exe" ' + str(self.IP))
+        '''except :
+            pass'''
 
 class MainWin(QWidget):
     # Create Server1 object
@@ -2115,7 +2124,9 @@ class MainWin(QWidget):
 
     def on_click_ip(self):
         self.IPValue = self.textbox_IP.text()
-        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue))
+        self.vnc_window_1 = VNC_Window(self.IPValue)
+        self.vnc_window_1.start()
+
 
     def on_click_port(self):
         PortValue = self.textbox_port.text()
