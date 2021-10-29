@@ -506,7 +506,7 @@ if __name__ == '__main__':
     # amIalive_thread1.run()
 
     app = QApplication(sys.argv)
-    win = MainWin()
+    win = MainWin(cosmo_guirlande)
     win.show()
     sys.exit(app.exec_())
 
