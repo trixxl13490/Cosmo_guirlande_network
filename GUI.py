@@ -698,7 +698,7 @@ class MainWin(QWidget):
         self.button_IP_3 = QPushButton('VNC', self)
         self.button_IP_3.setGeometry(660, 10, 50, 20)
         # connect button to function on_click
-        self.button_IP_3.clicked.connect(self.on_click_ip)
+        self.button_IP_3.clicked.connect(self.on_click_ip_3)
 
         # Entree Port
         # Create textbox
@@ -708,7 +708,7 @@ class MainWin(QWidget):
         self.button_port_3 = QPushButton('Port', self)
         self.button_port_3.setGeometry(660, 60, 50, 20)
         # connect button to function on_click
-        self.button_port_3.clicked.connect(self.on_click_port)
+        self.button_port_3.clicked.connect(self.on_click_port_3)
 
         # Couleur 3
         self.type_color33 = QComboBox(self)
@@ -994,7 +994,7 @@ class MainWin(QWidget):
         self.button_IP_4 = QPushButton('VNC', self)
         self.button_IP_4.setGeometry(960, 10, 50, 20)
         # connect button to function on_click
-        self.button_IP_4.clicked.connect(self.on_click_ip)
+        self.button_IP_4.clicked.connect(self.on_click_ip_4)
 
         # Entree Port
         # Create textbox
@@ -1004,7 +1004,7 @@ class MainWin(QWidget):
         self.button_port_4 = QPushButton('Port', self)
         self.button_port_4.setGeometry(960, 60, 50, 20)
         # connect button to function on_click
-        self.button_port_4.clicked.connect(self.on_click_port)
+        self.button_port_4.clicked.connect(self.on_click_port_4)
 
         # Couleur 4
         self.type_color44 = QComboBox(self)
@@ -1289,7 +1289,7 @@ class MainWin(QWidget):
         self.button_IP_5 = QPushButton('VNC', self)
         self.button_IP_5.setGeometry(1260, 10, 50, 20)
         # connect button to function on_click
-        self.button_IP_5.clicked.connect(self.on_click_ip)
+        self.button_IP_5.clicked.connect(self.on_click_ip_5)
 
         # Entree Port
         # Create textbox
@@ -1299,7 +1299,7 @@ class MainWin(QWidget):
         self.button_port_5 = QPushButton('Port', self)
         self.button_port_5.setGeometry(1260, 60, 50, 20)
         # connect button to function on_click
-        self.button_port_5.clicked.connect(self.on_click_port)
+        self.button_port_5.clicked.connect(self.on_click_port_5)
 
         # Couleur 5
         self.type_color55 = QComboBox(self)
@@ -1585,7 +1585,7 @@ class MainWin(QWidget):
         self.button_IP_6 = QPushButton('VNC', self)
         self.button_IP_6.setGeometry(1560, 10, 50, 20)
         # connect button to function on_click
-        self.button_IP_6.clicked.connect(self.on_click_ip)
+        self.button_IP_6.clicked.connect(self.on_click_ip_6)
 
         # Entree Port
         # Create textbox
@@ -1595,7 +1595,7 @@ class MainWin(QWidget):
         self.button_port_6 = QPushButton('Port', self)
         self.button_port_6.setGeometry(1560, 60, 50, 20)
         # connect button to function on_click
-        self.button_port_6.clicked.connect(self.on_click_port)
+        self.button_port_6.clicked.connect(self.on_click_port_6)
 
         # Couleur 6
         self.type_color16 = QComboBox(self)
@@ -2144,7 +2144,8 @@ class MainWin(QWidget):
         self.msg2 = 'cosmoguirlande,color2,' + str(( self.type_color22.currentText()))
     def on_click_ip_2(self):
         self.IPValue_2 = self.textbox_IP_2.text()
-        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue_2))
+        self.vnc_window_2 = VNC_Window(self.IPValue_2)
+        self.vnc_window_2.start()
 
     def on_click_port_2(self):
         PortValue_2 = self.textbox_port_2.text()
@@ -2254,7 +2255,8 @@ class MainWin(QWidget):
 
     def on_click_ip_3(self):
         self.IPValue_3 = self.textbox_IP_3.text()
-        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue_3))
+        self.vnc_window_3 = VNC_Window(self.IPValue_3)
+        self.vnc_window_3.start()
 
     def on_click_port_3(self):
         PortValue_3 = self.textbox_port_3.text()
@@ -2353,7 +2355,8 @@ class MainWin(QWidget):
 
     def on_click_ip_4(self):
         self.IPValue_4 = self.textbox_IP_4.text()
-        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue_4))
+        self.vnc_window_4 = VNC_Window(self.IPValue_4)
+        self.vnc_window_4.start()
 
     def on_click_port_4(self):
         PortValue_4 = self.textbox_port_4.text()
@@ -2472,7 +2475,8 @@ class MainWin(QWidget):
 
     def on_click_ip_5(self):
         self.IPValue_5 = self.textbox_IP_5.text()
-        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue_5))
+        self.vnc_window_5 = VNC_Window(self.IPValue_5)
+        self.vnc_window_5.start()
 
     def on_click_port_5(self):
         PortValue_5 = self.textbox_port_5.text()
@@ -2591,7 +2595,8 @@ class MainWin(QWidget):
 
     def on_click_ip_6(self):
         self.IPValue_6 = self.textbox_IP_6.text()
-        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue_6))
+        self.vnc_window_6 = VNC_Window(self.IPValue_6)
+        self.vnc_window_6.start()
 
     def on_click_port_6(self):
         PortValue_6 = self.textbox_port_6.text()
