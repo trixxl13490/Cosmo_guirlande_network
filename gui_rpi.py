@@ -48,12 +48,12 @@ class MainWin(QWidget):
         super().__init__()
 
         #Window configuration
-        self.setFixedSize(1280, 720)
+        self.setFixedSize(1280, 360)
         self.setWindowTitle("Cosmo Guirlandes RPi GUI")
         qtRectangle = self.frameGeometry()
         centerPoint = QDesktopWidget().availableGeometry().center()
         qtRectangle.moveCenter(centerPoint)
-        self.move(qtRectangle.topLeft())
+        self.move(qtRectangle.topRight())
         self.cosmo_guirlande = cosmo_guirlande
         self.pixels = pixels
 
