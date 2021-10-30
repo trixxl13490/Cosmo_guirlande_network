@@ -53,7 +53,7 @@ class MainWin(QWidget):
         qtRectangle = self.frameGeometry()
         centerPoint = QDesktopWidget().availableGeometry().center()
         qtRectangle.moveCenter(centerPoint)
-        self.move(qtRectangle.center())
+        self.move(qtRectangle.topRight())
         self.cosmo_guirlande = cosmo_guirlande
         self.pixels = pixels
 
