@@ -116,12 +116,6 @@ class MainWin(QWidget):
         self.button_strombo.clicked.connect(self.on_click_strombo_frequency)
 
 
-        #Checkbox de synchronisation
-        self.cb_sync = QCheckBox('Sync Commands', self)
-        self.cb_sync.setToolTip('Click if you wanna sync colors / effects')
-        self.cb_sync.stateChanged.connect(self.sync_demand)
-        self.cb_sync.setGeometry(10, 420, 300, 25)
-
         #--------------------------------------------------------------------
 
         #Checkbox Stromboscope
