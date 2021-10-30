@@ -99,7 +99,8 @@ class Cosmo_Communication(threading.Thread):
             connexion_serveur.close()
 
 class Cosmo_guirlande_rpi():
-    def __init__(self, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
+    def __init__(self, pixels, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
+        self.pixels = pixels
         self.pixel_number = pixel_number
         self.r = '0'
         self.g = '0'
@@ -152,7 +153,7 @@ class Cosmo_guirlande_rpi():
     def stromboscope(self, color, wait_s):
         print("self.color1",color)
         print("type self.color1", type(color))
-        blink = Blink(pixels, speed=wait_s, color=color)
+        blink = Blink(self.pixels, speed=wait_s, color=color)
         animations = AnimationSequence(
             blink,
             advance_interval=5,
@@ -162,7 +163,7 @@ class Cosmo_guirlande_rpi():
             animations.animate()
 
     def blackout(self):
-        solid = Solid(pixels, color=BLACK)
+        solid = Solid(self.pixels, color=BLACK)
         animations = AnimationSequence(
             solid,
             advance_interval=5,
@@ -173,8 +174,8 @@ class Cosmo_guirlande_rpi():
 
     def changeColor(self, r, g, b, w):
         self.color1 = (int(r), int(g), int(b), int(w))
-        pixels.fill((int(r), int(g), int(b), int(w)))
-        pixels.show()
+        self.pixels.fill((int(r), int(g), int(b), int(w)))
+        self.pixels.show()
         time.sleep(0.3)
 
     def changeColor1String(self, color):
@@ -182,9 +183,9 @@ class Cosmo_guirlande_rpi():
         self.g = '0'
         self.b = '0'
         self.w = '0'
-        pixels.fill((int(self.r), int(self.g), int(self.b), int(self.w)))
+        self.pixels.fill((int(self.r), int(self.g), int(self.b), int(self.w)))
         self.color1 = color
-        solid = Solid(pixels, color=self.color1)
+        solid = Solid(self.pixels, color=self.color1)
         animations = AnimationSequence(
             solid,
             advance_interval=5,
@@ -195,7 +196,7 @@ class Cosmo_guirlande_rpi():
 
     def changeColor2String(self, color):
         self.color2 = color
-        solid = Solid(pixels, color=self.color2)
+        solid = Solid(self.pixels, color=self.color2)
         animations = AnimationSequence(
             solid,
             advance_interval=5,
@@ -208,12 +209,12 @@ class Cosmo_guirlande_rpi():
         for j in range(255):
             for i in range(self.pixel_number):
                 pixel_index = (i * 256 // self.pixel_number) + j
-                pixels[i] = self.wheel(pixel_index & 255)
-            pixels.show()
+                self.pixels[i] = self.wheel(pixel_index & 255)
+            self.pixels.show()
             time.sleep(wait)
 
     def comet(self):
-        comet = Comet(pixels, speed=0.01, color=self.color1, tail_length=10, bounce=True)
+        comet = Comet(self.pixels, speed=0.01, color=self.color1, tail_length=10, bounce=True)
         animations = AnimationSequence(
             comet,
             advance_interval=5,
@@ -223,7 +224,7 @@ class Cosmo_guirlande_rpi():
             animations.animate()
 
     def chase(self):
-        chase = Chase(pixels, speed=self.chase_speed, size=self.chase_size, spacing=6, color=self.color1)
+        chase = Chase(self.pixels, speed=self.chase_speed, size=self.chase_size, spacing=6, color=self.color1)
         animations = AnimationSequence(
             chase,
             advance_interval=5,
@@ -233,7 +234,7 @@ class Cosmo_guirlande_rpi():
             animations.animate()
 
     def pulse(self):
-        pulse = Pulse(pixels, speed=self.pulse_speed, period=self.pulse_period, color=self.color1)
+        pulse = Pulse(self.pixels, speed=self.pulse_speed, period=self.pulse_period, color=self.color1)
         animations = AnimationSequence(
             pulse,
             advance_interval=5,
@@ -243,7 +244,7 @@ class Cosmo_guirlande_rpi():
             animations.animate()
 
     def sparkle(self):
-        sparkle = Sparkle(pixels, speed=self.sparkle_speed, color=self.color1, num_sparkles=self.sparkle_num)
+        sparkle = Sparkle(self.pixels, speed=self.sparkle_speed, color=self.color1, num_sparkles=self.sparkle_num)
         animations = AnimationSequence(
             sparkle,
             advance_interval=5,
@@ -254,7 +255,7 @@ class Cosmo_guirlande_rpi():
 
 
     def solid(self):
-        solid = Solid(pixels, color=self.color1)
+        solid = Solid(self.pixels, color=self.color1)
         animations = AnimationSequence(
             solid,
             advance_interval=5,
@@ -263,7 +264,7 @@ class Cosmo_guirlande_rpi():
         animations.animate()
 
     def colorcycle(self):
-        colorcycle = ColorCycle(pixels, speed=self.color_cycle_speed, colors=[self.color1, self.color2])
+        colorcycle = ColorCycle(self.pixels, speed=self.color_cycle_speed, colors=[self.color1, self.color2])
         animations = AnimationSequence(
             colorcycle,
             advance_interval=5,
