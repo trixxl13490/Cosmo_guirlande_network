@@ -102,6 +102,12 @@ class MainWin(QWidget):
         # connect button to function on_click
         self.button_port.clicked.connect(self.on_click_port)
 
+        #Checkbox de controle manuel
+        self.cb_sync = QCheckBox('Manual Control', self)
+        self.cb_sync.setToolTip('Click if you wanna manual control ')
+        self.cb_sync.stateChanged.connect(self.manual_demand_1)
+        self.cb_sync.setGeometry(10, 90, 300, 25)
+
         #Couleur 1
         self.type_color11 = QComboBox(self)
         self.type_color11.setGeometry(10, 110, 100, 20)
@@ -140,6 +146,7 @@ class MainWin(QWidget):
         self.cb_sync.setToolTip('Click if you wanna sync colors / effects')
         self.cb_sync.stateChanged.connect(self.sync_demand)
         self.cb_sync.setGeometry(10, 420, 300, 25)
+
 
         #--------------------------------------------------------------------
 
@@ -1897,6 +1904,16 @@ class MainWin(QWidget):
         '''os.execv(sys.argv[0], sys.argv)
         os.execv(__file__, sys.argv)
         os.execv(sys.executable, ['python'] + sys.argv)'''
+
+    def manual_demand_1(self):
+        print("selection changed ", self.type_color11.currentText())
+        self.msg1 = 'cosmoguirlande,manual'
+        self.newServer1.to_send = self.msg1
+        self.newServer2.to_send = self.msg1
+        self.newServer3.to_send = self.msg1
+        self.newServer4.to_send = self.msg1
+        self.newServer5.to_send = self.msg1
+        self.newServer6.to_send = self.msg1
 
     def color1_change_demand1(self):
         print("selection changed ", self.type_color11.currentText())

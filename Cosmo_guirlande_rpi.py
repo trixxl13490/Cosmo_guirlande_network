@@ -303,9 +303,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 self.previous_state = self.state
 
                 # wait for animation type and threshold
-                if self.controle_manuel:
+                if self.newSocket.data_rcv.startswith("cosmoguirlande,manual"):
                     print("manual control, do nothing while checkbox is on")
-                    self.newSocket.data_rcv =""
+                    time.sleep(0.3)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
                     self.state = "strombo"
