@@ -48,7 +48,7 @@ class MainWin(QWidget):
         super().__init__()
 
         #Window configuration
-        self.setFixedSize(1280, 360)
+        self.setFixedSize(740, 720)
         self.setWindowTitle("Cosmo Guirlandes RPi GUI")
         qtRectangle = self.frameGeometry()
         centerPoint = QDesktopWidget().availableGeometry().center()
