@@ -504,12 +504,11 @@ if __name__ == '__main__':
     cosmo_guirlande = Cosmo_guirlande_rpi(pixels, args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
     # amIalive_thread1 = AmIalive(cosmo_guirlande)
     # amIalive_thread1.run()
-
+    cosmo_guirlande.start()
+    #cosmo_guirlande.run()
     app = QApplication(sys.argv)
     win = MainWin(cosmo_guirlande, pixels)
     win.show()
-    cosmo_guirlande.start()
-    cosmo_guirlande.run()
     sys.exit(app.exec_())
 
 
