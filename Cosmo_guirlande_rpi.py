@@ -98,8 +98,9 @@ class Cosmo_Communication(threading.Thread):
             print("keyboard interrupt, blackout LED")
             connexion_serveur.close()
 
-class Cosmo_guirlande_rpi():
+class Cosmo_guirlande_rpi(threading.Thread):
     def __init__(self, pixels, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
+        threading.Thread.__init__(self)
         self.pixels = pixels
         self.pixel_number = pixel_number
         self.r = '0'
