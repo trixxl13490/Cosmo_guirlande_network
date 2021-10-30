@@ -508,6 +508,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     win = MainWin(cosmo_guirlande, pixels)
     win.show()
+    cosmo_guirlande.run()
     sys.exit(app.exec_())
 
 
