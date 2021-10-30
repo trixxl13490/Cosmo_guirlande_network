@@ -80,11 +80,12 @@ class Server(threading.Thread):
                             self.message = msg_recu
                             #print("message reçu :", self.message)
                             msg = bytes(self.to_send, encoding='utf8')
-                            if self.to_send != self.checkup:
+                            if not(self.to_send == self.checkup):
                                 self.checkup = msg
                                 client.send(msg)
                             else:
                                 pass
+                            self.to_send = self.checkup
 
                 # fermeture des connexions client en premier serveur en second
                 print("Fermeture des connexions")
