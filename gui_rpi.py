@@ -59,7 +59,7 @@ class MainWin(QWidget):
 
         #Start GUI configuration
         self.initUI()
-        self.cosmo_guirlande.run()
+        #self.cosmo_guirlande.run()
 
     def initUI(self):
         #########################################################################################################Strip 1
