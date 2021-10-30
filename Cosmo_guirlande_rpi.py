@@ -103,6 +103,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
         threading.Thread.__init__(self)
         self.pixels = pixels
         self.pixel_number = pixel_number
+        self.controle_manuel = False
         self.r = '0'
         self.g = '0'
         self.b = '0'
@@ -302,8 +303,11 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 self.previous_state = self.state
 
                 # wait for animation type and threshold
-                #if (self.newSocket.data_rcv.startswith("cosmoguirlande,strombo") and :
-                if self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
+                if self.controle_manuel:
+                    print("manual control, do nothing while checkbox is on")
+                    break
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
                     self.state = "strombo"
                     self.stromboscope(self.color1, 0.05)
                     time.sleep(0.3)
@@ -543,6 +547,8 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     print("nothing")
                     self.state = "nothing"
                     time.sleep(1)
+
+                self.previous_message = self.newSocket.data_rcv
 
 
         except TypeError:
