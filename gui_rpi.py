@@ -110,10 +110,10 @@ class MainWin(QWidget):
         self.textbox_strombo = QLineEdit(self)
         self.textbox_strombo.setGeometry(100, 450, 50, 20)
         # Create a button in the window
-        self.button_strombo= QPushButton('Strombo Frequency', self)
+        self.button_strombo= QPushButton('Manual control', self)
         self.button_strombo.setGeometry(150, 450, 100, 20)
         # connect button to function on_click
-        self.button_strombo.clicked.connect(self.on_click_strombo_frequency)
+        self.button_strombo.clicked.connect(self.on_click_manual_control)
 
 
         #--------------------------------------------------------------------
@@ -365,6 +365,9 @@ class MainWin(QWidget):
         self.sl_W1.setMaximum(255)
         self.sl_W1.valueChanged[int].connect(self.slider_W1)
 
+
+    def on_click_manual_control(self):
+        self.cosmo_guirlande.controle_manuel = not(self.cosmo_guirlande.controle_manuel)
 
     def restart_demand(self):
         self.cosmo_guirlande.msg1 = 'cosmoguirlande,restart'
