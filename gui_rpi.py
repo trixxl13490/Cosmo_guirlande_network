@@ -370,7 +370,7 @@ class MainWin(QWidget):
         self.cosmo_guirlande.msg1 = 'cosmoguirlande,restart'
 
     def strombo_demand(self):
-        self.cosmo_guirlande.stromboscope(self.color1, 0.05)
+        self.cosmo_guirlande.stromboscope(self.cosmo_guirlande.color1, 0.05)
         time.sleep(0.3)
 
     def color1_change_demand1(self):
@@ -465,7 +465,7 @@ class MainWin(QWidget):
             self.cosmo_guirlande.rainbow_cycle(0.01)
 
     def strombo_demand(self):
-        self.cosmo_guirlande.stromboscope(self.color1, 0.05)
+        self.cosmo_guirlande.stromboscope(self.cosmo_guirlande.color1, 0.05)
         time.sleep(0.3)
 
     def chase_demand_1(self):
@@ -506,23 +506,23 @@ class MainWin(QWidget):
         self.cosmo_guirlande.stop_dancingPiSpectrum()
 
     def stop_dancingPiScroll_demand_1(self):
-        self.cosmo_guirlande.changeColor(self.r, self.g, self.b, self.w)
+        self.cosmo_guirlande.changeColor(self.sl_R1.value(), self.sl_G1.value(), self.sl_B1.value(), self.sl_W1.value())
 
     # Slider Buttons functions
-    def slider_R1(self, R1):
-        self.cosmo_guirlande.changeColor(self.r, self.g, self.b, self.w)
+    def slider_R1(self):
+        self.cosmo_guirlande.changeColor(self.sl_R1.value(), self.sl_G1.value(), self.sl_B1.value(), self.sl_W1.value())
         time.sleep(0.5)
 
-    def slider_G1(self, G1):
-        self.cosmo_guirlande.changeColor(self.r, self.g, self.b, self.w)
+    def slider_G1(self):
+        self.cosmo_guirlande.changeColor(self.sl_R1.value(), self.sl_G1.value(), self.sl_B1.value(), self.sl_W1.value())
         time.sleep(0.5)
 
-    def slider_B1(self, B1):
-        self.cosmo_guirlande.changeColor(self.r, self.g, self.b, self.w)
+    def slider_B1(self):
+        self.cosmo_guirlande.changeColor(self.sl_R1.value(), self.sl_G1.value(), self.sl_B1.value(), self.sl_W1.value())
         time.sleep(0.5)
 
-    def slider_W1(self, W1):
-        self.cosmo_guirlande.changeColor(self.r, self.g, self.b, self.w)
+    def slider_W1(self):
+        self.cosmo_guirlande.changeColor(self.sl_R1.value(), self.sl_G1.value(), self.sl_B1.value(), self.sl_W1.value())
         time.sleep(0.5)
 
     def on_click_ip(self):
