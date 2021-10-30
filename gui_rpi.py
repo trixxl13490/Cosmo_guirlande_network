@@ -373,107 +373,166 @@ class MainWin(QWidget):
 
 
     def restart_demand(self):
-        self.msg1 = 'cosmoguirlande,restart'
-
-        '''os.execv(sys.argv[0], sys.argv)
-        os.execv(__file__, sys.argv)
-        os.execv(sys.executable, ['python'] + sys.argv)'''
-
-    def color1_change_demand1(self):
-        print("selection changed ", self.type_color11.currentText())
-        self.msg1 = 'cosmoguirlande,color1,' + str(( self.type_color11.currentText()))
-
-    def color2_change_demand1(self):
-        print("selection changed ", self.type_color21.currentText())
-        self.msg1 = 'cosmoguirlande,color2,' + str(( self.type_color21.currentText()))
-
-    def blackout_demand(self):
-        self.msg1 = 'cosmoguirlande,blackout'
-        self.newServer1.to_send = self.msg1
-
-    def rainbow_demand(self):
-        self.msg1 = 'cosmoguirlande,rainbow'
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.msg1 = 'cosmoguirlande,restart'
 
     def strombo_demand(self):
-        self.msg1 = 'cosmoguirlande,strombo'
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.stromboscope(self.color1, 0.05)
+        time.sleep(0.3)
+
+    def color1_change_demand1(self):
+        if self.color1 == 'AMBER':
+            self.cosmo_guirlande.changeColor1String(AMBER)
+        elif self.color1 == 'AQUA':
+            self.cosmo_guirlande.changeColor1String(AQUA)
+        elif self.color1 == 'YELLOW':
+            self.cosmo_guirlande.changeColor1String(YELLOW)
+        elif self.color1 == 'WHITE':
+            self.cosmo_guirlande.changeColor1String(WHITE)
+        elif self.color1 == 'TEAL':
+            self.cosmo_guirlande.changeColor1String(TEAL)
+        elif self.color1 == 'RGBW_WHITE_W':
+            self.cosmo_guirlande.changeColor1String(RGBW_WHITE_W)
+        elif self.color1 == 'RGBW_WHITE_RGBW':
+            self.cosmo_guirlande.changeColor1String(RGBW_WHITE_RGBW)
+        elif self.color1 == 'RGBW_WHITE_RGB':
+            self.cosmo_guirlande.changeColor1String(RGBW_WHITE_RGB)
+        elif self.color1 == 'RED':
+            self.cosmo_guirlande.changeColor1String(RED)
+        elif self.color1 == 'PURPLE':
+            self.cosmo_guirlande.changeColor1String(PURPLE)
+        elif self.color1 == 'PINK':
+            self.cosmo_guirlande.changeColor1String(PINK)
+        elif self.color1 == 'ORANGE':
+            self.cosmo_guirlande.changeColor1String(ORANGE)
+        elif self.color1 == 'OLD_LACE':
+            self.cosmo_guirlande.changeColor1String(OLD_LACE)
+        elif self.color1 == 'MAGENTA':
+            self.cosmo_guirlande.changeColor1String(MAGENTA)
+        elif self.color1 == 'JADE':
+            self.cosmo_guirlande.changeColor1String(JADE)
+        elif self.color1 == 'GREEN':
+            self.cosmo_guirlande.changeColor1String(GREEN)
+        elif self.color1 == 'GOLD':
+            self.cosmo_guirlande.changeColor1String(GOLD)
+        elif self.color1 == 'CYAN':
+            self.cosmo_guirlande.changeColor1String(CYAN)
+        elif self.color1 == 'BLUE':
+            self.cosmo_guirlande.changeColor1String(BLUE)
+        elif self.color1 == 'BLACK':
+            self.cosmo_guirlande.changeColor1String(BLACK)
+
+    def color2_change_demand1(self):
+        if self.color2 == 'AMBER':
+            self.cosmo_guirlande.changeColor2String(AMBER)
+        elif self.color2 == 'AQUA':
+            self.cosmo_guirlande.changeColor2String(AQUA)
+        elif self.color2 == 'YELLOW':
+            self.cosmo_guirlande.changeColor2String(YELLOW)
+        elif self.color2 == 'WHITE':
+            self.cosmo_guirlande.changeColor2String(WHITE)
+        elif self.color2 == 'TEAL':
+            self.cosmo_guirlande.changeColor2String(TEAL)
+        elif self.color2 == 'RGBW_WHITE_W':
+            self.cosmo_guirlande.changeColor2String(RGBW_WHITE_W)
+        elif self.color2 == 'RGBW_WHITE_RGBW':
+            self.cosmo_guirlande.changeColor2String(RGBW_WHITE_RGBW)
+        elif self.color2 == 'RGBW_WHITE_RGB':
+            self.cosmo_guirlande.changeColor2String(RGBW_WHITE_RGB)
+        elif self.color2 == 'RED':
+            self.cosmo_guirlande.changeColor2String(RED)
+        elif self.color2 == 'PURPLE':
+            self.cosmo_guirlande.changeColor2String(PURPLE)
+        elif self.color2 == 'PINK':
+            self.cosmo_guirlande.changeColor2String(PINK)
+        elif self.color2 == 'ORANGE':
+            self.cosmo_guirlande.changeColor2String(ORANGE)
+        elif self.color2 == 'OLD_LACE':
+            self.cosmo_guirlande.changeColor2String(OLD_LACE)
+        elif self.color2 == 'MAGENTA':
+            self.cosmo_guirlande.changeColor2String(MAGENTA)
+        elif self.color2 == 'JADE':
+            self.cosmo_guirlande.changeColor2String(JADE)
+        elif self.color2 == 'GREEN':
+            self.cosmo_guirlande.changeColor2String(GREEN)
+        elif self.color2 == 'GOLD':
+            self.cosmo_guirlande.changeColor2String(GOLD)
+        elif self.color2 == 'CYAN':
+            self.cosmo_guirlande.changeColor2String(CYAN)
+        elif self.color2 == 'BLUE':
+            self.cosmo_guirlande.changeColor2String(BLUE)
+        elif self.color2 == 'BLACK':
+            self.cosmo_guirlande.changeColor2String(BLACK)
+
+    def blackout_demand(self):
+        self.cosmo_guirlande.blackout()
+
+    def rainbow_demand(self):
+        for j in range(2):
+            self.cosmo_guirlande.rainbow_cycle(0.01)
+
+    def strombo_demand(self):
+        self.cosmo_guirlande.stromboscope(self.color1, 0.05)
+        time.sleep(0.3)
 
     def chase_demand_1(self):
-        self.msg1 = 'cosmoguirlande,chase,' + self.textbox_chase_speed.text() + ',' + self.textbox_chase_size.text()
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.chase()
 
     def comet_demand_1(self):
-        self.msg1 = 'cosmoguirlande,comet,' + self.textbox_comet_speed.text() + ',' + self.textbox_comet_tail.text()
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.comet()
 
     def sparkle_demand_1(self):
-        self.msg1 = 'cosmoguirlande,sparkle,' + self.textbox_sparkle_speed.text() + ',' + self.textbox_sparkle_num_sparkles.text()
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.sparkle()
 
     def pulse_demand_1(self):
-        self.msg1 = 'cosmoguirlande,pulse,'+ self.textbox_pulse_period.text() + ',' + self.textbox_pulse_speed.text()
-        self.newServer1.to_send = self.msg1
-
+        self.cosmo_guirlande.pulse()
 
     def solid_demand_1(self):
-        self.msg1 = 'cosmoguirlande,solid'
-        self.newServer1.to_send = self.msg1
-
+        self.cosmo_guirlande.solid()
+        time.sleep(0.5)
 
     def colorcycle_demand_1(self):
-        self.msg1 = 'cosmoguirlande,colorcycle,'++ self.textbox_color_cycle_speed.text()
-        self.newServer1.to_send = self.msg1
-
-    def sync_demand(self, state):
-        self.sync = not self.sync
-
+        self.cosmo_guirlande.colorcycle()
 
     def dancingPiScroll_demand_1(self):
-        self.msg1 = 'cosmoguirlande,dancingPiScroll'
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.blackout()
+        self.cosmo_guirlande.dancingPiScroll()
 
     def dancingPiEnergy_demand_1(self):
-        self.msg1 = 'cosmoguirlande,dancingPiEnergy'
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.blackout()
+        self.cosmo_guirlande.dancingPiEnergy()
 
     def dancingPiSpectrum_demand_1(self):
-        self.msg1 = 'cosmoguirlande,dancingPiSpectrum'
-        self.newServer1.to_send = self.msg1
-
+        self.cosmo_guirlande.blackout()
+        self.cosmo_guirlande.dancingPiSpectrum()
 
     def stop_dancingPiEnergy_demand_1(self):
-        self.msg1 = 'cosmoguirlande,stop_dancingPiEnergy'
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.stop_dancingPiScroll()
 
     def stop_dancingPiSpectrum_demand_1(self):
-        self.msg1 = 'cosmoguirlande,stop_dancingPiSpectrum'
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.stop_dancingPiSpectrum()
 
     def stop_dancingPiScroll_demand_1(self):
-        self.msg1 = 'cosmoguirlande,stop_dancingPiScroll'
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.changeColor(self.r, self.g, self.b, self.w)
 
     # Slider Buttons functions
     def slider_R1(self, R1):
-        self.msg1 = 'cosmoguirlande,R,' + str((R1))
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.changeColor(self.r, self.g, self.b, self.w)
+        time.sleep(0.5)
 
     def slider_G1(self, G1):
-        self.msg1 = 'cosmoguirlande,G,' + str((G1))
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.changeColor(self.r, self.g, self.b, self.w)
+        time.sleep(0.5)
 
     def slider_B1(self, B1):
-        self.msg1 = 'cosmoguirlande,B,' + str((B1))
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.changeColor(self.r, self.g, self.b, self.w)
+        time.sleep(0.5)
 
     def slider_W1(self, W1):
-        self.msg1 = 'cosmoguirlande,W,' + str((W1))
-        self.newServer1.to_send = self.msg1
+        self.cosmo_guirlande.changeColor(self.r, self.g, self.b, self.w)
+        time.sleep(0.5)
 
     def on_click_ip(self):
         self.IPValue = self.textbox_IP.text()
-        os.system('cmd /k "vncviewer.exe" ' + str(self.IPValue))
 
     def on_click_port(self):
         PortValue = self.textbox_port.text()
@@ -500,12 +559,11 @@ if __name__ == '__main__':
     print('Press Ctrl-C to quit.')
 
     # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0.17 50001 1024
+    #sudo python3 gui_rpi.py 3 30 192.168.43.144 50003 1024
 
     cosmo_guirlande = Cosmo_guirlande_rpi(pixels, args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
-    # amIalive_thread1 = AmIalive(cosmo_guirlande)
-    # amIalive_thread1.run()
+
     cosmo_guirlande.start()
-    #cosmo_guirlande.run()
     app = QApplication(sys.argv)
     win = MainWin(cosmo_guirlande, pixels)
     win.show()
