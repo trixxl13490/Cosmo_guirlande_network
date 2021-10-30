@@ -380,87 +380,87 @@ class MainWin(QWidget):
         time.sleep(0.3)
 
     def color1_change_demand1(self):
-        if self.color1 == 'AMBER':
+        if self.type_color11.currentText() == 'AMBER':
             self.cosmo_guirlande.changeColor1String(AMBER)
-        elif self.color1 == 'AQUA':
+        elif self.type_color11.currentText() == 'AQUA':
             self.cosmo_guirlande.changeColor1String(AQUA)
-        elif self.color1 == 'YELLOW':
+        elif self.type_color11.currentText() == 'YELLOW':
             self.cosmo_guirlande.changeColor1String(YELLOW)
-        elif self.color1 == 'WHITE':
+        elif self.type_color11.currentText() == 'WHITE':
             self.cosmo_guirlande.changeColor1String(WHITE)
-        elif self.color1 == 'TEAL':
+        elif self.type_color11.currentText() == 'TEAL':
             self.cosmo_guirlande.changeColor1String(TEAL)
-        elif self.color1 == 'RGBW_WHITE_W':
+        elif self.type_color11.currentText() == 'RGBW_WHITE_W':
             self.cosmo_guirlande.changeColor1String(RGBW_WHITE_W)
-        elif self.color1 == 'RGBW_WHITE_RGBW':
+        elif self.type_color11.currentText() == 'RGBW_WHITE_RGBW':
             self.cosmo_guirlande.changeColor1String(RGBW_WHITE_RGBW)
-        elif self.color1 == 'RGBW_WHITE_RGB':
+        elif self.type_color11.currentText() == 'RGBW_WHITE_RGB':
             self.cosmo_guirlande.changeColor1String(RGBW_WHITE_RGB)
-        elif self.color1 == 'RED':
+        elif self.type_color11.currentText() == 'RED':
             self.cosmo_guirlande.changeColor1String(RED)
-        elif self.color1 == 'PURPLE':
+        elif self.type_color11.currentText() == 'PURPLE':
             self.cosmo_guirlande.changeColor1String(PURPLE)
-        elif self.color1 == 'PINK':
+        elif self.type_color11.currentText() == 'PINK':
             self.cosmo_guirlande.changeColor1String(PINK)
-        elif self.color1 == 'ORANGE':
+        elif self.type_color11.currentText() == 'ORANGE':
             self.cosmo_guirlande.changeColor1String(ORANGE)
-        elif self.color1 == 'OLD_LACE':
+        elif self.type_color11.currentText() == 'OLD_LACE':
             self.cosmo_guirlande.changeColor1String(OLD_LACE)
-        elif self.color1 == 'MAGENTA':
+        elif self.type_color11.currentText() == 'MAGENTA':
             self.cosmo_guirlande.changeColor1String(MAGENTA)
-        elif self.color1 == 'JADE':
+        elif self.type_color11.currentText() == 'JADE':
             self.cosmo_guirlande.changeColor1String(JADE)
-        elif self.color1 == 'GREEN':
+        elif self.type_color11.currentText() == 'GREEN':
             self.cosmo_guirlande.changeColor1String(GREEN)
-        elif self.color1 == 'GOLD':
+        elif self.type_color11.currentText() == 'GOLD':
             self.cosmo_guirlande.changeColor1String(GOLD)
-        elif self.color1 == 'CYAN':
+        elif self.type_color11.currentText() == 'CYAN':
             self.cosmo_guirlande.changeColor1String(CYAN)
-        elif self.color1 == 'BLUE':
+        elif self.type_color11.currentText() == 'BLUE':
             self.cosmo_guirlande.changeColor1String(BLUE)
-        elif self.color1 == 'BLACK':
+        elif self.type_color11.currentText() == 'BLACK':
             self.cosmo_guirlande.changeColor1String(BLACK)
 
     def color2_change_demand1(self):
-        if self.color2 == 'AMBER':
+        if self.type_color21.currentText() == 'AMBER':
             self.cosmo_guirlande.changeColor2String(AMBER)
-        elif self.color2 == 'AQUA':
+        elif self.type_color21.currentText() == 'AQUA':
             self.cosmo_guirlande.changeColor2String(AQUA)
-        elif self.color2 == 'YELLOW':
+        elif self.type_color21.currentText() == 'YELLOW':
             self.cosmo_guirlande.changeColor2String(YELLOW)
-        elif self.color2 == 'WHITE':
+        elif self.type_color21.currentText() == 'WHITE':
             self.cosmo_guirlande.changeColor2String(WHITE)
-        elif self.color2 == 'TEAL':
+        elif self.type_color21.currentText() == 'TEAL':
             self.cosmo_guirlande.changeColor2String(TEAL)
-        elif self.color2 == 'RGBW_WHITE_W':
+        elif self.type_color21.currentText() == 'RGBW_WHITE_W':
             self.cosmo_guirlande.changeColor2String(RGBW_WHITE_W)
-        elif self.color2 == 'RGBW_WHITE_RGBW':
+        elif self.type_color21.currentText() == 'RGBW_WHITE_RGBW':
             self.cosmo_guirlande.changeColor2String(RGBW_WHITE_RGBW)
-        elif self.color2 == 'RGBW_WHITE_RGB':
+        elif self.type_color21.currentText() == 'RGBW_WHITE_RGB':
             self.cosmo_guirlande.changeColor2String(RGBW_WHITE_RGB)
-        elif self.color2 == 'RED':
+        elif self.type_color21.currentText() == 'RED':
             self.cosmo_guirlande.changeColor2String(RED)
-        elif self.color2 == 'PURPLE':
+        elif self.type_color21.currentText() == 'PURPLE':
             self.cosmo_guirlande.changeColor2String(PURPLE)
-        elif self.color2 == 'PINK':
+        elif self.type_color21.currentText() == 'PINK':
             self.cosmo_guirlande.changeColor2String(PINK)
-        elif self.color2 == 'ORANGE':
+        elif self.type_color21.currentText() == 'ORANGE':
             self.cosmo_guirlande.changeColor2String(ORANGE)
-        elif self.color2 == 'OLD_LACE':
+        elif self.type_color21.currentText() == 'OLD_LACE':
             self.cosmo_guirlande.changeColor2String(OLD_LACE)
-        elif self.color2 == 'MAGENTA':
+        elif self.type_color21.currentText() == 'MAGENTA':
             self.cosmo_guirlande.changeColor2String(MAGENTA)
-        elif self.color2 == 'JADE':
+        elif self.type_color21.currentText() == 'JADE':
             self.cosmo_guirlande.changeColor2String(JADE)
-        elif self.color2 == 'GREEN':
+        elif self.type_color21.currentText() == 'GREEN':
             self.cosmo_guirlande.changeColor2String(GREEN)
-        elif self.color2 == 'GOLD':
+        elif self.type_color21.currentText() == 'GOLD':
             self.cosmo_guirlande.changeColor2String(GOLD)
-        elif self.color2 == 'CYAN':
+        elif self.type_color21.currentText() == 'CYAN':
             self.cosmo_guirlande.changeColor2String(CYAN)
-        elif self.color2 == 'BLUE':
+        elif self.type_color21.currentText() == 'BLUE':
             self.cosmo_guirlande.changeColor2String(BLUE)
-        elif self.color2 == 'BLACK':
+        elif self.type_color21.currentText() == 'BLACK':
             self.cosmo_guirlande.changeColor2String(BLACK)
 
     def blackout_demand(self):
