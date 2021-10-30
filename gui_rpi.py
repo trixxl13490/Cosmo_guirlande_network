@@ -56,11 +56,10 @@ class MainWin(QWidget):
         self.move(qtRectangle.topLeft())
         self.cosmo_guirlande = cosmo_guirlande
         self.pixels = pixels
-        self.cosmo_guirlande.run()
 
         #Start GUI configuration
         self.initUI()
-
+        self.cosmo_guirlande.run()
 
     def initUI(self):
         #########################################################################################################Strip 1
