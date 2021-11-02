@@ -2,7 +2,7 @@ import ui_plot
 
 import sys
 
-from PyQt4 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui
 
 if __name__ == "__main__":
     app = QtGui.QApplication(sys.argv)
