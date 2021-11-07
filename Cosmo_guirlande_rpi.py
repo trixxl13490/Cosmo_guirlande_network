@@ -591,7 +591,7 @@ if __name__ == '__main__':
 
     # Configuration des LED
     pixels = neopixel.NeoPixel(
-        board.D18, args.num_pixel, brightness=0.2, auto_write=False, pixel_order=neopixel.GRBW
+        board.D18, args.num_pixel, brightness=0.9, auto_write=False, pixel_order=neopixel.GRBW
     )
     print('Press Ctrl-C to quit.')
 

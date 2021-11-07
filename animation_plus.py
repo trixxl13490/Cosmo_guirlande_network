@@ -5,7 +5,7 @@ import argparse
 from random import randrange
 
 parser = argparse.ArgumentParser()
-p#arser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
+parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
 #parser.add_argument('guirlande_number', metavar='guirlande_number', type=int, help='Cosmo Guirlande NUmber')
 parser.add_argument('num_pixel', metavar='num_pixel', type=int, help='Number of pixel')
 #parser.add_argument('server_tcp_ip', metavar='server_tcp_ip', type=str, help='Server IP')
