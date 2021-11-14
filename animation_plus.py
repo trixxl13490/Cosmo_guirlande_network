@@ -22,10 +22,10 @@ def Fire( Cooling, Sparking, SpeedDelay): #int int int
     heat =[] #static byte heat[NUM_LEDS]
     cooldown = 0
     y = 0
-
+    num_pixel = int(args.num_pixel)
     # Step 1.  Cool down every cell a little
     for i in range(args.num_pixel):
-        cooldown = randrange(0, ((Cooling * 10) / int(args.num_pixel)) + 2)
+        cooldown = randrange(0, ((Cooling * 10) / num_pixel) + 2)
 
     if (cooldown > heat[i]):
         heat[i] = 0
@@ -35,7 +35,7 @@ def Fire( Cooling, Sparking, SpeedDelay): #int int int
 
     # Step 2.  Heat from each cell drifts 'up' and diffuses a little
     #for (k= args.num_pixel - 1; k >= 2; k--):
-    for k in range(args.num_pixel, 2, -1):
+    for k in range(num_pixel, 2, -1):
         heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2]) / 3
 
     # Step 3.  Randomly ignite new 'sparks' near the bottom
@@ -45,7 +45,7 @@ def Fire( Cooling, Sparking, SpeedDelay): #int int int
         # heat[y] = random(160,255)
 
     # Step 4.  Convert heat to LED colors
-    for  j in range(args.num_pixel):
+    for  j in range(num_pixel):
         setPixelHeatColor(j, heat[j])
         pixels.show()
     time.sleep(SpeedDelay)
