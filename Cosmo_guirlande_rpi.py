@@ -71,7 +71,7 @@ class Cosmo_Communication(threading.Thread):
 
                 ##fermeture connexion
                 connexion_serveur.close()
-                time.sleep(0.5)
+                time.sleep(0.1)
 
                 if self.data_rcv.find('stop_dancingPi') != -1:
                     print("close dancyPi from cosmo_communication class")
