@@ -34,20 +34,17 @@ def Fire( Cooling, Sparking, SpeedDelay): #int int int
             heat[i] = 0
         else:
             heat[i] = heat[i] - cooldown
-        print("heat[i]: ",heat[i])
 
     # Step 2.  Heat from each cell drifts 'up' and diffuses a little
     #for (k= args.num_pixel - 1; k >= 2; k--):
     for k in range(num_pixel-1, 2, -1):
         heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2]) / 3
-        print("heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2]) / 3: ", heat[y])
 
 
     # Step 3.  Randomly ignite new 'sparks' near the bottom
     if (randrange(255) < Sparking):
         y = randrange(7)
         heat[y] = heat[y] + randrange(160, 255)
-        print("heat[y] = random(160,255): ", heat[y])
 
     # Step 4.  Convert heat to LED colors
     for  j in range(num_pixel):
@@ -60,9 +57,7 @@ def setPixelHeatColor(Pixel, temperature):
     print("temperature: ", temperature)
     # Scale 'heat' down from 0-255 to 0-191
     t192 = round((temperature / 255.0) * 191) #byte t192
-    print("t192 before: ", t192)
     t192 = t192 % 191
-    print("t192 after: ", t192)
 
     # calculate ramp up from
     heatramp = t192 & 0x3F #byte 0..63
@@ -81,4 +76,5 @@ def setPixelHeatColor(Pixel, temperature):
         pixels[Pixel] = (255, 255, heatramp, 0)
 
 while(True):
-    Fire(55,120,15)
+    Fire(55,120,1)
+    time.sleep(0.01)
