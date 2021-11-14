@@ -56,14 +56,14 @@ class Cosmo_Communication(threading.Thread):
                 ##message confirmation
                 print("Connexion etablie avec le serveur sur le port {}".format(self.tcp_port))
 
-                '''
+
                 # Send message
                 line = str("cosmoguirlande_" + str(self.guirlande_number) + "," + str(
                     self.pixel_number) + "," + self.tcp_ip + "," + str(self.tcp_port))
                 print(line)
                 line = line.encode()
                 connexion_serveur.send(line)
-                '''
+
                 #Receive message
                 self.data_rcv = connexion_serveur.recv(self.buffer_size)
                 self.data_rcv = self.data_rcv.decode()
@@ -568,21 +568,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 pixels.fill((0, 0, 0, 0))
 
 #Check if main class is style alive - to be run on a thread
-'''class AmIalive(threading.Thread, classTocheck):
-    def __init__(self):
-        threading.Thread.__init__(self)
 
-    def run(self):
-        global restart
-        print('Am I alive ?')
-        while True:
-            if classTocheck.mnewSocket.data_rcv.startswith("cosmoguirlande,restart"):
-                del(classTocheck)
-                print("restart cosmo guirlande class, kill it before")
-                cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port,
-                                                      args.buffer_size)
-                cosmo_guirlande.run()
-                restart = False'''
 
 if __name__ == '__main__':
     # Process arguments
