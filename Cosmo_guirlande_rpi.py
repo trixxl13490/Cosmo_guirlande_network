@@ -45,8 +45,8 @@ class Cosmo_Communication(threading.Thread):
         print("TCP buffer size: " + str(self.buffer_size))
 
     def run(self):
-        while True:
-            try:
+        try:
+            while True:
                 ##construction socket
                 connexion_serveur = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -80,24 +80,24 @@ class Cosmo_Communication(threading.Thread):
                     self.state = 'restart'
 
 
-            except ConnectionResetError:
-                print("connection reset")
-                time.sleep(1)
-                self.run()
+        except ConnectionResetError:
+            print("connection reset")
+            time.sleep(1)
+            self.run()
 
-            except TimeoutError:
-                print("Timeout Error, start again thread")
-                time.sleep(1)
-                self.run()
+        except TimeoutError:
+            print("Timeout Error, start again thread")
+            time.sleep(1)
+            self.run()
 
-            except OSError:
-                print("OS Error, start again thread")
-                time.sleep(1)
-                self.run()
+        except OSError:
+            print("OS Error, start again thread")
+            time.sleep(1)
+            self.run()
 
-            except KeyboardInterrupt:
-                print("keyboard interrupt, blackout LED")
-                connexion_serveur.close()
+        except KeyboardInterrupt:
+            print("keyboard interrupt, blackout LED")
+            connexion_serveur.close()
 
 class Cosmo_guirlande_rpi(threading.Thread):
     def __init__(self, pixels, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
@@ -604,8 +604,10 @@ if __name__ == '__main__':
     # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0.17 50001 1024
 
     cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
-    #amIalive_thread1 = AmIalive(cosmo_guirlande)
-    cosmo_guirlande.run()
-    #amIalive_thread1.run()
+    while(True):
+        try:
+            cosmo_guirlande.run()
+        except :
+            cosmo_guirlande.run()
 
 
