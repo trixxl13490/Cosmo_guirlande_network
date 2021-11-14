@@ -57,8 +57,7 @@ def setPixelHeatColor(Pixel, temperature):
     # Scale 'heat' down from 0-255 to 0-191
     t192 = round((temperature / 255.0) * 191) #byte t192
     print("t192 before: ", t192)
-
-    t192 = ((temperature - temperature.min()) * (1 / (temperature.max() - temperature.min()) * 191)).astype('uint8')
+    t192 = t192 % 191
     print("t192 after: ", t192)
 
     # calculate ramp up from
