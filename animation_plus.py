@@ -31,6 +31,7 @@ def Fire( Cooling, Sparking, SpeedDelay): #int int int
             heat[i] = 0
         else:
             heat[i] = heat[i] - cooldown
+        print("heat[i]: ",heat[i])
 
     # Step 2.  Heat from each cell drifts 'up' and diffuses a little
     #for (k= args.num_pixel - 1; k >= 2; k--):
