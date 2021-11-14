@@ -46,7 +46,7 @@ class Cosmo_Communication(threading.Thread):
 
     def run(self):
         try:
-            while True:
+            #while True:
                 ##construction socket
                 connexion_serveur = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
