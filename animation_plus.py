@@ -31,6 +31,7 @@ def Fire( Cooling, Sparking, SpeedDelay): #int int int
     for i in range(num_pixel):
         cooldown = randrange(0, int(((Cooling * 10) / num_pixel) + 2))
         if (cooldown > heat[i]):
+            print("cooldown > heat[i]")
             heat[i] = 0
         else:
             heat[i] = heat[i] - cooldown
