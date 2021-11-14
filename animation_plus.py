@@ -68,10 +68,10 @@ def setPixelHeatColor(Pixel, temperature):
         pixels[Pixel] = (255, 255, heatramp, 0)
     elif(t192 > 0x40):  # middle
         #setPixel(Pixel, 255, heatramp, 0)
-        pixels[Pixel] = (255, 255, heatramp, 0)
+        pixels[Pixel] = (255, heatramp,0, 0)
     else:  # coolest
         #setPixel(Pixel, heatramp, 0, 0)
-        pixels[Pixel] = (255, 255, heatramp, 0)
+        pixels[Pixel] = (heatramp, 0, 0, 0)
 
 while(True):
     Fire(55,120,0.01)
