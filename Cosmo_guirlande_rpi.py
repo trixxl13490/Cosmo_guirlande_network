@@ -45,8 +45,8 @@ class Cosmo_Communication(threading.Thread):
         print("TCP buffer size: " + str(self.buffer_size))
 
     def run(self):
-        try:
-            while True:
+        while True:
+            try:
                 ##construction socket
                 connexion_serveur = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
@@ -56,13 +56,14 @@ class Cosmo_Communication(threading.Thread):
                 ##message confirmation
                 print("Connexion etablie avec le serveur sur le port {}".format(self.tcp_port))
 
+                '''
                 # Send message
                 line = str("cosmoguirlande_" + str(self.guirlande_number) + "," + str(
                     self.pixel_number) + "," + self.tcp_ip + "," + str(self.tcp_port))
                 print(line)
                 line = line.encode()
                 connexion_serveur.send(line)
-
+                '''
                 #Receive message
                 self.data_rcv = connexion_serveur.recv(self.buffer_size)
                 self.data_rcv = self.data_rcv.decode()
@@ -79,24 +80,24 @@ class Cosmo_Communication(threading.Thread):
                     self.state = 'restart'
 
 
-        except ConnectionResetError:
-            print("connection reset")
-            time.sleep(1)
-            self.run()
+            except ConnectionResetError:
+                print("connection reset")
+                time.sleep(1)
+                self.run()
 
-        except TimeoutError:
-            print("Timeout Error, start again thread")
-            time.sleep(1)
-            self.run()
+            except TimeoutError:
+                print("Timeout Error, start again thread")
+                time.sleep(1)
+                self.run()
 
-        except OSError:
-            print("OS Error, start again thread")
-            time.sleep(1)
-            self.run()
+            except OSError:
+                print("OS Error, start again thread")
+                time.sleep(1)
+                self.run()
 
-        except KeyboardInterrupt:
-            print("keyboard interrupt, blackout LED")
-            connexion_serveur.close()
+            except KeyboardInterrupt:
+                print("keyboard interrupt, blackout LED")
+                connexion_serveur.close()
 
 class Cosmo_guirlande_rpi(threading.Thread):
     def __init__(self, pixels, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
