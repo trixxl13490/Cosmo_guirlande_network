@@ -65,7 +65,7 @@ def setPixelHeatColor(Pixel, temperature):
     # figure out which third of the spectrum we're in:
     if (t192 > 0x80):  # hottest
         #setPixel(Pixel, 255, 255, heatramp)
-        pixels[Pixel] = (255, 255, heatramp, 0)
+        pixels[Pixel] = (255, 255, 0, 0)
     elif(t192 > 0x40):  # middle
         #setPixel(Pixel, 255, heatramp, 0)
         pixels[Pixel] = (255, heatramp,0, 0)
