@@ -8,7 +8,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
 #parser.add_argument('guirlande_number', metavar='guirlande_number', type=int, help='Cosmo Guirlande NUmber')
 parser.add_argument('num_pixel', metavar='num_pixel', type=int, help='Number of pixel')
-#parser.add_argument('server_tcp_ip', metavar='server_tcp_ip', type=str, help='Server IP')
+parser.add_argument('delay', metavar='delay', type=str, help='Delay')
 #parser.add_argument('tcp_port', metavar='tcp_port', type=int, help='Tcp Port')
 #parser.add_argument('buffer_size', metavar='buffer_size', type=int, help='Buffer Size')
 args = parser.parse_args()
@@ -74,4 +74,4 @@ def setPixelHeatColor(Pixel, temperature):
         pixels[Pixel] = (heatramp, 0, 0, 0)
 
 while(True):
-    Fire(55,120,0.01)
+    Fire(55,120,args.delay)
