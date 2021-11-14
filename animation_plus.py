@@ -74,4 +74,7 @@ def setPixelHeatColor(Pixel, temperature):
         pixels[Pixel] = (heatramp, 0, 0, 0)
 
 while(True):
-    Fire(55,120,float(args.delay))
+    for i in range(20,50):
+        for j in range(50,200):
+            Fire(i,j,float(args.delay))
+
