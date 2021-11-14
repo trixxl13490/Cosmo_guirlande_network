@@ -31,7 +31,6 @@ def Fire( Cooling, Sparking, SpeedDelay): #int int int
     for i in range(num_pixel):
         cooldown = randrange(0, int(((Cooling * 10) / num_pixel) + 2))
         if (cooldown > heat[i]):
-            print("cooldown > heat[i]")
             heat[i] = 0
         else:
             heat[i] = heat[i] - cooldown
@@ -62,16 +61,18 @@ def setPixelHeatColor(Pixel, temperature):
     # calculate ramp up from
     heatramp = t192 & 0x3F #byte 0..63
     heatramp <<= 2  # scale up to 0..252
-    print("heatramp: ",heatramp)
 
     # figure out which third of the spectrum we're in:
     if (t192 > 0x80):  # hottest
+        print("hottest", heatramp)
         #setPixel(Pixel, 255, 255, heatramp)
         pixels[Pixel] = (255, 255, heatramp, 0)
     elif(t192 > 0x40):  # middle
+        print("middle", heatramp)
         #setPixel(Pixel, 255, heatramp, 0)
         pixels[Pixel] = (255, heatramp,0, 0)
     else:  # coolest
+        print("coolest", heatramp)
         #setPixel(Pixel, heatramp, 0, 0)
         pixels[Pixel] = (heatramp, 0, 0, 0)
 
