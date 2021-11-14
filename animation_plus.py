@@ -39,7 +39,7 @@ def Fire( Cooling, Sparking, SpeedDelay): #int int int
 
     # Step 2.  Heat from each cell drifts 'up' and diffuses a little
     #for (k= args.num_pixel - 1; k >= 2; k--):
-    for k in range(num_pixel, 2, -1):
+    for k in range(num_pixel-1, 2, -1):
         heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2]) / 3
 
     # Step 3.  Randomly ignite new 'sparks' near the bottom
