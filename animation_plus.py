@@ -39,12 +39,14 @@ def Fire( Cooling, Sparking, SpeedDelay): #int int int
     #for (k= args.num_pixel - 1; k >= 2; k--):
     for k in range(num_pixel-1, 2, -1):
         heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2]) / 3
+        print("heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2]) / 3: ", heat[y])
+
 
     # Step 3.  Randomly ignite new 'sparks' near the bottom
     if (randrange(255) < Sparking):
         y = randrange(7)
         heat[y] = heat[y] + randrange(160, 255)
-        # heat[y] = random(160,255)
+        print("heat[y] = random(160,255): ", heat[y])
 
     # Step 4.  Convert heat to LED colors
     for  j in range(num_pixel):
