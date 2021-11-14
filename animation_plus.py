@@ -60,7 +60,8 @@ def setPixelHeatColor(Pixel, temperature):
     # calculate ramp up from
     heatramp = t192 & 0x3F #byte 0..63
     heatramp <<= 2  # scale up to 0..252
-
+    print("t192: ", t192)
+    print("heatramp: ", heatramp)
     # figure out which third of the spectrum we're in:
     if (t192 > 0x80):  # hottest
         #setPixel(Pixel, 255, 255, heatramp)
