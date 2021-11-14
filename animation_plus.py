@@ -22,7 +22,7 @@ def Fire( Cooling, Sparking, SpeedDelay): #int int int
     cooldown = 0
     y = 0
     num_pixel = int(args.num_pixel)
-    heat = [None] * num_pixel  #static byte heat[NUM_LEDS]
+    heat = [0] * num_pixel  #static byte heat[NUM_LEDS]
 
     # Step 1.  Cool down every cell a little
     for i in range(num_pixel):
