@@ -80,4 +80,5 @@ while(True):
     for i in range(20,50):
         for j in range(50,200):
             Fire(i,j,float(args.delay))
+    print("done")
 
