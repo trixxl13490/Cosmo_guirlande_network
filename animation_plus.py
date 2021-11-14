@@ -54,6 +54,7 @@ def Fire( Cooling, Sparking, SpeedDelay): #int int int
 
 
 def setPixelHeatColor(Pixel, temperature):
+    print("temperature: ", temperature)
     # Scale 'heat' down from 0-255 to 0-191
     t192 = round((temperature / 255.0) * 191) #byte t192
     print("t192 before: ", t192)
