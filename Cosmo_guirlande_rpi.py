@@ -119,12 +119,16 @@ class Cosmo_guirlande_rpi(threading.Thread):
         self.sparkle_speed = 0.1
         self.sparkle_num = 10
         self.color_cycle_speed = 0.4
-        self.color1 = AMBER
-        self.color2 = AMBER
+        self.pixels = pixels
+        self.guirlande_number = guirlande_number
+        self.pixel_number = pixel_number
+        self.tcp_ip = tcp_ip
+        self.tcp_port = tcp_port
+        self.buffer_size = buffer_size
 
         #Create Socket to communicate
-        self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
-        self.newSocket.start()
+        #self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
+        #self.newSocket.start()
 
         #Watchdog
         self.watchdog_count = 0
@@ -298,11 +302,11 @@ class Cosmo_guirlande_rpi(threading.Thread):
     def run(self):
         try:
             while True:
-                '''
+
                 # Create Socket to communicate
-                self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
+                self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, args.tcp_port, self.buffer_size)
                 self.newSocket.start()
-                '''
+
                 print("Cosmoguirlande class run")
                 print("state :", self.state)
                 print("previous state :", self.state)
