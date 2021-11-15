@@ -304,7 +304,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             while True:
 
                 # Create Socket to communicate
-                self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, args.tcp_port, self.buffer_size)
+                self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
                 self.newSocket.start()
 
                 print("Cosmoguirlande class run")
