@@ -135,6 +135,8 @@ class MainWin(QWidget):
         #Entree Frequence Strombo
         # Create textbox
         self.textbox_strombo = QLineEdit(self)
+        self.textbox_strombo.setText('0.1')
+
         self.textbox_strombo.setGeometry(100, 450, 50, 20)
         # Create a button in the window
         self.button_strombo= QPushButton('Strombo Frequency', self)
@@ -183,6 +185,7 @@ class MainWin(QWidget):
         #Entree chase param speed
         # Create textbox
         self.textbox_chase_speed= QLineEdit(self)
+        self.textbox_chase_speed.setText('0.1')
         self.textbox_chase_speed.setGeometry(110, 540, 50, 20)
         # Create a button in the window
         self.button_chase_speed= QPushButton('speed', self)
@@ -193,6 +196,7 @@ class MainWin(QWidget):
         #Entree chase param size
         # Create textbox
         self.textbox_chase_size= QLineEdit(self)
+        self.textbox_chase_size.setText('5')
         self.textbox_chase_size.setGeometry(210, 540, 50, 20)
         # Create a button in the window
         self.button_chase_size= QPushButton('size', self)
@@ -210,6 +214,7 @@ class MainWin(QWidget):
         #Entree comet param speed
         # Create textbox
         self.textbox_comet_speed= QLineEdit(self)
+        self.textbox_comet_speed.setText('0.1')
         self.textbox_comet_speed.setGeometry(110, 570, 50, 20)
         # Create a button in the window
         self.button_comet_speed= QPushButton('speed', self)
@@ -220,6 +225,7 @@ class MainWin(QWidget):
         #Entree comet param tail
         # Create textbox
         self.textbox_comet_tail= QLineEdit(self)
+        self.textbox_comet_tail.setText('5')
         self.textbox_comet_tail.setGeometry(210, 570, 50, 20)
         # Create a button in the window
         self.button_comet_tail= QPushButton('tail', self)
@@ -237,6 +243,8 @@ class MainWin(QWidget):
         #Entree pulse param speed
         # Create textbox
         self.textbox_pulse_speed= QLineEdit(self)
+        self.textbox_pulse_speed.setText('0.1')
+
         self.textbox_pulse_speed.setGeometry(110, 600, 50, 20)
         # Create a button in the window
         self.button_pulse_speed= QPushButton('speed', self)
@@ -247,6 +255,8 @@ class MainWin(QWidget):
         #Entree pulse param period
         # Create textbox
         self.textbox_pulse_period= QLineEdit(self)
+        self.textbox_pulse_period.setText('0.1')
+
         self.textbox_pulse_period.setGeometry(210, 600, 50, 20)
         # Create a button in the window
         self.button_pulse_period= QPushButton('period', self)
@@ -264,6 +274,8 @@ class MainWin(QWidget):
         #Entree sparkle param speed
         # Create textbox
         self.textbox_sparkle_speed= QLineEdit(self)
+        self.textbox_sparkle_speed.setText('0.1')
+
         self.textbox_sparkle_speed.setGeometry(110, 630, 50, 20)
         # Create a button in the window
         self.button_sparkle_speed= QPushButton('speed', self)
@@ -274,6 +286,8 @@ class MainWin(QWidget):
         #Entree sparkle param num_sparkles
         # Create textbox
         self.textbox_sparkle_num_sparkles= QLineEdit(self)
+        self.textbox_sparkle_num_sparkles.setText('5')
+
         self.textbox_sparkle_num_sparkles.setGeometry(210, 630, 50, 20)
         # Create a button in the window
         self.button_sparkle_num_sparkles= QPushButton('num_sparkles', self)
@@ -298,6 +312,8 @@ class MainWin(QWidget):
         #Entree color_cycle param speed
         # Create textbox
         self.textbox_color_cycle_speed= QLineEdit(self)
+        self.textbox_color_cycle_speed.setText('0.1')
+
         self.textbox_color_cycle_speed.setGeometry(110, 690, 50, 20)
         # Create a button in the window
         self.button_color_cycle_speed= QPushButton('speed', self)
@@ -402,6 +418,8 @@ class MainWin(QWidget):
         #Entree Frequence Strombo 2
         # Create textbox
         self.textbox_strombo_2 = QLineEdit(self)
+        self.textbox_strombo_2.setText('0.1')
+
         self.textbox_strombo_2.setGeometry(400, 450, 50, 20)
         # Create a button in the window
         self.button_strombo_2= QPushButton('Strombo Frequency', self)
@@ -418,6 +436,8 @@ class MainWin(QWidget):
         # Entree adresse IP
         # Create textbox
         self.textbox_IP_2 = QLineEdit(self)
+        self.textbox_IP_2.setText('192.168.0.')
+
         self.textbox_IP_2.setGeometry(310, 10, 50, 20)
         # Create a button in the window
         self.button_IP_2 = QPushButton('VNC', self)
@@ -478,6 +498,8 @@ class MainWin(QWidget):
         #Entree chase param speed
         # Create textbox
         self.textbox_chase_speed_2= QLineEdit(self)
+        self.textbox_chase_speed_2.setText('0.1')
+
         self.textbox_chase_speed_2.setGeometry(410, 540, 50, 20)
         # Create a button in the window
         self.button_chase_speed_2= QPushButton('speed', self)
@@ -488,6 +510,8 @@ class MainWin(QWidget):
         #Entree chase param size
         # Create textbox
         self.textbox_chase_size_2= QLineEdit(self)
+        self.textbox_chase_size_2.setText('5')
+
         self.textbox_chase_size_2.setGeometry(510, 540, 50, 20)
         # Create a button in the window
         self.button_chase_size_2= QPushButton('size', self)
@@ -506,6 +530,8 @@ class MainWin(QWidget):
         #Entree comet param speed
         # Create textbox
         self.textbox_comet_speed_2= QLineEdit(self)
+        self.textbox_comet_speed_2.setText('0.1')
+
         self.textbox_comet_speed_2.setGeometry(410, 570, 50, 20)
         # Create a button in the window
         self.button_comet_speed_2= QPushButton('speed', self)
