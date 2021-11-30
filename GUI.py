@@ -10,7 +10,7 @@ from PyQt5 import QtCore
 from PyQt5.QtCore import pyqtSignal, pyqtSlot, Qt
 from PyQt5.QtGui import QPixmap, QImage
 from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QDesktopWidget, QCheckBox, QMessageBox, QSlider, QPushButton, QInputDialog, QLineEdit, QComboBox
-
+import paramiko
 ############################################
 # GUI
 ############################################
@@ -25,23 +25,25 @@ class VNC_Window(threading.Thread):
             pass'''
 
 class MainWin(QWidget):
+    h_name = socket.gethostname()
+    IP_addres = socket.gethostbyname(h_name)
     # Create Server1 object
-    newServer1 = Server.Server('192.168.0.20', 50001, 1024)
+    newServer1 = Server.Server(IP_addres, 50001, 1024)
     newServer1.start()
     # Create Server2 object
-    newServer2 = Server.Server('192.168.0.20', 50002, 1024)
+    newServer2 = Server.Server(IP_addres, 50002, 1024)
     newServer2.start()
     # Create Server3 object
-    newServer3 = Server.Server('192.168.0.20', 50003, 1024)
+    newServer3 = Server.Server(IP_addres, 50003, 1024)
     newServer3.start()
     # Create Server4 object
-    newServer4 = Server.Server('192.168.0.20', 50004, 1024)
+    newServer4 = Server.Server(IP_addres, 50004, 1024)
     newServer4.start()
     # Create Server5 object
-    newServer5 = Server.Server('192.168.0.20', 50005, 1024)
+    newServer5 = Server.Server(IP_addres, 50005, 1024)
     newServer5.start()
     # Create Server5 object
-    newServer6 = Server.Server('192.168.43.144', 50006, 1024)
+    newServer6 = Server.Server(IP_addres, 50006, 1024)
     newServer6.start()
 
     IPValue = ""
@@ -1901,9 +1903,11 @@ class MainWin(QWidget):
             self.newServer4.to_send = self.msg1
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
-        '''os.execv(sys.argv[0], sys.argv)
-        os.execv(__file__, sys.argv)
-        os.execv(sys.executable, ['python'] + sys.argv)'''
+        #Force restart by SSH - paramiko lib
+        #ssh.connect('192.168.0.26', username=username, password=password)
+        #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        #ssh.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=2, port=22)
+        #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('./home/pi/Cosmo_guirlande_network/restart.sh')
 
     def manual_demand_1(self):
         print("selection changed ", self.type_color11.currentText())
