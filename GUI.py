@@ -1904,9 +1904,13 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
         #Force restart by SSH - paramiko lib
+        #SSH parameter
         #ssh.connect('192.168.0.26', username=username, password=password)
         #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         #ssh.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=2, port=22)
+        #kill
+        #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+        #Start GUI again on rpi
         #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('./home/pi/Cosmo_guirlande_network/restart.sh')
 
     def manual_demand_1(self):
