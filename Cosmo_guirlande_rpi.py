@@ -82,22 +82,29 @@ class Cosmo_Communication(threading.Thread):
 
         except ConnectionResetError:
             print("connection reset")
+            connexion_serveur.close()
+            print("connection close")
             time.sleep(1)
             self.run()
 
         except TimeoutError:
             print("Timeout Error, start again thread")
             time.sleep(1)
+            connexion_serveur.close()
+            print("connection close")
             self.run()
 
         except OSError:
             print("OS Error, start again thread")
             time.sleep(1)
+            connexion_serveur.close()
+            print("connection close")
             self.run()
 
         except KeyboardInterrupt:
             print("keyboard interrupt, blackout LED")
             connexion_serveur.close()
+
 
 class Cosmo_guirlande_rpi(threading.Thread):
     def __init__(self, pixels, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
@@ -587,7 +594,7 @@ if __name__ == '__main__':
 
     # Configuration des LED
     pixels = neopixel.NeoPixel(
-        board.D18, args.num_pixel, brightness=0.5, auto_write=False, pixel_order=neopixel.GRBW
+        board.D18, args.num_pixel, brightness=0.9, auto_write=False, pixel_order=neopixel.GRBW
     )
     print('Press Ctrl-C to quit.')
 
