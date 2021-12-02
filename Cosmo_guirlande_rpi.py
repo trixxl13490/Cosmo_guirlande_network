@@ -38,7 +38,6 @@ class Cosmo_Communication(threading.Thread):
         self.data_rcv = ""
         self.state = ""
 
-
         print("Cosmo Guirlande Number: " + str(self.guirlande_number))
         print("TCP ip server: " + str(self.tcp_ip))
         print("TCP port : " + str(self.tcp_port))
