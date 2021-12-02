@@ -39,10 +39,10 @@ class Cosmo_Communication(threading.Thread):
         self.state = ""
 
 
-        print("Cosmo Guirlande Number: " + str(self.guirlande_number))
+        '''print("Cosmo Guirlande Number: " + str(self.guirlande_number))
         print("TCP ip server: " + str(self.tcp_ip))
         print("TCP port : " + str(self.tcp_port))
-        print("TCP buffer size: " + str(self.buffer_size))
+        print("TCP buffer size: " + str(self.buffer_size))'''
 
     def run(self):
         try:
@@ -60,14 +60,14 @@ class Cosmo_Communication(threading.Thread):
                 # Send message
                 line = str("cosmoguirlande_" + str(self.guirlande_number) + "," + str(
                     self.pixel_number) + "," + self.tcp_ip + "," + str(self.tcp_port))
-                print(line)
+                #print(line)
                 line = line.encode()
                 connexion_serveur.send(line)
 
                 #Receive message
                 self.data_rcv = connexion_serveur.recv(self.buffer_size)
                 self.data_rcv = self.data_rcv.decode()
-                print("data_rcv : ", self.data_rcv)
+                #print("data_rcv : ", self.data_rcv)
 
                 ##fermeture connexion
                 connexion_serveur.close()
@@ -556,9 +556,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 elif self.state == "restart":
                     self.state = "restart"
                     # Del former, create a new one and start it
-                    #self.newSocket.connexion_serveur.close()
-                    #self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
-                    #self.newSocket.start()
+                    self.newSocket.connexion_serveur.close()
+                    self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
+                    self.newSocket.start()
 
                 else:
                     print("nothing")
@@ -605,5 +605,4 @@ if __name__ == '__main__':
         try:
             cosmo_guirlande.run()
         except :
-            print("main try failed")
-            #cosmo_guirlande.run()
+            cosmo_guirlande.run()
