@@ -306,7 +306,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
         # os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
 
     def run(self):
-
+        print("run func")
         while True:
             try:
                 # Create Socket to communicate
