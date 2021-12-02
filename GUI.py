@@ -2051,7 +2051,7 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
 
     def colorcycle_demand_1(self):
-        self.msg1 = 'cosmoguirlande,colorcycle,'++ self.textbox_color_cycle_speed.text()
+        self.msg1 = 'cosmoguirlande,colorcycle,'+ str((self.type_color11.currentText())) + ',' + str((self.type_color21.currentText()))
         self.newServer1.to_send = self.msg1
         if self.sync:
             self.newServer2.to_send = self.msg1
