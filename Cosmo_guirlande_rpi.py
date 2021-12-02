@@ -605,4 +605,5 @@ if __name__ == '__main__':
         try:
             cosmo_guirlande.run()
         except :
-            cosmo_guirlande.run()
+            print("main try failed")
+            #cosmo_guirlande.run()
