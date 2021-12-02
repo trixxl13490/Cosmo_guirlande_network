@@ -38,6 +38,7 @@ class Cosmo_Communication(threading.Thread):
         self.data_rcv = ""
         self.state = ""
 
+
         print("Cosmo Guirlande Number: " + str(self.guirlande_number))
         print("TCP ip server: " + str(self.tcp_ip))
         print("TCP port : " + str(self.tcp_port))
@@ -84,21 +85,21 @@ class Cosmo_Communication(threading.Thread):
             #connexion_serveur.close()
             #print("connection close")
             time.sleep(1)
-            self.run()
+            #self.run()
 
         except TimeoutError:
             print("Timeout Error, start again thread")
             time.sleep(1)
             #connexion_serveur.close()
             #print("connection close")
-            self.run()
+            #self.run()
 
         except OSError:
             print("OS Error, start again thread")
             time.sleep(1)
             #connexion_serveur.close()
             #print("connection close")
-            self.run()
+            #self.run()
 
         except KeyboardInterrupt:
             print("keyboard interrupt, blackout LED")
@@ -306,9 +307,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
         # os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
 
     def run(self):
-        print("run func")
-        while True:
-            try:
+        try:
+            while True:
+
                 # Create Socket to communicate
                 self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
                 self.newSocket.start()
@@ -517,13 +518,10 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.stop_dancingPiSpectrum()
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,R"):
-                    print('R func start')
                     self.state = "R"
                     function_type, function, self.r = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
-                    print('R func end')
-
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,G"):
                     self.state = "G"
@@ -570,15 +568,15 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 self.previous_message = self.newSocket.data_rcv
 
 
-            except TypeError:
-                print("type error")
-                self.run()
+        except TypeError:
+            print("type error")
+            self.run()
 
-            except KeyboardInterrupt:
-                print("keyboard interrupt, blackout LED")
-                self.state = "keyboard"
-                if args.clear:
-                    pixels.fill((0, 0, 0, 0))
+        except KeyboardInterrupt:
+            print("keyboard interrupt, blackout LED")
+            self.state = "keyboard"
+            if args.clear:
+                pixels.fill((0, 0, 0, 0))
 
 #Check if main class is style alive - to be run on a thread
 
@@ -596,7 +594,7 @@ if __name__ == '__main__':
 
     # Configuration des LED
     pixels = neopixel.NeoPixel(
-        board.D18, args.num_pixel, brightness=0.9, auto_write=False, pixel_order=neopixel.GRBW
+        board.D18, args.num_pixel, brightness=0.5, auto_write=False, pixel_order=neopixel.GRBW
     )
     print('Press Ctrl-C to quit.')
 
