@@ -518,10 +518,13 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.stop_dancingPiSpectrum()
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,R"):
+                    print('R func start')
                     self.state = "R"
                     function_type, function, self.r = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
+                    print('R func end')
+
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,G"):
                     self.state = "G"
@@ -594,7 +597,7 @@ if __name__ == '__main__':
 
     # Configuration des LED
     pixels = neopixel.NeoPixel(
-        board.D18, args.num_pixel, brightness=0.5, auto_write=False, pixel_order=neopixel.GRBW
+        board.D18, args.num_pixel, brightness=0.9, auto_write=False, pixel_order=neopixel.GRBW
     )
     print('Press Ctrl-C to quit.')
 
