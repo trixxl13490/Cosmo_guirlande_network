@@ -284,8 +284,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             advance_interval=5,
             auto_clear=True,
         )
-        while self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle'):
-            animations.animate()
+        animations.animate()
 
     def dancingPiScroll(self):
         os.system("sudo python3 /home/pi/dancyPi-audio-reactive-led/python/visualization.py scroll")
