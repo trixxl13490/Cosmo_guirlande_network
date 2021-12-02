@@ -317,6 +317,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 print("Cosmoguirlande class run")
                 print("state :", self.state)
                 print("previous state :", self.state)
+                print('self.newSocket.data_rcv :', self.newSocket.data_rcv)
                 self.previous_state = self.state
 
                 # wait for animation type and threshold
