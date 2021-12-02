@@ -306,9 +306,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
         # os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
 
     def run(self):
-        try:
-            while True:
 
+        while True:
+            try:
                 # Create Socket to communicate
                 self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
                 self.newSocket.start()
@@ -570,15 +570,15 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 self.previous_message = self.newSocket.data_rcv
 
 
-        except TypeError:
-            print("type error")
-            self.run()
+            except TypeError:
+                print("type error")
+                self.run()
 
-        except KeyboardInterrupt:
-            print("keyboard interrupt, blackout LED")
-            self.state = "keyboard"
-            if args.clear:
-                pixels.fill((0, 0, 0, 0))
+            except KeyboardInterrupt:
+                print("keyboard interrupt, blackout LED")
+                self.state = "keyboard"
+                if args.clear:
+                    pixels.fill((0, 0, 0, 0))
 
 #Check if main class is style alive - to be run on a thread
 
