@@ -556,9 +556,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 elif self.state == "restart":
                     self.state = "restart"
                     # Del former, create a new one and start it
-                    self.newSocket.connexion_serveur.close()
-                    self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
-                    self.newSocket.start()
+                    #self.newSocket.connexion_serveur.close()
+                    #self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
+                    #self.newSocket.start()
 
                 else:
                     print("nothing")
