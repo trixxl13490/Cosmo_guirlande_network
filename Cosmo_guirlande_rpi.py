@@ -134,8 +134,8 @@ class Cosmo_guirlande_rpi(threading.Thread):
         self.buffer_size = buffer_size
 
         #Create Socket to communicate
-        #self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
-        #self.newSocket.start()
+        self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
+        self.newSocket.start()
 
         #Watchdog
         self.watchdog_count = 0
@@ -311,8 +311,8 @@ class Cosmo_guirlande_rpi(threading.Thread):
             while True:
 
                 # Create Socket to communicate
-                self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
-                self.newSocket.start()
+                #self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
+                #self.newSocket.start()
 
                 print("Cosmoguirlande class run")
                 print("state :", self.state)
