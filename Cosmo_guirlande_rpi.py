@@ -85,21 +85,21 @@ class Cosmo_Communication(threading.Thread):
             #connexion_serveur.close()
             #print("connection close")
             time.sleep(1)
-            #self.run()
+            self.run()
 
         except TimeoutError:
             print("Timeout Error, start again thread")
             time.sleep(1)
             #connexion_serveur.close()
             #print("connection close")
-            #self.run()
+            self.run()
 
         except OSError:
             print("OS Error, start again thread")
             time.sleep(1)
             #connexion_serveur.close()
             #print("connection close")
-            #self.run()
+            self.run()
 
         except KeyboardInterrupt:
             print("keyboard interrupt, blackout LED")
@@ -557,9 +557,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 elif self.state == "restart":
                     self.state = "restart"
                     # Del former, create a new one and start it
-                    self.newSocket.connexion_serveur.close()
+                    '''self.newSocket.connexion_serveur.close()
                     self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
-                    self.newSocket.start()
+                    self.newSocket.start()'''
 
                 else:
                     print("nothing")
