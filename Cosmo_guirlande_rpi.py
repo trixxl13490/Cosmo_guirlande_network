@@ -488,7 +488,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle'):
                     self.state = "colorcycle"
-                    function_type, function, self.color1 , self.color2 = self.newSocket.data_rcv.split(',')
+                    function_type, function, color1 , color2 = self.newSocket.data_rcv.split(',')
+                    self.color1 = color1
+                    self.color2 = color2
                     self.colorcycle()
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiScroll'):
