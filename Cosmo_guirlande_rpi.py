@@ -82,24 +82,24 @@ class Cosmo_Communication(threading.Thread):
 
         except ConnectionResetError:
             print("connection reset")
-            connexion_serveur.close()
-            print("connection close")
+            #connexion_serveur.close()
+            #print("connection close")
             time.sleep(1)
-            self.run()
+            #self.run()
 
         except TimeoutError:
             print("Timeout Error, start again thread")
             time.sleep(1)
-            connexion_serveur.close()
-            print("connection close")
-            self.run()
+            #connexion_serveur.close()
+            #print("connection close")
+            #self.run()
 
         except OSError:
             print("OS Error, start again thread")
             time.sleep(1)
-            connexion_serveur.close()
-            print("connection close")
-            self.run()
+            #connexion_serveur.close()
+            #print("connection close")
+            #self.run()
 
         except KeyboardInterrupt:
             print("keyboard interrupt, blackout LED")
