@@ -1931,13 +1931,14 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
         #Force restart by SSH - paramiko lib
         #SSH parameter
-        #ssh.connect('192.168.0.26', username=username, password=password)
-        #ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-        #ssh.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=2, port=22)
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=2, port=22)
         #kill
-        #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+        time.sleep(0.5)
         #Start GUI again on rpi
-        #ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command('./home/pi/Cosmo_guirlande_network/restart.sh')
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("DISPLAY=:0 nohup python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.20 50001 1024 &")
 
     def manual_demand_1(self):
         print("selection changed ", self.type_color11.currentText())
