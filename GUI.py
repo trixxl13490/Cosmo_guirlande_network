@@ -1931,23 +1931,8 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
         #Force restart by SSH - paramiko lib
-            # SSH parameter
-            ssh = paramiko.SSHClient()
-            ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=2, port=22)
-            # kill
-            ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
-            # Start GUI again on rpi
-            #subprocess.run(args='python start_display_remote_ssh.py', shell=True)
-            subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
+        subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
 
-            #SSH parameter
-            ssh1 = paramiko.SSHClient()
-            ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-            ssh1.connect(hostname='192.168.0.5', username='pi', password='vbcgxb270694', timeout=2, port=22)
-            #kill
-            ssh_stdin, ssh_stdout, ssh_stderr = ssh1.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
-            #Start GUI again on rpi
 
 
     def manual_demand_1(self):
