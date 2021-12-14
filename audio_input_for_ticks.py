@@ -106,6 +106,7 @@ def stop():
 def callback(in_data, frame_count, time_info, status):
     _VARS['audioData'] = np.frombuffer(in_data, dtype=np.int16)
     _VARS['fftData'] = np.abs(np.fft.rfft(np.frombuffer(in_data, dtype=np.int16))).astype(int)
+    '''
     fftTime=np.fft.rfftfreq(CHUNK, 1./RATE)
 
     b, a = signal.butter(1, 100, 'low', analog=True)
@@ -114,6 +115,7 @@ def callback(in_data, frame_count, time_info, status):
     #_VARS['filter_fftData'] = signal.filtfilt(b,a,_VARS['fftData'])
     _VARS['filter_fftData'] = signal.filtfilt(b,a,_VARS['audioData'])
 
+    
     print("audioData: ", _VARS['audioData'])
     print("type audioData: ", type(_VARS['audioData']))
     print("type audioData[0]: ", type(_VARS['audioData'][0]))
@@ -128,7 +130,7 @@ def callback(in_data, frame_count, time_info, status):
     print("type filter_fftData: ", type(_VARS['filter_fftData']))
     print("type filter_fftData[0]: ", type(_VARS['filter_fftData'][0]))
     print("len filter_fftData: ", len(_VARS['filter_fftData']))
-
+    '''
     print("fftData'][:10]: ", _VARS['fftData'][:10])
 
     return (in_data, pyaudio.paContinue)

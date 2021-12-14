@@ -14,37 +14,40 @@ ssh1 = paramiko.SSHClient()
 ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 ssh1.connect(hostname='192.168.0.5', username='pi', password='vbcgxb270694', timeout=2, port=22)
 
-ssh2 = paramiko.SSHClient()
-ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh2.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=2, port=22)
-
-
 # kill GUI if running
 ssh_stdin1, ssh_stdout1, ssh_stderr1 = ssh1.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
-ssh_stdin2, ssh_stdout2, ssh_stderr2 = ssh2.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
 
 # Start GUI again on rpi
 channel1 = ssh1.invoke_shell()
 stdin1 = channel1.makefile('wb')
 stdout1 = channel1.makefile('rb')
 
-channel2 = ssh2.invoke_shell()
-stdin2 = channel2.makefile('wb')
-stdout2 = channel2.makefile('rb')
-
 stdin1.write('''
   export XAUTHORITY=/home/pi/.Xauthority
   DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.20 50002 1024'
   ''')
 
+print(stdout1.read())
+#----------------------------------------------------------------------------------------------------------------------
+ssh2 = paramiko.SSHClient()
+ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ssh2.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=2, port=22)
+
+
+# kill GUI if running
+ssh_stdin2, ssh_stdout2, ssh_stderr2 = ssh2.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+
+# Start GUI again on rpi
+channel2 = ssh2.invoke_shell()
+stdin2 = channel2.makefile('wb')
+stdout2 = channel2.makefile('rb')
+
 stdin2.write('''
   export XAUTHORITY=/home/pi/.Xauthority
   DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.20 50001 1024'
   ''')
-
-
-print(stdout1.read())
 print(stdout2.read())
+#----------------------------------------------------------------------------------------------------------------------
 
 '''
 #To be tested
