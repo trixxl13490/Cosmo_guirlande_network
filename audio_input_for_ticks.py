@@ -132,7 +132,10 @@ def callback(in_data, frame_count, time_info, status):
     print("len filter_fftData: ", len(_VARS['filter_fftData']))
     '''
     print("fftData'][:10]: ", _VARS['fftData'][:10])
-
+    file2write = open("filename.txt", 'a')
+    file2write.write(str(_VARS['fftData'][:10]))
+    file2write.write("\n")
+    file2write.close()
     return (in_data, pyaudio.paContinue)
 
 
