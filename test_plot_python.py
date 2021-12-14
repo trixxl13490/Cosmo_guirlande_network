@@ -111,7 +111,8 @@ def callback(in_data, frame_count, time_info, status):
     b, a = signal.butter(1, 100, 'low', analog=True)
     w, h = signal.freqs(b, a)
 
-    _VARS['filter_fftData'] = signal.filtfilt(b,a,_VARS['fftData'])
+    #_VARS['filter_fftData'] = signal.filtfilt(b,a,_VARS['fftData'])
+    _VARS['filter_fftData'] = signal.filtfilt(b,a,_VARS['audioData'])
 
     print("audioData: ", _VARS['audioData'])
     print("type audioData: ", type(_VARS['audioData']))
@@ -127,6 +128,9 @@ def callback(in_data, frame_count, time_info, status):
     print("type filter_fftData: ", type(_VARS['filter_fftData']))
     print("type filter_fftData[0]: ", type(_VARS['filter_fftData'][0]))
     print("len filter_fftData: ", len(_VARS['filter_fftData']))
+
+    print("fftData'][:10]: ", _VARS['fftData'][:10])
+
     return (in_data, pyaudio.paContinue)
 
 
@@ -146,7 +150,7 @@ def updateUI():
     # Uodate volumne meter
     _VARS['window']['-PROG-'].update(np.amax(_VARS['audioData']))
     _VARS['window']['-PROG1-'].update(np.amax(_VARS['fftData']))
-    _VARS['window']['-PROG2-'].update(np.amax(_VARS['filter_fftData']))
+    _VARS['window']['-PROG2-'].update(np.amax(_VARS['fftData'][:10]))
     # Redraw plot
     graph.erase()
     drawAxis()
