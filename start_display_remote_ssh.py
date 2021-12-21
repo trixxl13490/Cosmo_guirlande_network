@@ -27,7 +27,7 @@ stdin1.write('''
   DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.21 50002 1024'
   ''')
 
-print(stdout1.read())
+#print(stdout1.read())
 #----------------------------------------------------------------------------------------------------------------------
 ssh2 = paramiko.SSHClient()
 ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
