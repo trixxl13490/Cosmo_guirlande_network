@@ -222,9 +222,18 @@ def updateUI():
         pulse = Pulse(pixels, speed=0.1, color=AMBER, period=0.3)
         pulse.animate()'''
 
+        '''not ok
         comet = Comet(pixels, speed=0.01, color='ORANGE', tail_length=10, bounce=True)
         animations = AnimationSequence(
             comet,
+            advance_interval=5,
+            auto_clear=True,
+        )
+        animations.animate()'''
+
+        pulse = Pulse(pixels, speed=0.2, period=0.2, color='ORANGE')
+        animations = AnimationSequence(
+            pulse,
             advance_interval=5,
             auto_clear=True,
         )
