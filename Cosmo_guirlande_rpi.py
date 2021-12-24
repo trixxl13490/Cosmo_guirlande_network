@@ -254,6 +254,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             advance_interval=5,
             auto_clear=True,
         )
+        animations.animate()
         while self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
             animations.animate()
 
