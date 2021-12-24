@@ -287,19 +287,19 @@ class Cosmo_guirlande_rpi(threading.Thread):
         animations.animate()
 
     def dancingPiScroll(self):
-        os.system("sudo python3 /home/pi/dancyPi-audio-reactive-led/python/visualization.py scroll")
+        os.system("sudo python3 dancyPi-audio-reactive-led/python/visualization.py scroll")
 
     def stop_dancingPiScroll(self):
         os.system("sudo ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
 
     def dancingPiEnergy(self):
-        os.system("sudo python3 /home/pi/dancyPi-audio-reactive-led/python/visualization.py energy")
+        os.system("sudo python3 dancyPi-audio-reactive-led/python/visualization.py energy")
 
     def stop_dancingPiEnergy(self):
         os.system("sudo ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
 
     def dancingPiSpectrum(self):
-        os.system("sudo python3 /home/pi/dancyPi-audio-reactive-led/python/visualization.py spectrum")
+        os.system("sudo python3 dancyPi-audio-reactive-led/python/visualization.py spectrum")
 
     def stop_dancingPiSpectrum(self):
         os.system("sudo ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
