@@ -205,14 +205,22 @@ def updateUI():
         
     if np.amax(_VARS['fftData'][:10]) > 10000:
         
-        '''cosmo_guirlande.pulse_period = 0.15
+        '''not ok
+        cosmo_guirlande.pulse_period = 0.15
         cosmo_guirlande.pulse_speed = 0.1
         cosmo_guirlande.color1= 'ORANGE'
         cosmo_guirlande.pulse()'''
+
+        '''ok
         pixels.fill((100, 0, 0, 0))
         pixels.show()
         time.sleep(0.2)
         pixels.fill((0, 0, 0, 0))
+        pixels.show()'''
+
+        pulse = Pulse(pixels, speed=0.1, color=AMBER, period=0.3)
+        pulse.animate()
+
 
     # Redraw plot
     graph.erase()
