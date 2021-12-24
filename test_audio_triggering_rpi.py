@@ -204,10 +204,15 @@ def updateUI():
     _VARS['window']['-PROG4-'].update(np.mean(_VARS['fftData'][170:512]))
         
     if np.amax(_VARS['fftData'][:10]) > 10000:
-        cosmo_guirlande.pulse_period = 0.15
+        
+        '''cosmo_guirlande.pulse_period = 0.15
         cosmo_guirlande.pulse_speed = 0.1
         cosmo_guirlande.color1= 'ORANGE'
-        cosmo_guirlande.pulse()
+        cosmo_guirlande.pulse()'''
+        pixels.fill((100, 0, 0, 0))
+        pixels.show()
+        time.sleep(0.2)
+        pixels.fill((0, 0, 0, 0))
 
     # Redraw plot
     graph.erase()
