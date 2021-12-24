@@ -28,6 +28,10 @@ layout = [[sg.Graph(canvas_size=(CanvasSizeWH, CanvasSizeWH),
                           size=(20, 20), key='-PROG1-')],
           [sg.ProgressBar(400000, orientation='h',
                           size=(20, 20), key='-PROG2-')],
+          [sg.ProgressBar(400000, orientation='h',
+                          size=(20, 20), key='-PROG3-')],
+          [sg.ProgressBar(400000, orientation='h',
+                          size=(20, 20), key='-PROG4-')],
           [sg.Button('Listen', font=AppFont),
            sg.Button('Stop', font=AppFont, disabled=True),
            sg.Button('Exit', font=AppFont)]]
@@ -99,6 +103,8 @@ def stop():
         _VARS['window']['-PROG-'].update(0)
         _VARS['window']['-PROG1-'].update(0)
         _VARS['window']['-PROG2-'].update(0)
+        _VARS['window']['-PROG3-'].update(0)
+        _VARS['window']['-PROG4-'].update(0)
         _VARS['window'].FindElement('Stop').Update(disabled=True)
         _VARS['window'].FindElement('Listen').Update(disabled=False)
 
@@ -130,12 +136,19 @@ def callback(in_data, frame_count, time_info, status):
     print("type filter_fftData: ", type(_VARS['filter_fftData']))
     print("type filter_fftData[0]: ", type(_VARS['filter_fftData'][0]))
     print("len filter_fftData: ", len(_VARS['filter_fftData']))
-    '''
+    
     print("fftData'][:10]: ", _VARS['fftData'][:10])
     file2write = open("filename.txt", 'a')
     file2write.write(str(_VARS['fftData'][:10]))
     file2write.write("\n")
     file2write.close()
+    '''
+    #print("fftData: ", _VARS['fftData'])
+    print("len fftData: ", len(_VARS['fftData']))
+    print("fftData:[:10] ", _VARS['fftData'][:10])
+    print("fftData'][100:300]: ", _VARS['fftData'][100:300])
+    print("fftData'][350:512]: ", _VARS['fftData'][350:512])
+
     return (in_data, pyaudio.paContinue)
 
 
@@ -156,6 +169,8 @@ def updateUI():
     _VARS['window']['-PROG-'].update(np.amax(_VARS['audioData']))
     _VARS['window']['-PROG1-'].update(np.amax(_VARS['fftData']))
     _VARS['window']['-PROG2-'].update(np.amax(_VARS['fftData'][:10]))
+    _VARS['window']['-PROG3-'].update(np.amax(_VARS['fftData'][100:300]))
+    _VARS['window']['-PROG4-'].update(np.amax(_VARS['fftData'][350:512]))
     # Redraw plot
     graph.erase()
     drawAxis()
