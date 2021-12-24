@@ -135,7 +135,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
         #Create Socket to communicate
         self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
-        self.newSocket.start()
+        
 
         #Watchdog
         self.watchdog_count = 0
@@ -306,6 +306,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
         # os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
 
     def run(self):
+        self.newSocket.start()
         try:
             while True:
 
