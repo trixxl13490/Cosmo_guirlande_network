@@ -227,7 +227,7 @@ pixels = neopixel.NeoPixel(
 )
 print('Press Ctrl-C to quit.')
 
-cosmo_guirlande = Cosmo_guirlande_rpi.Cosmo_guirlande_rpi(3, 30, '192.168.0.21', 50003, 1024)
+cosmo_guirlande = Cosmo_guirlande_rpi.Cosmo_guirlande_rpi(pixels, 3, 30, '192.168.0.21', 50003, 1024)
 
 # MAIN LOOP
 while True:
