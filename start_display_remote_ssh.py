@@ -28,6 +28,7 @@ stdin1.write('''
   ''')
 
 #print(stdout1.read())
+time.sleep(0.1)
 #----------------------------------------------------------------------------------------------------------------------
 ssh2 = paramiko.SSHClient()
 ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -46,6 +47,7 @@ stdin2.write('''
   export XAUTHORITY=/home/pi/.Xauthority
   DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.21 50002 1024'
   ''')
+time.sleep(0.1)
 #----------------------------------------------------------------------------------------------------------------------
 ssh3 = paramiko.SSHClient()
 ssh3.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -64,6 +66,7 @@ stdin3.write('''
   export XAUTHORITY=/home/pi/.Xauthority
   DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 119 192.168.0.21 50003 1024'
   ''')
+time.sleep(0.1)
 #----------------------------------------------------------------------------------------------------------------------
 
 '''
