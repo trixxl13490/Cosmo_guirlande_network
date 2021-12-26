@@ -116,6 +116,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
         self.g = '0'
         self.b = '0'
         self.w = '0'
+        self.color1 = "AMBER"
         self.fixed_color = False
         self.chase_speed = 0.1
         self.chase_size = 10
