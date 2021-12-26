@@ -24,7 +24,7 @@ stdout1 = channel1.makefile('rb')
 
 stdin1.write('''
   export XAUTHORITY=/home/pi/.Xauthority
-  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.21 50002 1024'
+  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.21 50001 1024'
   ''')
 
 #print(stdout1.read())
@@ -44,9 +44,26 @@ stdout2 = channel2.makefile('rb')
 
 stdin2.write('''
   export XAUTHORITY=/home/pi/.Xauthority
-  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.21 50001 1024'
+  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.21 50002 1024'
   ''')
-print(stdout2.read())
+#----------------------------------------------------------------------------------------------------------------------
+ssh3 = paramiko.SSHClient()
+ssh3.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ssh3.connect(hostname='192.168.0.28', username='pi', password='vbcgxb270694', timeout=2, port=22)
+
+
+# kill GUI if running
+ssh_stdin3, ssh_stdout3, ssh_stderr3 = ssh3.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+
+# Start GUI again on rpi
+channel3 = ssh3.invoke_shell()
+stdin3 = channel3.makefile('wb')
+stdout3 = channel3.makefile('rb')
+
+stdin3.write('''
+  export XAUTHORITY=/home/pi/.Xauthority
+  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 119 192.168.0.21 50003 1024'
+  ''')
 #----------------------------------------------------------------------------------------------------------------------
 
 '''
