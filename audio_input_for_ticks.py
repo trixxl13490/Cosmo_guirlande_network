@@ -26,11 +26,11 @@ layout = [[sg.Graph(canvas_size=(CanvasSizeWH, CanvasSizeWH),
                           size=(20, 20), key='-PROG-')],
           [sg.ProgressBar(400000, orientation='h',
                           size=(20, 20), key='-PROG1-')],
-          [sg.ProgressBar(400000, orientation='h',
+          [sg.ProgressBar(40000, orientation='h',
                           size=(20, 20), key='-PROG2-')],
-          [sg.ProgressBar(400000, orientation='h',
+          [sg.ProgressBar(40000, orientation='h',
                           size=(20, 20), key='-PROG3-')],
-          [sg.ProgressBar(400000, orientation='h',
+          [sg.ProgressBar(40000, orientation='h',
                           size=(20, 20), key='-PROG4-')],
           [sg.Button('Listen', font=AppFont),
            sg.Button('Stop', font=AppFont, disabled=True),
@@ -79,8 +79,8 @@ def drawAxesLabels():
 
 
 def drawPlot():
-    step = 100/CHUNK
-    gain = 1
+    step = 100/CHUNK*2
+    gain = 0.001
 
     # MIN MAX Scaled :
     # mn, mx = np.min(_VARS['audioData']), np.max(_VARS['audioData'])
@@ -88,7 +88,7 @@ def drawPlot():
 
     # Scaled/Centered for display (change to suit signal):
     #x_scaled = ((_VARS['audioData']/100)*gain)+50
-    x_scaled = _VARS['fftData']
+    x_scaled = _VARS['fftData'] * gain
     for x in range(513):
         graph.DrawCircle((x*step, (x_scaled[x])),
                          0.4, line_color='black', fill_color='black')
@@ -138,17 +138,22 @@ def callback(in_data, frame_count, time_info, status):
     print("len filter_fftData: ", len(_VARS['filter_fftData']))
     
     print("fftData'][:10]: ", _VARS['fftData'][:10])
+
     file2write = open("filename.txt", 'a')
     file2write.write(str(_VARS['fftData'][:10]))
     file2write.write("\n")
     file2write.close()
-    '''
-    #print("fftData: ", _VARS['fftData'])
+
+    print("fftData: ", _VARS['fftData'])
     print("len fftData: ", len(_VARS['fftData']))
     print("fftData:[:10] ", _VARS['fftData'][:10])
     print("fftData'][100:300]: ", _VARS['fftData'][100:300])
     print("fftData'][350:512]: ", _VARS['fftData'][350:512])
 
+    print("mean fftData:[:10] ", np.mean(_VARS['fftData'][:10]))
+    print("mean fftData'][100:300]: ", np.mean(_VARS['fftData'][100:300]))
+    print("mean fftData'][350:512]: ", np.mean(_VARS['fftData'][350:512]))
+    '''
     return (in_data, pyaudio.paContinue)
 
 
@@ -169,8 +174,8 @@ def updateUI():
     _VARS['window']['-PROG-'].update(np.amax(_VARS['audioData']))
     _VARS['window']['-PROG1-'].update(np.amax(_VARS['fftData']))
     _VARS['window']['-PROG2-'].update(np.amax(_VARS['fftData'][:10]))
-    _VARS['window']['-PROG3-'].update(np.amax(_VARS['fftData'][100:300]))
-    _VARS['window']['-PROG4-'].update(np.amax(_VARS['fftData'][350:512]))
+    _VARS['window']['-PROG3-'].update(np.mean(_VARS['fftData'][10:170]))
+    _VARS['window']['-PROG4-'].update(np.mean(_VARS['fftData'][170:512]))
     # Redraw plot
     graph.erase()
     drawAxis()
