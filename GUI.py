@@ -119,7 +119,7 @@ class MainWin(QWidget):
         self.type_color11.addItems(["AMBER","AQUA","BLACK","BLUE", "CYAN","GOLD","GREEN","JADE","MAGENTA","OLD_LACE"
                                        ,"ORANGE", "PINK","PURPLE","RAINBOW","RED",
                                     "RGBW_WHITE_RGB" ,"RGBW_WHITE_RGBW","RGBW_WHITE_W", "TEAL", "WHITE","YELLOW" ])
-        self.type_color11.currentIndexChanged.connect(self.color1_change_demand1)
+        self.type_color11.currentIndexChanged.connect(self.color1_change_demand11)
 
         #Couleur 2
         self.type_color21 = QComboBox(self)
@@ -127,7 +127,7 @@ class MainWin(QWidget):
         self.type_color21.addItems(["AMBER","AQUA","BLACK","BLUE", "CYAN","GOLD","GREEN","JADE","MAGENTA","OLD_LACE"
                                        ,"ORANGE", "PINK","PURPLE","RAINBOW","RED",
                                     "RGBW_WHITE_RGB" ,"RGBW_WHITE_RGBW","RGBW_WHITE_W", "TEAL", "WHITE","YELLOW" ])
-        self.type_color21.currentIndexChanged.connect(self.color2_change_demand1)
+        self.type_color21.currentIndexChanged.connect(self.color2_change_demand12)
 
         #Bouton Rainbow 1 Loop
         self.button_restart_1 = QPushButton('restart', self)
@@ -467,7 +467,7 @@ class MainWin(QWidget):
             ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
                 , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
              "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
-        self.type_color22.currentIndexChanged.connect(self.color2_change_demand2)
+        self.type_color22.currentIndexChanged.connect(self.color2_change_demand21)
 
         # Couleur 2
         self.type_color22 = QComboBox(self)
@@ -476,7 +476,7 @@ class MainWin(QWidget):
             ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
                 , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
              "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
-        self.type_color22.currentIndexChanged.connect(self.color2_change_demand2)
+        self.type_color22.currentIndexChanged.connect(self.color2_change_demand22)
 
 
         #Bouton effet rainbow 2 Loop
@@ -759,22 +759,22 @@ class MainWin(QWidget):
         self.button_port_3.clicked.connect(self.on_click_port_3)
 
         # Couleur 3
-        self.type_color33 = QComboBox(self)
-        self.type_color33.setGeometry(610, 110, 100, 20)
-        self.type_color33.addItems(
+        self.type_color31 = QComboBox(self)
+        self.type_color31.setGeometry(610, 110, 100, 20)
+        self.type_color31.addItems(
             ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
                 , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
              "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
-        self.type_color33.currentIndexChanged.connect(self.color3_change_demand3)
+        self.type_color31.currentIndexChanged.connect(self.color3_change_demand31)
 
         # Couleur 3
-        self.type_color33 = QComboBox(self)
-        self.type_color33.setGeometry(660, 110, 100, 20)
-        self.type_color33.addItems(
+        self.type_color32 = QComboBox(self)
+        self.type_color32.setGeometry(660, 110, 100, 20)
+        self.type_color32.addItems(
             ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
                 , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
              "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
-        self.type_color33.currentIndexChanged.connect(self.color3_change_demand3)
+        self.type_color32.currentIndexChanged.connect(self.color3_change_demand32)
 
         #Entree Frequence Strombo 3
         # Create textbox
@@ -876,7 +876,7 @@ class MainWin(QWidget):
         #Entree pulse param speed
         # Create textbox
         self.textbox_pulse_speed_3= QLineEdit(self)
-        self.textbox_pulse_speed_3.setText('0.1')
+        self.textbox_pulse_speed_3.setText('0.15')
         self.textbox_pulse_speed_3.setGeometry(710, 600, 50, 20)
         # Create a button in the window
         self.button_pulse_speed_3= QPushButton('speed', self)
@@ -1072,7 +1072,7 @@ class MainWin(QWidget):
             ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
                 , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
              "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
-        self.type_color44.currentIndexChanged.connect(self.color4_change_demand4)
+        self.type_color44.currentIndexChanged.connect(self.color4_change_demand41)
 
         # Couleur 4
         self.type_color44 = QComboBox(self)
@@ -1081,7 +1081,7 @@ class MainWin(QWidget):
             ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
                 , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
              "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
-        self.type_color44.currentIndexChanged.connect(self.color4_change_demand4)
+        self.type_color44.currentIndexChanged.connect(self.color4_change_demand42)
 
         #Entree Frequence Strombo 4
         # Create textbox
@@ -1379,7 +1379,7 @@ class MainWin(QWidget):
             ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
                 , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
              "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
-        self.type_color55.currentIndexChanged.connect(self.color5_change_demand5)
+        self.type_color55.currentIndexChanged.connect(self.color5_change_demand51)
 
         # Couleur 5
         self.type_color55 = QComboBox(self)
@@ -1388,7 +1388,7 @@ class MainWin(QWidget):
             ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
                 , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
              "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
-        self.type_color55.currentIndexChanged.connect(self.color5_change_demand5)
+        self.type_color55.currentIndexChanged.connect(self.color5_change_demand52)
 
         #Entree Frequence Strombo 5
         # Create textbox
@@ -1687,7 +1687,7 @@ class MainWin(QWidget):
             ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
                 , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
              "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
-        self.type_color16.currentIndexChanged.connect(self.color6_change_demand6)
+        self.type_color16.currentIndexChanged.connect(self.color6_change_demand61)
 
         # Couleur 2
         self.type_color26 = QComboBox(self)
@@ -1696,7 +1696,7 @@ class MainWin(QWidget):
             ["AMBER", "AQUA", "BLACK", "BLUE", "CYAN", "GOLD", "GREEN", "JADE", "MAGENTA", "OLD_LACE"
                 , "ORANGE", "PINK", "PURPLE", "RAINBOW", "RED",
              "RGBW_WHITE_RGB", "RGBW_WHITE_RGBW", "RGBW_WHITE_W", "TEAL", "WHITE", "YELLOW"])
-        self.type_color26.currentIndexChanged.connect(self.color6_change_demand6)
+        self.type_color26.currentIndexChanged.connect(self.color6_change_demand62)
 
         #Entree Frequence Strombo 6
         # Create textbox
@@ -2002,7 +2002,7 @@ class MainWin(QWidget):
         self.newServer5.to_send = self.msg1
         self.newServer6.to_send = self.msg1
 
-    def color1_change_demand1(self):
+    def color1_change_demand11(self):
         print("selection changed ", self.type_color11.currentText())
         self.msg1 = 'cosmoguirlande,color1,' + str(( self.type_color11.currentText()))
         self.newServer1.to_send = self.msg1
@@ -2012,7 +2012,7 @@ class MainWin(QWidget):
         self.newServer5.to_send = self.msg1
         self.newServer6.to_send = self.msg1
 
-    def color2_change_demand1(self):
+    def color2_change_demand12(self):
         print("selection changed ", self.type_color21.currentText())
         self.msg1 = 'cosmoguirlande,color2,' + str(( self.type_color21.currentText()))
         self.newServer1.to_send = self.msg1
@@ -2239,13 +2239,16 @@ class MainWin(QWidget):
         Strombo_frequency = self.textbox_port.text()
 
     #########################################################################################################Strip 2
-    def color2_change_demand2(self):
+    def color2_change_demand21(self):
         print("selection changed ", self.type_color22.currentText())
         self.msg2 = 'cosmoguirlande,color1,' + str(( self.type_color21.currentText()))
+        self.newServer2.to_send = self.msg2
 
-    def color2_change_demand2(self):
+    def color2_change_demand22(self):
         print("selection changed ", self.type_color22.currentText())
         self.msg2 = 'cosmoguirlande,color2,' + str(( self.type_color22.currentText()))
+        self.newServer2.to_send = self.msg2
+
     def on_click_ip_2(self):
         self.IPValue_2 = self.textbox_IP_2.text()
         self.vnc_window_2 = VNC_Window(self.IPValue_2)
@@ -2349,13 +2352,18 @@ class MainWin(QWidget):
                              QMessageBox.Ok)
         self.textbox.setText("")
 
-    def color3_change_demand3(self):
-        print("selection changed ", self.type_color33.currentText())
+    def color3_change_demand31(self):
+        print("selection changed ", self.type_color31.currentText())
         self.msg3 = 'cosmoguirlande,color1,' + str(( self.type_color31.currentText()))
+        self.newServer3.to_send = self.msg3
+        print("change color 3 method 1")
 
-    def color3_change_demand3(self):
-        print("selection changed ", self.type_color33.currentText())
+    def color3_change_demand32(self):
+        print("selection changed ", self.type_color32.currentText())
         self.msg3 = 'cosmoguirlande,color2,' + str(( self.type_color32.currentText()))
+        self.newServer3.to_send = self.msg3
+        print("change color 3 method 2")
+
 
     def on_click_ip_3(self):
         self.IPValue_3 = self.textbox_IP_3.text()
@@ -2449,13 +2457,16 @@ class MainWin(QWidget):
         self.newServer3.to_send = self.msg3              
 
     #########################################################################################################Strip 4
-    def color4_change_demand4(self):
+    def color4_change_demand41(self):
         print("selection changed ", self.type_color44.currentText())
         self.msg4 = 'cosmoguirlande,color1,' + str((self.type_color41.currentText()))
+        self.newServer4.to_send = self.msg4
 
-    def color4_change_demand4(self):
+
+    def color4_change_demand42(self):
         print("selection changed ", self.type_color44.currentText())
         self.msg4 = 'cosmoguirlande,color2,' + str((self.type_color42.currentText()))
+        self.newServer4.to_send = self.msg4
 
     def on_click_ip_4(self):
         self.IPValue_4 = self.textbox_IP_4.text()
@@ -2569,13 +2580,15 @@ class MainWin(QWidget):
         self.newServer4.to_send = self.msg4
 
     #########################################################################################################Strip 5
-    def color5_change_demand5(self):
+    def color5_change_demand51(self):
         print("selection changed ", self.type_color55.currentText())
         self.msg5 = 'cosmoguirlande,color1,' + str(( self.type_color51.currentText()))
+        self.newServer5.to_send = self.msg5
 
-    def color5_change_demand5(self):
+    def color5_change_demand52(self):
         print("selection changed ", self.type_color55.currentText())
         self.msg5 = 'cosmoguirlande,color2,' + str(( self.type_color52.currentText()))
+        self.newServer5.to_send = self.msg5
 
     def on_click_ip_5(self):
         self.IPValue_5 = self.textbox_IP_5.text()
@@ -2689,13 +2702,15 @@ class MainWin(QWidget):
         self.newServer5.to_send = self.msg5
 
     #########################################################################################################Strip 6
-    def color6_change_demand6(self):
+    def color6_change_demand61(self):
         print("selection changed ", self.type_color66.currentText())
         self.msg6 = 'cosmoguirlande,color1,' + str(( self.type_color61.currentText()))
+        self.newServer6.to_send = self.msg6
 
-    def color6_change_demand6(self):
+    def color6_change_demand62(self):
         print("selection changed ", self.type_color66.currentText())
         self.msg6 = 'cosmoguirlande,color2,' + str(( self.type_color62.currentText()))
+        self.newServer6.to_send = self.msg6
 
     def on_click_ip_6(self):
         self.IPValue_6 = self.textbox_IP_6.text()
