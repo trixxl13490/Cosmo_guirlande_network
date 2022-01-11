@@ -547,16 +547,25 @@ if __name__ == '__main__':
     parser.add_argument('server_tcp_ip', metavar='server_tcp_ip', type=str, help='Server IP')
     parser.add_argument('tcp_port', metavar='tcp_port', type=int, help='Tcp Port')
     parser.add_argument('buffer_size', metavar='buffer_size', type=int, help='Buffer Size')
+    parser.add_argument('RGB', metavar='RGB', type=str, help='RGB or RGBW Size')
+
     args = parser.parse_args()
 
     # Configuration des LED
-    pixels = neopixel.NeoPixel(
-        board.D18, args.num_pixel, brightness=0.2, auto_write=False, pixel_order=neopixel.GRBW
-    )
+    if args.RGB.startswith("RGBW"):
+        pixels = neopixel.NeoPixel(
+            board.D18, args.num_pixel, brightness=0.99, auto_write=False, pixel_order=neopixel.GRBW
+        )
+
+    elif args.RGB.startswith("RGB"):
+        pixels = neopixel.NeoPixel(
+            board.D18, args.num_pixel, brightness=0.99, auto_write=False, pixel_order=neopixel.GRB
+        )
+
     print('Press Ctrl-C to quit.')
 
-    # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0.17 50001 1024
-    #sudo python3 gui_rpi.py 3 30 192.168.43.144 50003 1024
+    # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0.17 50001 1024 RGB
+    #sudo python3 gui_rpi.py 3 30 192.168.43.144 50003 1024 RGBW
 
     cosmo_guirlande = Cosmo_guirlande_rpi(pixels, args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
 
