@@ -565,7 +565,7 @@ if __name__ == '__main__':
     print('Press Ctrl-C to quit.')
 
     # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0.17 50001 1024 RGB
-    #sudo python3 gui_rpi.py 3 30 192.168.43.144 50003 1024 RGBW
+    # Run ex: sudo python3 gui_rpi.py 3 30 192.168.43.144 50003 1024 RGBW
 
     cosmo_guirlande = Cosmo_guirlande_rpi(pixels, args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size , args.RGB)
 
