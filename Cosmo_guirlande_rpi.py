@@ -189,13 +189,13 @@ class Cosmo_guirlande_rpi(threading.Thread):
             animations.animate()
 
     def changeColor(self, r, g, b, w):
-        if self.rgb.startswith("RGB"):
+        if self.rgb.startswith("RGBW"):
             self.color1 = (int(r), int(g), int(b), int(w))
             self.pixels.fill((int(r), int(g), int(b), int(w)))
             self.pixels.show()
             time.sleep(0.3)
 
-        elif self.rgb.startswith("RGBW"):
+        elif self.rgb.startswith("RGB"):
             self.color1 = (int(r), int(g), int(b))
             self.pixels.fill((int(r), int(g), int(b)))
             self.pixels.show()
