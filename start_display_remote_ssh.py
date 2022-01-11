@@ -31,10 +31,10 @@ stdout3 = channel3.makefile('rb')
 
 stdin3.write('''
   export XAUTHORITY=/home/pi/.Xauthority
-  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 119 192.168.0.20 50003 1024'
+  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 119 192.168.0.20 50003 1024 RGB'
   ''')
 print("ss3 passed")
-#----------------------------------------------------------------------------------------------------------------------
+#--------------------------------------------------------------------------------------------------------------------
 
 #Create SSH connection with paramiko
 ssh1 = paramiko.SSHClient()
@@ -51,7 +51,7 @@ stdout1 = channel1.makefile('rb')
 
 stdin1.write('''
   export XAUTHORITY=/home/pi/.Xauthority
-  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.20 50001 1024'
+  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.20 50001 1024 RGBW'
   ''')
 
 #print(stdout1.read())
@@ -78,7 +78,7 @@ stdout2 = channel2.makefile('rb')
 
 stdin2.write('''
   export XAUTHORITY=/home/pi/.Xauthority
-  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.20 50002 1024'
+  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.20 50002 1024 RGBW'
   ''')
 print("ss2 passed")
 #----------------------------------------------------------------------------------------------------------------------
@@ -101,7 +101,7 @@ stdout2 = channel2.makefile('rb')
 
 stdin2.write('''
   export XAUTHORITY=/home/pi/.Xauthority
-  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.20 50002 1024'
+  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.20 50002 1024 RGBW'
   ''')
 print("ss2 passed")
 
