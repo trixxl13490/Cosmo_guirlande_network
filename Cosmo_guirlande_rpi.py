@@ -107,11 +107,12 @@ class Cosmo_Communication(threading.Thread):
 
 
 class Cosmo_guirlande_rpi(threading.Thread):
-    def __init__(self, pixels, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
+    def __init__(self, pixels, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size, rgb):
         threading.Thread.__init__(self)
         self.pixels = pixels
         self.pixel_number = pixel_number
         self.controle_manuel = False
+        self.rgb = rgb
         self.r = '0'
         self.g = '0'
         self.b = '0'
@@ -188,10 +189,17 @@ class Cosmo_guirlande_rpi(threading.Thread):
             animations.animate()
 
     def changeColor(self, r, g, b, w):
-        self.color1 = (int(r), int(g), int(b), int(w))
-        self.pixels.fill((int(r), int(g), int(b), int(w)))
-        self.pixels.show()
-        time.sleep(0.3)
+        if self.rgb.startswith("RGB"):
+            self.color1 = (int(r), int(g), int(b), int(w))
+            self.pixels.fill((int(r), int(g), int(b), int(w)))
+            self.pixels.show()
+            time.sleep(0.3)
+
+        elif self.rgb.startswith("RGBW"):
+            self.color1 = (int(r), int(g), int(b))
+            self.pixels.fill((int(r), int(g), int(b)))
+            self.pixels.show()
+            time.sleep(0.3)
 
     def changeColor1String(self, color):
         self.r = '0'
@@ -595,17 +603,25 @@ if __name__ == '__main__':
     parser.add_argument('server_tcp_ip', metavar='server_tcp_ip', type=str, help='Server IP')
     parser.add_argument('tcp_port', metavar='tcp_port', type=int, help='Tcp Port')
     parser.add_argument('buffer_size', metavar='buffer_size', type=int, help='Buffer Size')
+    parser.add_argument('RGB', metavar='RGB', type=str, help='RGB or RGBW Size')
     args = parser.parse_args()
 
     # Configuration des LED
-    pixels = neopixel.NeoPixel(
-        board.D18, args.num_pixel, brightness=0.99, auto_write=False, pixel_order=neopixel.GRBW
-    )
+    if args.RGB.startswith("RGBW"):
+        pixels = neopixel.NeoPixel(
+            board.D18, args.num_pixel, brightness=0.99, auto_write=False, pixel_order=neopixel.GRBW
+        )
+
+    elif args.RGB.startswith("RGB"):
+        pixels = neopixel.NeoPixel(
+            board.D18, args.num_pixel, brightness=0.99, auto_write=False, pixel_order=neopixel.GRB
+        )
+
     print('Press Ctrl-C to quit.')
 
     # Run ex: sudo python3 Desktop/Cosmo_guirlande_rpi.py 1 30 192.168.0.17 50001 1024
 
-    cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size)
+    cosmo_guirlande = Cosmo_guirlande_rpi(args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size, args.RGB)
     while(True):
         try:
             cosmo_guirlande.run()
