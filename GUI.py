@@ -2281,7 +2281,7 @@ class MainWin(QWidget):
         self.newServer2.to_send = self.msg2
 
     def comet_demand_2(self):
-        self.msg2 = 'cosmoguirlande,comet'
+        self.msg2 = 'cosmoguirlande,comet'+ self.textbox_comet_speed_2.text() + ',' + self.textbox_comet_tail_2.text()
         self.newServer2.to_send = self.msg2
 
     def sparkle_demand_2(self):
@@ -2391,7 +2391,7 @@ class MainWin(QWidget):
         self.newServer3.to_send = self.msg3
 
     def comet_demand_3(self):
-        self.msg3 = 'cosmoguirlande,comet'
+        self.msg3 = 'cosmoguirlande,comet' + self.textbox_comet_speed_3.text() + ',' + self.textbox_comet_tail_3.text()
         self.newServer3.to_send = self.msg3
 
     def sparkle_demand_3(self):
@@ -2543,7 +2543,7 @@ class MainWin(QWidget):
         self.newServer4.to_send = self.msg4
 
     def comet_demand_4(self):
-        self.msg4 = 'cosmoguirlande,comet'
+        self.msg4 = 'cosmoguirlande,comet' + self.textbox_comet_speed_4.text() + ',' + self.textbox_comet_tail_4.text()
         self.newServer4.to_send = self.msg4
 
     def sparkle_demand_4(self):
@@ -2641,7 +2641,7 @@ class MainWin(QWidget):
         self.newServer5.to_send = self.msg5
 
     def comet_demand_5(self):
-        self.msg5 = 'cosmoguirlande,comet'
+        self.msg5 = 'cosmoguirlande,comet' + self.textbox_comet_speed_5.text() + ',' + self.textbox_comet_tail_5.text()
         self.newServer5.to_send = self.msg5
 
     def sparkle_demand_5(self):
@@ -2763,7 +2763,7 @@ class MainWin(QWidget):
         self.newServer6.to_send = self.msg6
 
     def comet_demand_6(self):
-        self.msg6 = 'cosmoguirlande,comet'
+        self.msg6 = 'cosmoguirlande,comet' + self.textbox_comet_speed_6.text() + ',' + self.textbox_comet_tail_6.text()
         self.newServer6.to_send = self.msg6
 
     def sparkle_demand_6(self):
