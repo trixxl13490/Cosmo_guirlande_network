@@ -316,7 +316,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
     # colorAll2Color((red1, green1, blue1), (red2, green2, blue2)) 
     def colorAll2Color(self, c1, c2):
-        for i in range(self.pixels):
+        for i in range(self.pixel_number):
             if(i % 2 == 0): # even
                 self.pixels[i] = c1
             else: # odd   
