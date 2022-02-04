@@ -1630,14 +1630,14 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,Fire"):
                     self.state = "Fire"
                     function_type, function = self.newSocket.data_rcv.split(',')
-                    while self.newSocket.data_rcv.startswith('cosmoguirlande,strombo'):
+                    while self.newSocket.data_rcv.startswith('cosmoguirlande,Fire'):
                         self.Fire(55, 120,0, 100)
                     time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,FireCustom"):
                     self.state = "FireCustom"
                     function_type, function = self.newSocket.data_rcv.split(',')
-                    while self.newSocket.data_rcv.startswith('cosmoguirlande,strombo'):
+                    while self.newSocket.data_rcv.startswith('cosmoguirlande,FireCustom'):
                         self.FireCustom(self.r, self.g, self.b )
                     time.sleep(0.5)
 
