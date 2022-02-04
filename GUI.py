@@ -336,7 +336,7 @@ class MainWin(QWidget):
         self.button_stop_dancingPiScroll = QPushButton('stop_dancingPiSroll', self)
         self.button_stop_dancingPiScroll.setToolTip('stop_dancingPiSroll')
         self.button_stop_dancingPiScroll.setGeometry(110, 720, 100, 25)
-        self.button_stop_dancingPiScroll.clicked.connect(self.stop_dancingPiScroll_demand_1)
+        self.button_stop_dancingPiScroll.clicked.connect(self.stop_dancingPiEnergy_demand_1)
         #--------------------------------------------------------------------
 
         # Bouton Dancing Pi Spectrum 1
@@ -349,7 +349,7 @@ class MainWin(QWidget):
         self.button_stop_dancingPiSpectrum = QPushButton('stop_dancingPiSpectrum', self)
         self.button_stop_dancingPiSpectrum.setToolTip('stop_dancingPiSpectrum')
         self.button_stop_dancingPiSpectrum.setGeometry(110, 750, 100, 25)
-        self.button_stop_dancingPiSpectrum.clicked.connect(self.stop_dancingPiSpectrum_demand_1)
+        self.button_stop_dancingPiSpectrum.clicked.connect(self.stop_dancingPiEnergy_demand_1)
         #--------------------------------------------------------------------
 
         # Bouton Dancing Pi Energy 1
@@ -370,6 +370,115 @@ class MainWin(QWidget):
         self.button_cosmoBall.setToolTip('cosmoBall')
         self.button_cosmoBall.setGeometry(10,810, 100, 25)
         #self.button_dancingPi.clicked.connect(self.cosmoBall_demand_1)
+
+        # Bouton colorAll2Color - repere dancingPiScroll_demand_1
+        self.button_colorAll2Color = QPushButton('colorAll2Color', self)
+        self.button_colorAll2Color.setToolTip('colorAll2Color')
+        self.button_colorAll2Color.setGeometry(10,840, 100, 25)
+        self.button_colorAll2Color.clicked.connect(self.colorAll2Color_demand_1)
+
+        # Bouton FadeInOut
+        self.button_FadeInOut = QPushButton('FadeInOut', self)
+        self.button_FadeInOut.setToolTip('FadeInOut')
+        self.button_FadeInOut.setGeometry(10,870, 100, 25)
+        self.button_FadeInOut.clicked.connect(self.FadeInOut_demand_1)
+
+         # Bouton Strobe
+        self.button_Strobe = QPushButton('Strobe', self)
+        self.button_Strobe.setToolTip('Strobe')
+        self.button_Strobe.setGeometry(10,900, 100, 25)
+        self.button_Strobe.clicked.connect(self.Strobe_demand_1)
+
+        # Bouton HalloweenEyes
+        self.button_HalloweenEyes = QPushButton('HalloweenEyes', self)
+        self.button_HalloweenEyes.setToolTip('HalloweenEyes')
+        self.button_HalloweenEyes.setGeometry(10,930, 100, 25)
+        self.button_HalloweenEyes.clicked.connect(self.HalloweenEyes_demand_1)
+
+        # Bouton CylonBounce
+        self.button_CylonBounce = QPushButton('CylonBounce', self)
+        self.button_CylonBounce.setToolTip('CylonBounce')
+        self.button_CylonBounce.setGeometry(110,840, 100, 25)
+        self.button_CylonBounce.clicked.connect(self.CylonBounce_demand_1)
+
+        # Bouton NewKITT
+        self.button_NewKITT = QPushButton('NewKITT', self)
+        self.button_NewKITT.setToolTip('NewKITT')
+        self.button_NewKITT.setGeometry(110,870, 100, 25)
+        self.button_NewKITT.clicked.connect(self.NewKITT_demand_1)
+
+        # Bouton Twinkle
+        self.button_Twinkle = QPushButton('Twinkle', self)
+        self.button_Twinkle.setToolTip('Twinkle')
+        self.button_Twinkle.setGeometry(110,900, 100, 25)
+        self.button_Twinkle.clicked.connect(self.Twinkle_demand_1)
+
+        # Bouton TwinkleRandom
+        self.button_TwinkleRandom = QPushButton('TwinkleRandom', self)
+        self.button_TwinkleRandom.setToolTip('TwinkleRandom')
+        self.button_TwinkleRandom.setGeometry(110,930, 100, 25)
+        self.button_TwinkleRandom.clicked.connect(self.TwinkleRandom_demand_1)
+
+        # Bouton SnowSparkle
+        self.button_SnowSparkle = QPushButton('SnowSparkle', self)
+        self.button_SnowSparkle.setToolTip('SnowSparkle')
+        self.button_SnowSparkle.setGeometry(210,840, 100, 25)
+        self.button_SnowSparkle.clicked.connect(self.SnowSparkle_demand_1)
+
+        # Bouton RunningLights
+        self.button_RunningLights = QPushButton('RunningLights', self)
+        self.button_RunningLights.setToolTip('RunningLights')
+        self.button_RunningLights.setGeometry(210,870, 100, 25)
+        self.button_RunningLights.clicked.connect(self.RunningLights_demand_1)
+
+        # Bouton colorWipe
+        self.button_colorWipe = QPushButton('colorWipe', self)
+        self.button_colorWipe.setToolTip('colorWipe')
+        self.button_colorWipe.setGeometry(210,900, 100, 25)
+        self.button_colorWipe.clicked.connect(self.colorWipe_demand_1)
+
+        # Bouton theaterChaseRainbow
+        self.button_theaterChaseRainbow = QPushButton('theaterChaseRainbow', self)
+        self.button_theaterChaseRainbow.setToolTip('theaterChaseRainbow')
+        self.button_theaterChaseRainbow.setGeometry(210,930, 100, 25)
+        self.button_theaterChaseRainbow.clicked.connect(self.theaterChaseRainbow_demand_1)
+
+        # Bouton Fire
+        self.button_Fire = QPushButton('Fire', self)
+        self.button_Fire.setToolTip('Fire')
+        self.button_Fire.setGeometry(310,840, 100, 25)
+        self.button_Fire.clicked.connect(self.Fire_demand_1)
+
+        # Bouton FireCustom
+        self.button_FireCustom = QPushButton('FireCustom', self)
+        self.button_FireCustom.setToolTip('FireCustom')
+        self.button_FireCustom.setGeometry(310,870, 100, 25)
+        self.button_FireCustom.clicked.connect(self.FireCustom_demand_1)
+
+        # Bouton meteorRain
+        self.button_meteorRain = QPushButton('meteorRain', self)
+        self.button_meteorRain.setToolTip('meteorRain')
+        self.button_meteorRain.setGeometry(310,900, 100, 25)
+        self.button_meteorRain.clicked.connect(self.meteorRain_demand_1)
+
+        # Bouton fadeToBlack
+        self.button_fadeToBlack = QPushButton('fadeToBlack', self)
+        self.button_fadeToBlack.setToolTip('fadeToBlack')
+        self.button_fadeToBlack.setGeometry(310,930, 100, 25)
+        self.button_fadeToBlack.clicked.connect(self.fadeToBlack_demand_1)
+
+        # Bouton BouncingBalls
+        self.button_BouncingBalls = QPushButton('BouncingBalls', self)
+        self.button_BouncingBalls.setToolTip('BouncingBalls')
+        self.button_BouncingBalls.setGeometry(410,840, 100, 25)
+        self.button_BouncingBalls.clicked.connect(self.BouncingBalls_demand_1)
+
+        # Bouton BouncingColoredBalls
+        self.button_BouncingColoredBalls = QPushButton('BouncingColoredBalls', self)
+        self.button_BouncingColoredBalls.setToolTip('BouncingColoredBalls')
+        self.button_BouncingColoredBalls.setGeometry(410,870, 100, 25)
+        self.button_BouncingColoredBalls.clicked.connect(self.BouncingColoredBalls_demand_1)
+
 
         # Slider Red 1
         self.sl_R1 = QSlider(Qt.Vertical, self)
@@ -2165,8 +2274,8 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
 
-    def stop_dancingPiSpectrum_demand_1(self):
-        self.msg1 = 'cosmoguirlande,stop_dancingPiSpectrum'
+    def colorAll2Color_demand_1(self):
+        self.msg1 = 'cosmoguirlande,colorAll2Color'
         self.newServer1.to_send = self.msg1
         if self.sync:
             self.newServer2.to_send = self.msg1
@@ -2175,8 +2284,8 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
 
-    def stop_dancingPiScroll_demand_1(self):
-        self.msg1 = 'cosmoguirlande,stop_dancingPiScroll'
+    def FadeInOut_demand_1(self):
+        self.msg1 = 'cosmoguirlande,FadeInOut'
         self.newServer1.to_send = self.msg1
         if self.sync:
             self.newServer2.to_send = self.msg1
@@ -2184,6 +2293,177 @@ class MainWin(QWidget):
             self.newServer4.to_send = self.msg1
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
+
+    def Strobe_demand_1(self):
+        self.msg1 = 'cosmoguirlande,Strobe'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def HalloweenEyes_demand_1(self):
+        self.msg1 = 'cosmoguirlande,HalloweenEyes'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def CylonBounce_demand_1(self):
+        self.msg1 = 'cosmoguirlande,CylonBounce'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def NewKITT_demand_1(self):
+        self.msg1 = 'cosmoguirlande,NewKITT'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def Twinkle_demand_1(self):
+        self.msg1 = 'cosmoguirlande,Twinkle'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def TwinkleRandom_demand_1(self):
+        self.msg1 = 'cosmoguirlande,TwinkleRandom'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def SnowSparkle_demand_1(self):
+        self.msg1 = 'cosmoguirlande,SnowSparkle'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def RunningLights_demand_1(self):
+        self.msg1 = 'cosmoguirlande,*RunningLights'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def colorWipe_demand_1(self):
+        self.msg1 = 'cosmoguirlande,colorWipe'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def theaterChaseRainbow_demand_1(self):
+        self.msg1 = 'cosmoguirlande,theaterChaseRainbow'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def Fire_demand_1(self):
+        self.msg1 = 'cosmoguirlande,Fire'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def FireCustom_demand_1(self):
+        self.msg1 = 'cosmoguirlande,FireCustom'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def FadeInOut_demand_1(self):
+        self.msg1 = 'cosmoguirlande,FadeInOut'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def fadeToBlack_demand_1(self):
+        self.msg1 = 'cosmoguirlande,fadeToBlack'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def BouncingBalls_demand_1(self):
+        self.msg1 = 'cosmoguirlande,*BouncingBalls'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
+    def BouncingColoredBalls_demand_1(self):
+        self.msg1 = 'cosmoguirlande,*BouncingColoredBalls'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+    
+    def meteorRain_demand_1(self):
+        self.msg1 = 'cosmoguirlande,meteorRain'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+    
 
     # Slider Buttons functions
     def slider_R1(self, R1):

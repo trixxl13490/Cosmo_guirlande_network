@@ -5,6 +5,7 @@ import board
 import neopixel
 import os
 import threading
+import math
 import socket
 from adafruit_led_animation.animation.comet import Comet # sudo pip3 install adafruit-circuitpython-led-animation
 from adafruit_led_animation.animation.chase import Chase
@@ -23,6 +24,8 @@ from adafruit_led_animation.sequence import AnimationSequence
 from adafruit_led_animation.color import AMBER, AQUA, BLACK,BLUE,CYAN,GOLD,GREEN
 from adafruit_led_animation.color import JADE,MAGENTA,OLD_LACE,ORANGE,PINK,PURPLE,RAINBOW,RED,RGBW_WHITE_RGB
 from adafruit_led_animation.color import RGBW_WHITE_RGBW,RGBW_WHITE_W,TEAL,WHITE,YELLOW
+import random
+
 #Recorder for beat detection
 #from recorder import *
 
@@ -165,7 +168,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
             b = int(255 - pos * 3)
         return (r, g, b) if neopixel.RGBW in (neopixel.RGB, neopixel.GRB) else (r, g, b, 0)
 
-
     def stromboscope(self, color, wait_s):
         print("self.color1",color)
         print("type self.color1", type(color))
@@ -277,7 +279,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
         while self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle'):
             animations.animate()
 
-
     def solid(self):
         solid = Solid(self.pixels, color=self.color1)
         animations = AnimationSequence(
@@ -313,46 +314,965 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
     def stop_dancingPiSpectrum(self):
         os.system("sudo ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
-        # os.system("ps aux | grep dancyPi | awk '{print $2}' | xargs sudo kill -9")
 
-    # BouncingColoredBalls(BallCount, colors[][3], LoopCount) 
-    # BouncingBalls(red, green, blue, BallCount, LoopCount) 
-    # Fire(CoolingRangeStart, CoolingRangeEnd, Sparking, SparkingRangeStart, SparkingRangeEnd, SpeedDelay, FireColor, FireEffect, LoopCount)
-		#CoolingRangeStart = 0-255
-		#CoolingRangeEnd = 0-255
-		#Sparking = 0-100  (0= 0% sparkes randomly added, 100= 100% sparks randomly added)
-		#SparkingRangeStart = 0-255 
-		#SparkingRangeEnd = 0-255
-		#FireColor = 0-2 (0=red, 1=blue , 2=green)
-		#FireEffect = 0-2
-	# Fire(Cooling, Sparking, SpeedDelay, LoopCount)
-    # meteorRain(red, green, blue, meteorSize, meteorTrailDecay, meteorRandomDecay, LoopCount, SpeedDelay)
-    # theaterChaseRainbow(SpeedDelay)
-    # theaterChase(red, green, blue, cycles, SpeedDelay)
-    # colorWipe(red, green, blue, SpeedDelay)
-    # RunningLights(red, green, blue, WaveDelay)
-    # SnowSparkle(red, green, blue, Count, SparkleDelay, SpeedDelay)
-    # TwinkleRandom( Count, SpeedDelay, OnlyOne) 
-    # Twinkle(red, green, blue, Count, SpeedDelay, OnlyOne)
-    # NewKITT(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
-    # CylonBounce(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
-    # HalloweenEyes(red, green, blue, EyeWidth, EyeSpace, Fade, Steps, FadeDelay, EndPause)
-    # Strobe(red, green, blue, StrobeCount, FlashDelay, EndPause)
-    # FadeInOut(red, green, blue, delay)
-    # RGBLoop(delay)
     # colorAll2Color((red1, green1, blue1), (red2, green2, blue2)) 
-    #RotateExisting( delay, cycles)
-    # theaterChaseCustom(colorobj, darkspace, cycles, SpeedDelay)
+    def colorAll2Color(self, c1, c2):
+        for i in range(self.pixels):
+            if(i % 2 == 0): # even
+                pixels[i] = c1
+            else: # odd   
+                pixels[i] = c2
+        pixels.show()
+
+
+    def wheel(pos):
+        # Input a value 0 to 255 to get a color value.
+        # The colours are a transition r - g - b - back to r.
+        if pos < 0 or pos > 255:
+            r = g = b = 0
+        elif pos < 85:
+            r = int(pos * 3)
+            g = int(255 - pos*3)
+            b = 0
+        elif pos < 170:
+            pos -= 85
+            r = int(255 - pos*3)
+            g = 0
+            b = int(pos*3)
+        else:
+            pos -= 170
+            r = 0
+            g = int(pos*3)
+            b = int(255 - pos*3)
+        return (r, g, b) if neopixel.ORDER == neopixel.RGB or neopixel.ORDER == neopixel.GRB else (r, g, b, 0)
+
+
+    def rainbow_cycle(self,delay, cycles):
+        for j in range(255 * cycles):
+            for i in range(self.pixel_number):
+                # " // "  this divides and returns the integer value of the quotient. 
+                # It dumps the digits after the decimal
+                pixel_index = (i * 256 // self.pixel_numbers) + j
+                pixels[i] = wheel(pixel_index & 255)
+            pixels.show()
+            time.sleep(delay)
+
+    # RGBLoop(delay)
+    def RGBLoop(delay):
+        for j in range(3):
+            # Fade IN
+            for k in range(256):
+                if j == 0:
+                    pixels.fill((k, 0, 0))
+                elif j == 1:
+                    pixels.fill((0, k, 0))
+                elif j == 2:
+                    pixels.fill((0, 0, k))
+                pixels.show()
+                time.sleep(delay)
+
+            # Fade OUT
+            for k in range(256):
+                if j == 2:
+                    pixels.fill((k, 0, 0))
+                elif j == 1:
+                    pixels.fill((0, k, 0))
+                elif j == 0:
+                    pixels.fill((0, 0, k))
+                pixels.show()
+                time.sleep(delay)
+
+    # FadeInOut(red, green, blue, delay)  
+    def FadeInOut(red, green, blue, delay):
+        r = 0
+        g = 0
+        b = 0
+        
+        for k in range(256):
+            r = (k/256.0)*red
+            g = (k/256.0)*green
+            b = (k/256.0)*blue
+            pixels.fill((int(r), int(g), int(b)))
+            pixels.show()
+            time.sleep(delay)
+        
+        for k in range(256, -1, -1):
+            r = (k/256.0)*red
+            g = (k/256.0)*green
+            b = (k/256.0)*blue
+            pixels.fill((int(r), int(g), int(b)))
+            pixels.show()
+            time.sleep(delay)
+
+    # Strobe(red, green, blue, StrobeCount, FlashDelay, EndPause)
+    def Strobe(red, green, blue, StrobeCount, FlashDelay, EndPause):
+        for j in range(StrobeCount):
+            pixels.fill((red,green,blue))
+            pixels.show()
+            time.sleep(FlashDelay)
+            pixels.fill((0,0,0))
+            pixels.show()
+            time.sleep(FlashDelay)
+    
+        time.sleep(EndPause)
+
+    # HalloweenEyes(red, green, blue, EyeWidth, EyeSpace, Fade, Steps, FadeDelay, EndPause)
+    def HalloweenEyes(self, red, green, blue, EyeWidth, EyeSpace, Fade, Steps, FadeDelay, EndPause):
+        pixels.fill((0,0,0))
+        r = 0
+        g = 0
+        b = 0
+
+        # define eye1 and eye2 location
+        StartPoint  = random.randint( 0, self.pixel_number - (2*EyeWidth) - EyeSpace )
+        Start2ndEye = StartPoint + EyeWidth + EyeSpace
+
+        #  set color of eyes for given location
+        for i in range(EyeWidth):
+            pixels[StartPoint + i] = (red, green, blue)
+            pixels[Start2ndEye + i] = (red, green, blue)
+        pixels.show()
+
+        # if user wants fading, then fadeout pixel color
+        if Fade == True:
+            for j in range(Steps, -1, -1):
+                r = (j/Steps)*red
+                g = (j/Steps)*green
+                b = (j/Steps)*blue
+
+                for i in range(EyeWidth):
+                    pixels[StartPoint + i] = ((int(r), int(g), int(b)))
+                    pixels[Start2ndEye + i] = ((int(r), int(g), int(b)))
+
+                pixels.show()
+                time.sleep(FadeDelay)
+        
+        # Set all pixels to black
+        pixels.fill((0,0,0))
+
+        # pause before changing eye location
+        time.sleep(EndPause)
+
+    # CylonBounce(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+    def CylonBounce(self, red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
+    
+        for i in range(self.pixel_number - EyeSize - 1):
+            pixels.fill((0,0,0))
+            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+
+            for j in range(1, EyeSize+1):
+                pixels[i+j] = (red, green, blue)
+
+            pixels[i+EyeSize+1] = (int(red/10), int(green/10), int(blue/10))
+            pixels.show()
+            time.sleep(SpeedDelay)
+    
+        time.sleep(ReturnDelay)
+        time.sleep(10)
+        
+        for i in range(self.pixel_number - EyeSize - 2, -1, -1):
+            pixels.fill((0,0,0))
+            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+
+            for j in range(1, EyeSize+1):
+                pixels[i+j] = (red, green, blue)
+
+            pixels[i+EyeSize+1] = (int(red/10), int(green/10), int(blue/10))
+            pixels.show()
+            time.sleep(SpeedDelay)
+
+        time.sleep(ReturnDelay)
+        time.sleep(10)
+
+    # NewKITT(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+    def NewKITT(red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
+        RightToLeft(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        LeftToRight(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        OutsideToCenter(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        CenterToOutside(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        LeftToRight(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        RightToLeft(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        OutsideToCenter(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        CenterToOutside(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+
+    def CenterToOutside(self,red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
+        for i in range(int((self.pixel_number - EyeSize)/2), -1, -1):
+            pixels.fill((0,0,0))
+            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+
+            for j in range(1, EyeSize+1):
+                pixels[i + j] = (red, green, blue)
+            
+            pixels[i + EyeSize + 1] = (int(red/10), int(green/10), int(blue/10))
+            pixels[self.pixel_number - i - j] = (int(red/10), int(green/10), int(blue/10))
+
+            for j in range(1, EyeSize+1):
+                pixels[self.pixel_number - i - j] = (red, green, blue)
+
+            pixels[self.pixel_number - i - EyeSize - 1] = (int(red/10), int(green/10), int(blue/10))
+            pixels.show()
+            time.sleep(SpeedDelay)
+
+        time.sleep(ReturnDelay)
+
+    def OutsideToCenter(self, red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
+
+        for i in range(int(((self.pixel_number - EyeSize)/2)+1)):
+            pixels.fill((0,0,0))
+            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+
+            for j in range(1, EyeSize+1):
+                pixels[i + j] = (red, green, blue) 
+            
+            pixels[i + EyeSize +1] = (int(red/10), int(green/10), int(blue/10))
+            pixels[self.pixel_number - i-1] = (int(red/10), int(green/10), int(blue/10))
+
+            for j in range(1, EyeSize+1):
+                pixels[self.pixel_number - i - j] = (red, green, blue)
+            
+            pixels[self.pixel_number - i - EyeSize - 1] = (int(red/10), int(green/10), int(blue/10))
+            pixels.show()
+            time.sleep(SpeedDelay)
+    
+        time.sleep(ReturnDelay)
+
+
+    def LeftToRight(self, red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
+        for i in range(self.pixel_number - EyeSize - 2):
+            pixels.fill((0,0,0))
+            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+
+            for j in range(1, EyeSize+1):
+                pixels[i + j] = (red, green, blue)
+
+            pixels[i + EyeSize + 1] = (int(red/10), int(green/10), int(blue/10))
+            pixels.show()
+            time.sleep(SpeedDelay)
+        
+        time.sleep(ReturnDelay)
+
+
+    def RightToLeft(self, red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
+        for i in range(self.pixel_number - EyeSize - 2, 0, -1):
+            pixels.fill((0,0,0))
+            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+
+            for j in range(1, EyeSize+1):
+                pixels[i + j] = (red, green, blue)
+
+            pixels[i + EyeSize + 1] = (int(red/10), int(green/10), int(blue/10))
+            pixels.show()
+            time.sleep(SpeedDelay)
+    
+        time.sleep(ReturnDelay)
+
+    # Twinkle(red, green, blue, Count, SpeedDelay, OnlyOne)
+    def Twinkle(self, red, green, blue, Count, SpeedDelay, OnlyOne):
+        pixels.fill((0,0,0))
+    
+        for i in range(Count):
+            pixels[random.randint(0, self.pixel_number-1)] = (red, green, blue)
+            pixels.show()
+            time.sleep(SpeedDelay)
+            if OnlyOne:
+                pixels.fill((0,0,0))
+
+        time.sleep(SpeedDelay)
+
+    # TwinkleRandom( Count, SpeedDelay, OnlyOne) 
+    def TwinkleRandom(self, Count, SpeedDelay, OnlyOne):
+        pixels.fill((0,0,0))
+
+        for i in range(Count):
+            pixels[random.randint(0, self.pixel_number-1)] = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
+            pixels.show()
+            time.sleep(SpeedDelay)
+            if OnlyOne:
+                pixels.fill((0,0,0))
+
+        time.sleep(SpeedDelay)
+
+
+    def Sparkle(self, red, green, blue, Count, SpeedDelay):
+
+        for i in range(Count):    
+            Pixel = random.randint(0,self.pixel_number-1)
+            pixels[Pixel] = (red,green,blue)
+            pixels.show()
+            time.sleep(SpeedDelay)
+            pixels[Pixel] = (0,0,0)
+    
+    # SnowSparkle(red, green, blue, Count, SparkleDelay, SpeedDelay)
+    def SnowSparkle(self, red, green, blue, Count, SparkleDelay, SpeedDelay):
+        pixels.fill((red,green,blue))
+
+        for i in range(Count):
+            Pixel = random.randint(0,self.pixel_number-1)
+            pixels[Pixel] = (255,255,255)
+            pixels.show()
+            time.sleep(SparkleDelay)
+            pixels[Pixel] = (red,green,blue)
+            pixels.show()
+            time.sleep(SpeedDelay)
+
+    # RunningLights(red, green, blue, WaveDelay)
+    def RunningLights(self, red, green, blue, WaveDelay):
+        Position = 0
+        
+        for j in range(self.pixel_number*2):
+            Position = Position + 1
+            
+            for i in range(self.pixel_number):
+                # sine wave, 3 offset waves make a rainbow!
+                # float level = sin(i+Position) * 127 + 128;
+                # setPixel(i,level,0,0);
+                # float level = sin(i+Position) * 127 + 128;
+                level = math.sin(i + Position) * 127 + 128
+                r = int((level/255)*red)
+                g = int((level/255)*green)
+                b = int((level/255)*blue)
+                pixels[i] = (r,g,b)
+
+            pixels.show()
+            time.sleep(WaveDelay)
+
+    # colorWipe(red, green, blue, SpeedDelay)
+    def colorWipe(self, red, green, blue, SpeedDelay):
+        for i in range(self.pixel_number):
+            pixels[i] = (red, green, blue)
+            pixels.show()
+            time.sleep(SpeedDelay)
+
+    # theaterChase(red, green, blue, cycles, SpeedDelay)
+    def theaterChase(self, red, green, blue, cycles, SpeedDelay):
+        for j in range(cycles):
+            for q in range(3):
+                for i in range(0, self.pixel_number, 3):
+                    if i+q < self.pixel_number:
+                        # turn every third pixel on
+                        pixels[i+q] = (red, green, blue)
+                
+                pixels.show()
+                time.sleep(SpeedDelay)
+                
+                for i in range(0, self.pixel_number, 3):
+                    if i+q < self.pixel_number:
+                        # turn every third pixel off
+                        pixels[i+q] = (0,0,0)
+
+    # theaterChaseRainbow(SpeedDelay)
+    def theaterChaseRainbow(self, SpeedDelay, cycles):
+        # cycle all 256 colors in the wheel
+        for j in range(cycles):
+
+            for q in range(3):
+                for i in range(0, self.pixel_number, 3):
+                    # check that pixel index is not greater than number of pixels
+                    if i+q < self.pixel_number:
+                        # turn every third pixel on
+                        pixel_index = (i * 256 // self.pixel_number) + j
+                        pixels[i+q] = wheel(pixel_index & 255)
+
+                
+                pixels.show()
+                time.sleep(SpeedDelay)
+                
+                for i in range(0, self.pixel_number, 3):
+                    # check that pixel index is not greater than number of pixels
+                    if i+q < self.pixel_number:
+                        # turn every third pixel off
+                        pixels[i+q] = (0,0,0)
+
+    ### Fix Me - something is broken with the logic. the color doesn't change. and the fire effect seems small
+    ### orginal code; https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/#LEDStripEffectFire
+
+    # Fire(CoolingRangeStart, CoolingRangeEnd, Sparking, SparkingRangeStart, SparkingRangeEnd, SpeedDelay, FireColor, FireEffect, LoopCount)
+        #CoolingRangeStart = 0-255
+        #CoolingRangeEnd = 0-255
+        #Sparking = 0-100  (0= 0% sparkes randomly added, 100= 100% sparks randomly added)
+        #SparkingRangeStart = 0-255 
+        #SparkingRangeEnd = 0-255
+        #FireColor = 0-2 (0=red, 1=blue , 2=green)
+        #FireEffect = 0-2
+
+	# Fire(Cooling, Sparking, SpeedDelay, LoopCount)
+    def Fire(self, Cooling, Sparking, SpeedDelay, LoopCount):
+        heat = []
+        for i in range(self.pixel_number):
+            heat.append(0)
+        for l in range(LoopCount):
+            cooldown = 0
+            
+            # Step 1.  Cool down every cell a little
+            for i in range(self.pixel_number):
+                randomCooldown = ((Cooling * 10) / self.pixel_number) + 2
+                cooldown = random.randint(0, int(randomCooldown))
+
+                if cooldown > heat[i]:
+                    heat[i]=0
+                else: 
+                    heat[i]=heat[i]-cooldown
+            
+            
+            # Step 2.  Heat from each cell drifts 'up' and diffuses a little
+            for k in range(self.pixel_number - 1, 2, -1):
+                heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2]) / 3
+                
+            # Step 3.  Randomly ignite new 'sparks' near the bottom
+            if random.randint(0,255) < Sparking:
+                y = random.randint(0,7)
+                #heat[y] = heat[y] + random.randint(160,255)
+                heat[y] = random.randint(160,255)
+
+            # Step 4.  Convert heat to LED colors
+            for j in range(self.pixel_number):
+                setPixelHeatColor(j, int(heat[j]) )
+
+            pixels.show()
+            time.sleep(SpeedDelay)
+
+    def setPixelHeatColor (self, Pixel, temperature):
+        # Scale 'heat' down from 0-255 to 0-191
+        t192 = round((temperature/255.0)*191)
+
+        # calculate ramp up from
+        heatramp = t192 & 63 # 0..63  0x3f=63
+        heatramp <<= 2 # scale up to 0..252
+        # figure out which third of the spectrum we're in:
+        if t192 > 0x80: # hottest 128 = 0x80
+            pixels[Pixel] = (255, 255, int(heatramp))
+        elif t192 > 0x40: # middle 64 = 0x40
+            pixels[Pixel] = (255, int(heatramp), 0)
+        else: # coolest
+            pixels[Pixel] = (int(heatramp), 0, 0)
+
     # FireCustom(CoolingRangeStart, CoolingRangeEnd, Sparking, SparkingRangeStart, SparkingRangeEnd, 
     #             SpeedDelay, cycles):
-		#   CoolingRangeStart: (0-255) cooling random value, start range
-		#   CoolingRangeEnd: (0-255) cooling random value, end range
-		#   Sparking: (0-100)  chance of sparkes are added randomly controld througn a % value, 100= 100% and 0 = 0%
-		#   SparkingRangeStart: (0- number of pixels) spark position random value, start range
-		#   SparkingRangeEnd: (0- number of pixels) spark position random value, end range
-		#   SpeedDelay: (0-...) slow down the effect by injecting a delay in Sec. 0=no delay, .05=50msec, 2=2sec
-    
+        #   CoolingRangeStart: (0-255) cooling random value, start range
+        #   CoolingRangeEnd: (0-255) cooling random value, end range
+        #   Sparking: (0-100)  chance of sparkes are added randomly controld througn a % value, 100= 100% and 0 = 0%
+        #   SparkingRangeStart: (0- number of pixels) spark position random value, start range
+        #   SparkingRangeEnd: (0- number of pixels) spark position random value, end range
+        #   SpeedDelay: (0-...) slow down the effect by injecting a delay in Sec. 0=no delay, .05=50msec, 2=2sec
 
+
+    def FireCustom(self, CoolingRangeStart, CoolingRangeEnd, Sparking, SparkingRangeStart, SparkingRangeEnd, SpeedDelay, FireColor, FireEffect, LoopCount):
+        heat = []
+        for i in range(self.pixel_number):
+            heat.append(0)
+        for l in range(LoopCount):
+            cooldown = 0
+            
+            # Step 1.  Cool down every cell a little
+            for i in range(self.pixel_number):
+                # for 50 leds and cooling 50
+                # cooldown = random.randint(0, 12)
+                # cooldown = random.randint(0, ((Cooling * 10) / self.pixel_number) + 2)
+                cooldown = random.randint(CoolingRangeStart, CoolingRangeEnd)
+                if cooldown > heat[i]:
+                    heat[i]=0
+                else: 
+                    heat[i]=heat[i]-cooldown
+            
+            # Step 2.  Heat from each cell drifts 'up' and diffuses a little
+            for k in range(self.pixel_number - 1, 2, -1):
+                heat[k] = (heat[k - 1] + heat[k - 2] + heat[k - 2]) / 3
+                
+            # Step 3.  Randomly ignite new 'sparks' near the bottom
+            if random.randint(0,100) < Sparking:
+                
+                # randomly pick the position of the spark
+                y = random.randint(SparkingRangeStart,SparkingRangeEnd)
+                # different fire effects 
+                if FireEffect == 0:
+                    heat[y] = random.randint(int(heat[y]),255)
+                elif FireEffect == 1:
+                    heat[y] = heat[y] + random.randint(160,255)
+                else:
+                    heat[y] = random.randint(160,255)
+
+            # Step 4.  Convert heat to LED colors
+            for j in range(self.pixel_number):
+                t192 = round((int(heat[j])/255.0)*191)
+
+                # calculate ramp up from
+                heatramp = t192 & 63 # 0..63  0x3f=63
+                heatramp <<= 2 # scale up to 0..252
+                # figure out which third of the spectrum we're in:
+                if FireColor == 2: #green flame
+                    if t192 > 0x80: # hottest 128 = 0x80
+                        pixels[j] = (int(heatramp),255, 255)
+                    elif t192 > 0x40: # middle 64 = 0x40
+                        pixels[j] = (0, 255, int(heatramp))
+                    else: # coolest
+                        pixels[j] = (0, int(heatramp), 0)
+                elif FireColor == 1: #blue flame
+                    if t192 > 0x80: # hottest 128 = 0x80
+                        pixels[j] = (255, int(heatramp), 255)
+                    elif t192 > 0x40: # middle 64 = 0x40
+                        pixels[j] = (int(heatramp), 0, 255)
+                    else: # coolest
+                        pixels[j] = (0, 0, int(heatramp))
+                else: #FireColor == 0: #red flame
+                    if t192 > 0x80: # hottest 128 = 0x80
+                        pixels[j] = (255, 255, int(heatramp))
+                    elif t192 > 0x40: # middle 64 = 0x40
+                        pixels[j] = (255, int(heatramp), 0)
+                    else: # coolest
+                        pixels[j] = (int(heatramp), 0, 0)
+                    
+
+            pixels.show()
+            time.sleep(SpeedDelay)
+
+    # meteorRain(red, green, blue, meteorSize, meteorTrailDecay, meteorRandomDecay, LoopCount, SpeedDelay)
+    def meteorRain(self, red, green, blue, meteorSize, meteorTrailDecay, meteorRandomDecay, LoopCount, SpeedDelay): 
+        for loop in range(LoopCount):
+            pixels.fill((0,0,0))
+            
+            for i in range(self.pixel_number*2):
+                # fade brightness all LEDs one step
+                for j in range(self.pixel_number):
+                    if (not meteorRandomDecay) or (random.randint(0,10) > 5):
+                        fadeToBlack(j, meteorTrailDecay )      
+                
+                # draw meteor
+                for j in range(meteorSize):
+                    if ( i-j < self.pixel_number) and (i-j >= 0): 
+                        pixels[i-j] = (red, green, blue)
+
+                pixels.show()
+                time.sleep(SpeedDelay)
+
+    def fadeToBlack(self, ledNo, fadeValue):
+        oldColor = pixels[ledNo]
+        r = oldColor[0]
+        g = oldColor[1]
+        b = oldColor[2]
+
+        if (r<=10):
+            r = 0
+        else:
+            r = r - ( r * fadeValue / 256 )
+
+        if (g<=10):
+            g = 0
+        else:
+            g = g - ( g * fadeValue / 256 )
+
+        if (b<=10):
+            b = 0
+        else:
+            b = b - ( b * fadeValue / 256 )
+
+        pixels[ledNo] = ( int(r), int(g), int(b) )
+
+    # BouncingBalls(red, green, blue, BallCount, LoopCount) 
+    def BouncingBalls(self, red, green, blue, BallCount, LoopCount):
+        
+        ## setup 
+        Gravity = -9.81
+        StartHeight = 1
+
+        Height = []
+        for i in range(BallCount):
+            Height.append(0)
+
+        ImpactVelocityStart = math.sqrt( -2 * Gravity * StartHeight )
+
+        ImpactVelocity = []
+        for i in range(BallCount):
+            ImpactVelocity.append(0)
+
+        TimeSinceLastBounce = []
+        for i in range(BallCount):
+            TimeSinceLastBounce.append(0)
+
+        Position = []
+        for i in range(BallCount):
+            Position.append(0)
+
+        ClockTimeSinceLastBounce = []
+        for i in range(BallCount):
+            ClockTimeSinceLastBounce.append(0)
+        
+        Dampening = []
+        for i in range(BallCount):
+            Dampening.append(0)
+
+        for i in range(BallCount):
+            ClockTimeSinceLastBounce[i] = int(round(time.time() * 1000))
+
+            Height[i] = StartHeight
+            Position[i] = 0
+            ImpactVelocity[i] = ImpactVelocityStart
+            TimeSinceLastBounce[i] = 0
+            Dampening[i] = 0.90 - float(i)/pow(BallCount,2)
+        
+        ## loop 
+        for loop in range(LoopCount):
+            for i in range(BallCount):
+                TimeSinceLastBounce[i] =  int(round(time.time() * 1000)) - ClockTimeSinceLastBounce[i]
+                Height[i] = 0.5 * Gravity * pow( TimeSinceLastBounce[i]/1000 , 2.0 ) + ImpactVelocity[i] * TimeSinceLastBounce[i]/1000
+        
+                if Height[i] < 0:                 
+                    Height[i] = 0
+                    ImpactVelocity[i] = Dampening[i] * ImpactVelocity[i]
+                    ClockTimeSinceLastBounce[i] = int(round(time.time() * 1000))
+            
+                    if ImpactVelocity[i] < 0.01:
+                        ImpactVelocity[i] = ImpactVelocityStart
+
+                Position[i] = round( Height[i] * (self.pixel_number - 1) / StartHeight)
+            
+            for i in range(BallCount):
+                pixels[Position[i]] = (red,green,blue)
+            
+            pixels.show()
+            pixels.fill((0, 0, 0))
+            
+    # BouncingColoredBalls(BallCount, colors[][3], LoopCount) 
+    def BouncingColoredBalls(self, BallCount, colors, LoopCount):
+        
+        ## setup 
+        Gravity = -9.81
+        StartHeight = 1
+
+        Height = []
+        for i in range(BallCount):
+            Height.append(0)
+
+        ImpactVelocityStart = math.sqrt( -2 * Gravity * StartHeight )
+
+        ImpactVelocity = []
+        for i in range(BallCount):
+            ImpactVelocity.append(0)
+
+        TimeSinceLastBounce = []
+        for i in range(BallCount):
+            TimeSinceLastBounce.append(0)
+
+        Position = []
+        for i in range(BallCount):
+            Position.append(0)
+
+        ClockTimeSinceLastBounce = []
+        for i in range(BallCount):
+            ClockTimeSinceLastBounce.append(0)
+        
+        Dampening = []
+        for i in range(BallCount):
+            Dampening.append(0)
+
+        for i in range(BallCount):
+            ClockTimeSinceLastBounce[i] = int(round(time.time() * 1000))
+
+            Height[i] = StartHeight
+            Position[i] = 0
+            ImpactVelocity[i] = ImpactVelocityStart
+            TimeSinceLastBounce[i] = 0
+            Dampening[i] = 0.90 - float(i)/pow(BallCount,2)
+        
+        ## loop 
+        for loop in range(LoopCount):
+            for i in range(BallCount):
+                TimeSinceLastBounce[i] =  int(round(time.time() * 1000)) - ClockTimeSinceLastBounce[i]
+                Height[i] = 0.5 * Gravity * pow( TimeSinceLastBounce[i]/1000 , 2.0 ) + ImpactVelocity[i] * TimeSinceLastBounce[i]/1000
+        
+                if Height[i] < 0:                 
+                    Height[i] = 0
+                    ImpactVelocity[i] = Dampening[i] * ImpactVelocity[i]
+                    ClockTimeSinceLastBounce[i] = int(round(time.time() * 1000))
+            
+                    if ImpactVelocity[i] < 0.01:
+                        ImpactVelocity[i] = ImpactVelocityStart
+
+                Position[i] = round( Height[i] * (self.pixel_number - 1) / StartHeight)
+            
+            for i in range(BallCount):
+                pixels[Position[i]] = (colors[i][0],colors[i][1],colors[i][2])
+            
+            pixels.show()
+            pixels.fill((0, 0, 0))
+        
+
+        def run(self):
+            self.newSocket.start()
+            try:
+                while True:
+
+                    # Create Socket to communicate
+                    #self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
+                    #self.newSocket.start()
+
+                    print("Cosmoguirlande class run")
+                    print("state :", self.state)
+                    print("previous state :", self.state)
+                    print('self.newSocket.data_rcv :', self.newSocket.data_rcv)
+                    self.previous_state = self.state
+
+                    # wait for animation type and threshold
+                    if self.newSocket.data_rcv.startswith("cosmoguirlande,manual"):
+                        print("manual control, do nothing while checkbox is on")
+                        time.sleep(0.3)
+
+                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
+                        self.state = "strombo"
+                        self.stromboscope(self.color1, 0.05)
+                        time.sleep(0.3)
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,color1'):
+                        self.state = 'color1'
+                        function_type, function, self.color1 = self.newSocket.data_rcv.split(',')
+                        print("color1 :", self.color1)
+                        self.w = 0
+                        if self.color1 =='AMBER':
+                            self.changeColor1String(AMBER)
+                        elif self.color1 =='AQUA':
+                            self.changeColor1String(AQUA)
+                        elif self.color1 == 'YELLOW':
+                            self.changeColor1String(YELLOW)
+                        elif self.color1 == 'WHITE':
+                            self.changeColor1String(WHITE)
+                        elif self.color1 == 'TEAL':
+                            self.changeColor1String(TEAL)
+                        elif self.color1 == 'RGBW_WHITE_W':
+                            self.changeColor1String(RGBW_WHITE_W)
+                        elif self.color1 == 'RGBW_WHITE_RGBW':
+                            self.changeColor1String(RGBW_WHITE_RGBW)
+                        elif self.color1 == 'RGBW_WHITE_RGB':
+                            self.changeColor1String(RGBW_WHITE_RGB)
+                        elif self.color1 == 'RED':
+                            self.changeColor1String(RED)
+                        elif self.color1 == 'PURPLE':
+                            self.changeColor1String(PURPLE)
+                        elif self.color1 == 'PINK':
+                            self.changeColor1String(PINK)
+                        elif self.color1 == 'ORANGE':
+                            self.changeColor1String(ORANGE)
+                        elif self.color1 =='OLD_LACE':
+                            self.changeColor1String(OLD_LACE)
+                        elif self.color1 == 'MAGENTA':
+                            self.changeColor1String(MAGENTA)
+                        elif self.color1 == 'JADE':
+                            self.changeColor1String(JADE)
+                        elif self.color1 == 'GREEN':
+                            self.changeColor1String(GREEN)
+                        elif self.color1 =='GOLD':
+                            self.changeColor1String(GOLD)
+                        elif self.color1 == 'CYAN':
+                            self.changeColor1String(CYAN)
+                        elif self.color1 == 'BLUE':
+                            self.changeColor1String(BLUE)
+                        elif self.color1 == 'BLACK':
+                            self.changeColor1String(BLACK)
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,color2'):
+                        self.state = 'color2'
+                        function_type, function, self.color2 = self.newSocket.data_rcv.split(',')
+                        if self.color2 =='AMBER':
+                            self.changeColor2String(AMBER)
+                        elif self.color2 =='AQUA':
+                            self.changeColor2String(AQUA)
+                        elif self.color2 == 'YELLOW':
+                            self.changeColor2String(YELLOW)
+                        elif self.color2 == 'WHITE':
+                            self.changeColor2String(WHITE)
+                        elif self.color2 == 'TEAL':
+                            self.changeColor2String(TEAL)
+                        elif self.color2 == 'RGBW_WHITE_W':
+                            self.changeColor2String(RGBW_WHITE_W)
+                        elif self.color2 == 'RGBW_WHITE_RGBW':
+                            self.changeColor2String(RGBW_WHITE_RGBW)
+                        elif self.color2 == 'RGBW_WHITE_RGB':
+                            self.changeColor2String(RGBW_WHITE_RGB)
+                        elif self.color2 == 'RED':
+                            self.changeColor2String(RED)
+                        elif self.color2 == 'PURPLE':
+                            self.changeColor2String(PURPLE)
+                        elif self.color2 == 'PINK':
+                            self.changeColor2String(PINK)
+                        elif self.color2 == 'ORANGE':
+                            self.changeColor2String(ORANGE)
+                        elif self.color2 =='OLD_LACE':
+                            self.changeColor2String(OLD_LACE)
+                        elif self.color2 == 'MAGENTA':
+                            self.changeColor2String(MAGENTA)
+                        elif self.color2 == 'JADE':
+                            self.changeColor2String(JADE)
+                        elif self.color2 == 'GREEN':
+                            self.changeColor2String(GREEN)
+                        elif self.color2 =='GOLD':
+                            self.changeColor2String(GOLD)
+                        elif self.color2 == 'CYAN':
+                            self.changeColor2String(CYAN)
+                        elif self.color2 == 'BLUE':
+                            self.changeColor2String(BLUE)
+                        elif self.color2 == 'BLACK':
+                            self.changeColor2String(BLACK)
+
+                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbow"):
+                        self.state = "rainbow"
+                        for j in range(2):
+                            self.rainbow_cycle(0.01)
+
+                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,blackout"):
+                        self.state = "blackout"
+                        self.blackout()
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase'):
+                        self.state = "chase"
+                        function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
+                        try:
+                            self.chase_speed = float(chase_speed)
+                        except ValueError:
+                            self.chase_speed = 0
+                        try:
+                            self.chase_size = int(chase_size)
+                        except ValueError:
+                            self.chase_size = 0
+                        self.chase()
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet'):
+                        self.state = "comet"
+                        function_type, function, comet_speed, comet_tail = self.newSocket.data_rcv.split(',')
+                        try:
+                            self.comet_speed = float(comet_speed)
+                        except ValueError:
+                            self.comet_speed = 0
+                        try:
+                            self.comet_tail = int(comet_tail)
+                        except ValueError:
+                            self.comet_tail = 0
+                        self.comet()
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle'):
+                        self.state = "sparkle"
+                        function_type, function, sparkle_speed, sparkle_num = self.newSocket.data_rcv.split(',')
+                        try:
+                            self.sparkle_speed = float(sparkle_speed)
+                        except ValueError:
+                            self.sparkle_speed = 0
+                        try:
+                            self.sparkle_num = int(sparkle_num)
+                        except ValueError:
+                            self.sparkle_num = 0
+                        self.sparkle()
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
+                        self.state = "pulse"
+                        function_type, function, pulse_period, pulse_speed = self.newSocket.data_rcv.split(',')
+                        try:
+                            self.pulse_period = float(pulse_period)
+                        except ValueError:
+                            self.pulse_period = 0
+                        try:
+                            self.pulse_speed = float(pulse_speed)
+                        except ValueError:
+                            self.pulse_speed = 0
+                        self.pulse()
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,solid'):
+                        self.state = "solid"
+                        self.solid()
+                        time.sleep(0.5)
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle'):
+                        self.state = "colorcycle"
+                        function_type, function, color1 , color2 = self.newSocket.data_rcv.split(',')
+                        self.color1 = color1
+                        self.color2 = color2
+                        #☻self.colorcycle()
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiScroll'):
+                        self.state = "dancingPiScroll"
+                        self.blackout()
+                        self.dancingPiScroll()
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiEnergy'):
+                        self.state = "dancingPiEnergy"
+                        self.blackout()
+                        self.dancingPiEnergy()
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum'):
+                        self.state = "dancingPiSpectrum"
+                        self.blackout()
+                        self.dancingPiSpectrum()
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll'):
+                        self.state = "stop_dancingPiScroll"
+                        self.stop_dancingPiScroll()
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiEnergy'):
+                        self.state = "stop_dancingPiEnergy"
+                        self.stop_dancingPiEnergy()
+
+                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum'):
+                        self.state = "stop_dancingPiSpectrum"
+                        self.stop_dancingPiSpectrum()
+
+                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,R"):
+                        self.state = "R"
+                        function_type, function, self.r = self.newSocket.data_rcv.split(',')
+                        self.changeColor(self.r, self.g, self.b, self.w)
+                        time.sleep(0.5)
+
+                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,G"):
+                        self.state = "G"
+                        function_type, function, self.g = self.newSocket.data_rcv.split(',')
+                        self.changeColor(self.r, self.g, self.b, self.w)
+                        time.sleep(0.5)
+
+                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,B"):
+                        self.state = "B"
+                        function_type, function, self.b = self.newSocket.data_rcv.split(',')
+                        self.changeColor(self.r, self.g, self.b, self.w)
+                        time.sleep(0.5)
+
+                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,W"):
+                        self.state = "W"
+                        function_type, function, self.w = self.newSocket.data_rcv.split(',')
+                        self.changeColor(self.r, self.g, self.b, self.w)
+                        time.sleep(0.5)
+
+                    elif self.state == "nothing":
+                        #increse count if last states are "main"
+                        if self.previous_state == "nothing":
+                            self.watchdog_count = self.watchdog_count +1
+                            print("watchdog_count :",self.watchdog_count)
+                            time.sleep(0.5)
+                        #if no messages since last 10 sec (10 "main state), start again
+                        elif self.watchdog_count == 20:
+                            self.watchdog_count = 0
+                            self.run()
+                        self.previous_state = self.state
+
+                    elif self.state == "restart":
+                        self.state = "restart"
+                        # Del former, create a new one and start it
+                        '''self.newSocket.connexion_serveur.close()
+                        self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
+                        self.newSocket.start()'''
+
+                    else:
+                        print("nothing")
+                        self.state = "nothing"
+                        time.sleep(1)
+
+                    self.previous_message = self.newSocket.data_rcv
+
+
+            except TypeError:
+                print("type error")
+                self.run()
+
+            except KeyboardInterrupt:
+                print("keyboard interrupt, blackout LED")
+                self.state = "keyboard"
+                if args.clear:
+                    pixels.fill((0, 0, 0, 0))
+
+    #Check if main class is style alive - to be run on a thread
     def run(self):
         self.newSocket.start()
         try:
@@ -591,6 +1511,117 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     function_type, function, self.w = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
+                
+                ######################################################################################################################
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,colorAll2Color"):
+                    self.state = "colorAll2Color"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.colorAll2Color((self.r, self.g, self.b), (255,165,0))
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,FadeInOut"):
+                    self.state = "FadeInOut"
+                    function_type, function= self.newSocket.data_rcv.split(',')
+                    self.FadeInOut(self.r, self.g, self.b, 0)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Strobe"):
+                    self.state = "Strobe"
+                    function_type, function= self.newSocket.data_rcv.split(',')
+                    self.Strobe(self.r, self.g, self.b,  10, 0, 1)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,HalloweenEyes"):
+                    self.state = "HalloweenEyes"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.HalloweenEyes(self.r, self.g, self.b, 1, 1, True, 10, 1, 3)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,CylonBounce"):
+                    self.state = "CylonBounce"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.CylonBounce(self.r, self.g, self.b, 2, 0, 0)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,NewKITT"):
+                    self.state = "NewKITT"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.NewKITT(self.r, self.g, self.b, 4, 0, 0)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Twinkle"):
+                    self.state = "Twinkle"
+                    function_type, function= self.newSocket.data_rcv.split(',')
+                    self.Twinkle(self.r, self.g, self.b, 10, 0.1, False)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,TwinkleRandom"):
+                    self.state = "TwinkleRandom"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.TwinkleRandom(20, 0.1, False)
+                    time.sleep(0.5)
+ 
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,SnowSparkle"):
+                    self.state = "SnowSparkle"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.SnowSparkle(self.r, self.g, self.b, 100, 0.1, 0.3 )
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*RunningLights"):
+                    self.state = "RunningLights"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.RunningLights(self.r, self.g, self.b, 0)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,colorWipe"):
+                    self.state = "colorWipe"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.colorWipe(self.r, self.g, self.b, 0 )
+                    time.sleep(0.5)
+
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,theaterChaseRainbow"):
+                    self.state = "theaterChaseRainbow"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.theaterChaseRainbow(0.1, 30)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Fire"):
+                    self.state = "Fire"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.Fire(55, 120,0, 100)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,FireCustom"):
+                    self.state = "FireCustom"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.FireCustom(self.r, self.g, self.b )
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,meteorRain"):
+                    self.state = "meteorRain"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.meteorRain(self.r, self.g, self.b )
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,fadeToBlack"):
+                    self.state = "fadeToBlack"
+                    function_type, function= self.newSocket.data_rcv.split(',')
+                    self.fadeToBlack(self.r, self.g, self.b, )
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*BouncingBalls"):
+                    self.state = "BouncingBalls"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.BouncingBalls(255, 0, 0, 3, 100) 
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*BouncingColoredBalls"):
+                    self.state = "BouncingColoredBalls"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.BouncingColoredBalls(3, ((255,0,0),(0,255,0),(0,0,255)), 1000)
+                    time.sleep(0.5)
+                ######################################################################################################################
 
                 elif self.state == "nothing":
                     #increse count if last states are "main"
@@ -628,9 +1659,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
             self.state = "keyboard"
             if args.clear:
                 pixels.fill((0, 0, 0, 0))
-
-#Check if main class is style alive - to be run on a thread
-
 
 if __name__ == '__main__':
     # Process arguments
