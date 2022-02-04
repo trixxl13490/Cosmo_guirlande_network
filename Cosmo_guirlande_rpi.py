@@ -131,7 +131,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
         self.sparkle_speed = 0.1
         self.sparkle_num = 10
         self.color_cycle_speed = 0.4
-        self.pixels = pixels
         self.guirlande_number = guirlande_number
         self.pixel_number = pixel_number
         self.tcp_ip = tcp_ip
@@ -319,10 +318,10 @@ class Cosmo_guirlande_rpi(threading.Thread):
     def colorAll2Color(self, c1, c2):
         for i in range(self.pixels):
             if(i % 2 == 0): # even
-                pixels[i] = c1
+                self.pixels[i] = c1
             else: # odd   
-                pixels[i] = c2
-        pixels.show()
+                self.pixels[i] = c2
+        self.pixels.show()
 
 
     def wheel(pos):
@@ -353,37 +352,37 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 # " // "  this divides and returns the integer value of the quotient. 
                 # It dumps the digits after the decimal
                 pixel_index = (i * 256 // self.pixel_numbers) + j
-                pixels[i] = wheel(pixel_index & 255)
-            pixels.show()
+                self.pixels[i] = self.wheel(pixel_index & 255)
+            self.pixels.show()
             time.sleep(delay)
 
     # RGBLoop(delay)
-    def RGBLoop(delay):
+    def RGBLoop(self, delay):
         for j in range(3):
             # Fade IN
             for k in range(256):
                 if j == 0:
-                    pixels.fill((k, 0, 0))
+                    self.pixels.fill((k, 0, 0))
                 elif j == 1:
-                    pixels.fill((0, k, 0))
+                    self.pixels.fill((0, k, 0))
                 elif j == 2:
-                    pixels.fill((0, 0, k))
-                pixels.show()
+                    self.pixels.fill((0, 0, k))
+                self.pixels.show()
                 time.sleep(delay)
 
             # Fade OUT
             for k in range(256):
                 if j == 2:
-                    pixels.fill((k, 0, 0))
+                    self.pixels.fill((k, 0, 0))
                 elif j == 1:
-                    pixels.fill((0, k, 0))
+                    self.pixels.fill((0, k, 0))
                 elif j == 0:
-                    pixels.fill((0, 0, k))
-                pixels.show()
+                    self.pixels.fill((0, 0, k))
+                self.pixels.show()
                 time.sleep(delay)
 
     # FadeInOut(red, green, blue, delay)  
-    def FadeInOut(red, green, blue, delay):
+    def FadeInOut(self,red, green, blue, delay):
         r = 0
         g = 0
         b = 0
@@ -392,33 +391,33 @@ class Cosmo_guirlande_rpi(threading.Thread):
             r = (k/256.0)*red
             g = (k/256.0)*green
             b = (k/256.0)*blue
-            pixels.fill((int(r), int(g), int(b)))
-            pixels.show()
+            self.pixels.fill((int(r), int(g), int(b)))
+            self.pixels.show()
             time.sleep(delay)
         
         for k in range(256, -1, -1):
             r = (k/256.0)*red
             g = (k/256.0)*green
             b = (k/256.0)*blue
-            pixels.fill((int(r), int(g), int(b)))
-            pixels.show()
+            self.pixels.fill((int(r), int(g), int(b)))
+            self.pixels.show()
             time.sleep(delay)
 
     # Strobe(red, green, blue, StrobeCount, FlashDelay, EndPause)
-    def Strobe(red, green, blue, StrobeCount, FlashDelay, EndPause):
+    def Strobe(self, red, green, blue, StrobeCount, FlashDelay, EndPause):
         for j in range(StrobeCount):
-            pixels.fill((red,green,blue))
-            pixels.show()
+            self.pixels.fill((red,green,blue))
+            self.pixels.show()
             time.sleep(FlashDelay)
-            pixels.fill((0,0,0))
-            pixels.show()
+            self.pixels.fill((0,0,0))
+            self.pixels.show()
             time.sleep(FlashDelay)
     
         time.sleep(EndPause)
 
     # HalloweenEyes(red, green, blue, EyeWidth, EyeSpace, Fade, Steps, FadeDelay, EndPause)
     def HalloweenEyes(self, red, green, blue, EyeWidth, EyeSpace, Fade, Steps, FadeDelay, EndPause):
-        pixels.fill((0,0,0))
+        self.pixels.fill((0,0,0))
         r = 0
         g = 0
         b = 0
@@ -429,9 +428,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
         #  set color of eyes for given location
         for i in range(EyeWidth):
-            pixels[StartPoint + i] = (red, green, blue)
-            pixels[Start2ndEye + i] = (red, green, blue)
-        pixels.show()
+            self.pixels[StartPoint + i] = (red, green, blue)
+            self.pixels[Start2ndEye + i] = (red, green, blue)
+        self.pixels.show()
 
         # if user wants fading, then fadeout pixel color
         if Fade == True:
@@ -441,14 +440,14 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 b = (j/Steps)*blue
 
                 for i in range(EyeWidth):
-                    pixels[StartPoint + i] = ((int(r), int(g), int(b)))
-                    pixels[Start2ndEye + i] = ((int(r), int(g), int(b)))
+                    self.pixels[StartPoint + i] = ((int(r), int(g), int(b)))
+                    self.pixels[Start2ndEye + i] = ((int(r), int(g), int(b)))
 
-                pixels.show()
+                self.pixels.show()
                 time.sleep(FadeDelay)
         
         # Set all pixels to black
-        pixels.fill((0,0,0))
+        self.pixels.fill((0,0,0))
 
         # pause before changing eye location
         time.sleep(EndPause)
@@ -457,60 +456,60 @@ class Cosmo_guirlande_rpi(threading.Thread):
     def CylonBounce(self, red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
     
         for i in range(self.pixel_number - EyeSize - 1):
-            pixels.fill((0,0,0))
-            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.fill((0,0,0))
+            self.pixels[i] = (int(red/10), int(green/10), int(blue/10))
 
             for j in range(1, EyeSize+1):
-                pixels[i+j] = (red, green, blue)
+                self.pixels[i+j] = (red, green, blue)
 
-            pixels[i+EyeSize+1] = (int(red/10), int(green/10), int(blue/10))
-            pixels.show()
+            self.pixels[i+EyeSize+1] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.show()
             time.sleep(SpeedDelay)
     
         time.sleep(ReturnDelay)
         time.sleep(10)
         
         for i in range(self.pixel_number - EyeSize - 2, -1, -1):
-            pixels.fill((0,0,0))
-            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.fill((0,0,0))
+            self.pixels[i] = (int(red/10), int(green/10), int(blue/10))
 
             for j in range(1, EyeSize+1):
-                pixels[i+j] = (red, green, blue)
+                self.pixels[i+j] = (red, green, blue)
 
-            pixels[i+EyeSize+1] = (int(red/10), int(green/10), int(blue/10))
-            pixels.show()
+            self.pixels[i+EyeSize+1] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.show()
             time.sleep(SpeedDelay)
 
         time.sleep(ReturnDelay)
         time.sleep(10)
 
     # NewKITT(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
-    def NewKITT(red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
-        RightToLeft(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
-        LeftToRight(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
-        OutsideToCenter(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
-        CenterToOutside(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
-        LeftToRight(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
-        RightToLeft(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
-        OutsideToCenter(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
-        CenterToOutside(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+    def NewKITT(self, red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
+        self.RightToLeft(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        self.LeftToRight(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        self.OutsideToCenter(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        self.CenterToOutside(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        self.LeftToRight(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        self.RightToLeft(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        self.OutsideToCenter(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
+        self.CenterToOutside(red, green, blue, EyeSize, SpeedDelay, ReturnDelay)
 
     def CenterToOutside(self,red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
         for i in range(int((self.pixel_number - EyeSize)/2), -1, -1):
-            pixels.fill((0,0,0))
-            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.fill((0,0,0))
+            self.pixels[i] = (int(red/10), int(green/10), int(blue/10))
 
             for j in range(1, EyeSize+1):
-                pixels[i + j] = (red, green, blue)
+                self.pixels[i + j] = (red, green, blue)
             
-            pixels[i + EyeSize + 1] = (int(red/10), int(green/10), int(blue/10))
-            pixels[self.pixel_number - i - j] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels[i + EyeSize + 1] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels[self.pixel_number - i - j] = (int(red/10), int(green/10), int(blue/10))
 
             for j in range(1, EyeSize+1):
-                pixels[self.pixel_number - i - j] = (red, green, blue)
+                self.pixels[self.pixel_number - i - j] = (red, green, blue)
 
-            pixels[self.pixel_number - i - EyeSize - 1] = (int(red/10), int(green/10), int(blue/10))
-            pixels.show()
+            self.pixels[self.pixel_number - i - EyeSize - 1] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.show()
             time.sleep(SpeedDelay)
 
         time.sleep(ReturnDelay)
@@ -518,20 +517,20 @@ class Cosmo_guirlande_rpi(threading.Thread):
     def OutsideToCenter(self, red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
 
         for i in range(int(((self.pixel_number - EyeSize)/2)+1)):
-            pixels.fill((0,0,0))
-            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.fill((0,0,0))
+            self.pixels[i] = (int(red/10), int(green/10), int(blue/10))
 
             for j in range(1, EyeSize+1):
-                pixels[i + j] = (red, green, blue) 
+                self.pixels[i + j] = (red, green, blue) 
             
-            pixels[i + EyeSize +1] = (int(red/10), int(green/10), int(blue/10))
-            pixels[self.pixel_number - i-1] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels[i + EyeSize +1] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels[self.pixel_number - i-1] = (int(red/10), int(green/10), int(blue/10))
 
             for j in range(1, EyeSize+1):
-                pixels[self.pixel_number - i - j] = (red, green, blue)
+                self.pixels[self.pixel_number - i - j] = (red, green, blue)
             
-            pixels[self.pixel_number - i - EyeSize - 1] = (int(red/10), int(green/10), int(blue/10))
-            pixels.show()
+            self.pixels[self.pixel_number - i - EyeSize - 1] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.show()
             time.sleep(SpeedDelay)
     
         time.sleep(ReturnDelay)
@@ -539,14 +538,14 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
     def LeftToRight(self, red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
         for i in range(self.pixel_number - EyeSize - 2):
-            pixels.fill((0,0,0))
-            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.fill((0,0,0))
+            self.pixels[i] = (int(red/10), int(green/10), int(blue/10))
 
             for j in range(1, EyeSize+1):
-                pixels[i + j] = (red, green, blue)
+                self.pixels[i + j] = (red, green, blue)
 
-            pixels[i + EyeSize + 1] = (int(red/10), int(green/10), int(blue/10))
-            pixels.show()
+            self.pixels[i + EyeSize + 1] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.show()
             time.sleep(SpeedDelay)
         
         time.sleep(ReturnDelay)
@@ -554,41 +553,41 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
     def RightToLeft(self, red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
         for i in range(self.pixel_number - EyeSize - 2, 0, -1):
-            pixels.fill((0,0,0))
-            pixels[i] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.fill((0,0,0))
+            self.pixels[i] = (int(red/10), int(green/10), int(blue/10))
 
             for j in range(1, EyeSize+1):
-                pixels[i + j] = (red, green, blue)
+                self.pixels[i + j] = (red, green, blue)
 
-            pixels[i + EyeSize + 1] = (int(red/10), int(green/10), int(blue/10))
-            pixels.show()
+            self.pixels[i + EyeSize + 1] = (int(red/10), int(green/10), int(blue/10))
+            self.pixels.show()
             time.sleep(SpeedDelay)
     
         time.sleep(ReturnDelay)
 
     # Twinkle(red, green, blue, Count, SpeedDelay, OnlyOne)
     def Twinkle(self, red, green, blue, Count, SpeedDelay, OnlyOne):
-        pixels.fill((0,0,0))
+        self.pixels.fill((0,0,0))
     
         for i in range(Count):
-            pixels[random.randint(0, self.pixel_number-1)] = (red, green, blue)
-            pixels.show()
+            self.pixels[random.randint(0, self.pixel_number-1)] = (red, green, blue)
+            self.pixels.show()
             time.sleep(SpeedDelay)
             if OnlyOne:
-                pixels.fill((0,0,0))
+                self.pixels.fill((0,0,0))
 
         time.sleep(SpeedDelay)
 
     # TwinkleRandom( Count, SpeedDelay, OnlyOne) 
     def TwinkleRandom(self, Count, SpeedDelay, OnlyOne):
-        pixels.fill((0,0,0))
+        self.pixels.fill((0,0,0))
 
         for i in range(Count):
-            pixels[random.randint(0, self.pixel_number-1)] = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
-            pixels.show()
+            self.pixels[random.randint(0, self.pixel_number-1)] = (random.randint(0,255), random.randint(0,255), random.randint(0,255))
+            self.pixels.show()
             time.sleep(SpeedDelay)
             if OnlyOne:
-                pixels.fill((0,0,0))
+                self.pixels.fill((0,0,0))
 
         time.sleep(SpeedDelay)
 
@@ -597,22 +596,22 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
         for i in range(Count):    
             Pixel = random.randint(0,self.pixel_number-1)
-            pixels[Pixel] = (red,green,blue)
-            pixels.show()
+            self.pixels[Pixel] = (red,green,blue)
+            self.pixels.show()
             time.sleep(SpeedDelay)
-            pixels[Pixel] = (0,0,0)
+            self.pixels[Pixel] = (0,0,0)
     
     # SnowSparkle(red, green, blue, Count, SparkleDelay, SpeedDelay)
     def SnowSparkle(self, red, green, blue, Count, SparkleDelay, SpeedDelay):
-        pixels.fill((red,green,blue))
+        self.pixels.fill((red,green,blue))
 
         for i in range(Count):
             Pixel = random.randint(0,self.pixel_number-1)
-            pixels[Pixel] = (255,255,255)
-            pixels.show()
+            self.pixels[Pixel] = (255,255,255)
+            self.pixels.show()
             time.sleep(SparkleDelay)
-            pixels[Pixel] = (red,green,blue)
-            pixels.show()
+            self.pixels[Pixel] = (red,green,blue)
+            self.pixels.show()
             time.sleep(SpeedDelay)
 
     # RunningLights(red, green, blue, WaveDelay)
@@ -631,16 +630,16 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 r = int((level/255)*red)
                 g = int((level/255)*green)
                 b = int((level/255)*blue)
-                pixels[i] = (r,g,b)
+                self.pixels[i] = (r,g,b)
 
-            pixels.show()
+            self.pixels.show()
             time.sleep(WaveDelay)
 
     # colorWipe(red, green, blue, SpeedDelay)
     def colorWipe(self, red, green, blue, SpeedDelay):
         for i in range(self.pixel_number):
-            pixels[i] = (red, green, blue)
-            pixels.show()
+            self.pixels[i] = (red, green, blue)
+            self.pixels.show()
             time.sleep(SpeedDelay)
 
     # theaterChase(red, green, blue, cycles, SpeedDelay)
@@ -650,15 +649,15 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 for i in range(0, self.pixel_number, 3):
                     if i+q < self.pixel_number:
                         # turn every third pixel on
-                        pixels[i+q] = (red, green, blue)
+                        self.pixels[i+q] = (red, green, blue)
                 
-                pixels.show()
+                self.pixels.show()
                 time.sleep(SpeedDelay)
                 
                 for i in range(0, self.pixel_number, 3):
                     if i+q < self.pixel_number:
                         # turn every third pixel off
-                        pixels[i+q] = (0,0,0)
+                        self.pixels[i+q] = (0,0,0)
 
     # theaterChaseRainbow(SpeedDelay)
     def theaterChaseRainbow(self, SpeedDelay, cycles):
@@ -671,17 +670,17 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     if i+q < self.pixel_number:
                         # turn every third pixel on
                         pixel_index = (i * 256 // self.pixel_number) + j
-                        pixels[i+q] = wheel(pixel_index & 255)
+                        self.pixels[i+q] = self.wheel(pixel_index & 255)
 
                 
-                pixels.show()
+                self.pixels.show()
                 time.sleep(SpeedDelay)
                 
                 for i in range(0, self.pixel_number, 3):
                     # check that pixel index is not greater than number of pixels
                     if i+q < self.pixel_number:
                         # turn every third pixel off
-                        pixels[i+q] = (0,0,0)
+                        self.pixels[i+q] = (0,0,0)
 
     ### Fix Me - something is broken with the logic. the color doesn't change. and the fire effect seems small
     ### orginal code; https://www.tweaking4all.com/hardware/arduino/adruino-led-strip-effects/#LEDStripEffectFire
@@ -726,9 +725,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
             # Step 4.  Convert heat to LED colors
             for j in range(self.pixel_number):
-                setPixelHeatColor(j, int(heat[j]) )
+                self.setPixelHeatColor(j, int(heat[j]) )
 
-            pixels.show()
+            self.pixels.show()
             time.sleep(SpeedDelay)
 
     def setPixelHeatColor (self, Pixel, temperature):
@@ -740,11 +739,11 @@ class Cosmo_guirlande_rpi(threading.Thread):
         heatramp <<= 2 # scale up to 0..252
         # figure out which third of the spectrum we're in:
         if t192 > 0x80: # hottest 128 = 0x80
-            pixels[Pixel] = (255, 255, int(heatramp))
+            self.pixels[Pixel] = (255, 255, int(heatramp))
         elif t192 > 0x40: # middle 64 = 0x40
-            pixels[Pixel] = (255, int(heatramp), 0)
+            self.pixels[Pixel] = (255, int(heatramp), 0)
         else: # coolest
-            pixels[Pixel] = (int(heatramp), 0, 0)
+            self.pixels[Pixel] = (int(heatramp), 0, 0)
 
     # FireCustom(CoolingRangeStart, CoolingRangeEnd, Sparking, SparkingRangeStart, SparkingRangeEnd, 
     #             SpeedDelay, cycles):
@@ -801,51 +800,51 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 # figure out which third of the spectrum we're in:
                 if FireColor == 2: #green flame
                     if t192 > 0x80: # hottest 128 = 0x80
-                        pixels[j] = (int(heatramp),255, 255)
+                        self.pixels[j] = (int(heatramp),255, 255)
                     elif t192 > 0x40: # middle 64 = 0x40
-                        pixels[j] = (0, 255, int(heatramp))
+                        self.pixels[j] = (0, 255, int(heatramp))
                     else: # coolest
-                        pixels[j] = (0, int(heatramp), 0)
+                        self.pixels[j] = (0, int(heatramp), 0)
                 elif FireColor == 1: #blue flame
                     if t192 > 0x80: # hottest 128 = 0x80
-                        pixels[j] = (255, int(heatramp), 255)
+                        self.pixels[j] = (255, int(heatramp), 255)
                     elif t192 > 0x40: # middle 64 = 0x40
-                        pixels[j] = (int(heatramp), 0, 255)
+                        self.pixels[j] = (int(heatramp), 0, 255)
                     else: # coolest
-                        pixels[j] = (0, 0, int(heatramp))
+                        self.pixels[j] = (0, 0, int(heatramp))
                 else: #FireColor == 0: #red flame
                     if t192 > 0x80: # hottest 128 = 0x80
-                        pixels[j] = (255, 255, int(heatramp))
+                        self.pixels[j] = (255, 255, int(heatramp))
                     elif t192 > 0x40: # middle 64 = 0x40
-                        pixels[j] = (255, int(heatramp), 0)
+                        self.pixels[j] = (255, int(heatramp), 0)
                     else: # coolest
-                        pixels[j] = (int(heatramp), 0, 0)
+                        self.pixels[j] = (int(heatramp), 0, 0)
                     
 
-            pixels.show()
+            self.pixels.show()
             time.sleep(SpeedDelay)
 
     # meteorRain(red, green, blue, meteorSize, meteorTrailDecay, meteorRandomDecay, LoopCount, SpeedDelay)
     def meteorRain(self, red, green, blue, meteorSize, meteorTrailDecay, meteorRandomDecay, LoopCount, SpeedDelay): 
         for loop in range(LoopCount):
-            pixels.fill((0,0,0))
+            self.pixels.fill((0,0,0))
             
             for i in range(self.pixel_number*2):
                 # fade brightness all LEDs one step
                 for j in range(self.pixel_number):
                     if (not meteorRandomDecay) or (random.randint(0,10) > 5):
-                        fadeToBlack(j, meteorTrailDecay )      
+                        self.fadeToBlack(j, meteorTrailDecay )      
                 
                 # draw meteor
                 for j in range(meteorSize):
                     if ( i-j < self.pixel_number) and (i-j >= 0): 
-                        pixels[i-j] = (red, green, blue)
+                        self.pixels[i-j] = (red, green, blue)
 
-                pixels.show()
+                self.pixels.show()
                 time.sleep(SpeedDelay)
 
     def fadeToBlack(self, ledNo, fadeValue):
-        oldColor = pixels[ledNo]
+        oldColor = self.pixels[ledNo]
         r = oldColor[0]
         g = oldColor[1]
         b = oldColor[2]
@@ -865,7 +864,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
         else:
             b = b - ( b * fadeValue / 256 )
 
-        pixels[ledNo] = ( int(r), int(g), int(b) )
+        self.pixels[ledNo] = ( int(r), int(g), int(b) )
 
     # BouncingBalls(red, green, blue, BallCount, LoopCount) 
     def BouncingBalls(self, red, green, blue, BallCount, LoopCount):
@@ -926,10 +925,10 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 Position[i] = round( Height[i] * (self.pixel_number - 1) / StartHeight)
             
             for i in range(BallCount):
-                pixels[Position[i]] = (red,green,blue)
+                self.pixels[Position[i]] = (red,green,blue)
             
-            pixels.show()
-            pixels.fill((0, 0, 0))
+            self.pixels.show()
+            self.pixels.fill((0, 0, 0))
             
     # BouncingColoredBalls(BallCount, colors[][3], LoopCount) 
     def BouncingColoredBalls(self, BallCount, colors, LoopCount):
@@ -990,10 +989,10 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 Position[i] = round( Height[i] * (self.pixel_number - 1) / StartHeight)
             
             for i in range(BallCount):
-                pixels[Position[i]] = (colors[i][0],colors[i][1],colors[i][2])
+                self.pixels[Position[i]] = (colors[i][0],colors[i][1],colors[i][2])
             
-            pixels.show()
-            pixels.fill((0, 0, 0))
+            self.pixels.show()
+            self.pixels.fill((0, 0, 0))
         
 
         def run(self):
@@ -1270,7 +1269,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 print("keyboard interrupt, blackout LED")
                 self.state = "keyboard"
                 if args.clear:
-                    pixels.fill((0, 0, 0, 0))
+                    self.pixels.fill((0, 0, 0, 0))
 
     #Check if main class is style alive - to be run on a thread
     def run(self):
@@ -1658,7 +1657,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             print("keyboard interrupt, blackout LED")
             self.state = "keyboard"
             if args.clear:
-                pixels.fill((0, 0, 0, 0))
+                self.pixels.fill((0, 0, 0, 0))
 
 if __name__ == '__main__':
     # Process arguments
