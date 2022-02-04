@@ -318,9 +318,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
     def colorAll2Color(self, c1, c2):
         for i in range(self.pixel_number):
             if(i % 2 == 0): # even
-                self.pixels[i] = c1
+                self.pixels[i] = int(c1)
             else: # odd   
-                self.pixels[i] = c2
+                self.pixels[i] = int(c2)
         self.pixels.show()
 
 
