@@ -1642,7 +1642,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,meteorRain"):
                     self.state = "meteorRain"
                     function_type, function = self.newSocket.data_rcv.split(',')
-                    self.meteorRain(self.r, self.g, self.b )
+                    self.meteorRain(self.r, self.g, self.b, 10, 64, True, 1, 0 )
                     time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,fadeToBlack"):
