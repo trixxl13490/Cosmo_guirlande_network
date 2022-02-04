@@ -386,7 +386,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
         r = 0
         g = 0
         b = 0
-        
+        red = int(red) 
+        green = int(green)
+        blue = int(blue)
         for k in range(256):
             r = (k/256.0)*red
             g = (k/256.0)*green
