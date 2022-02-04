@@ -1648,7 +1648,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,fadeToBlack"):
                     self.state = "fadeToBlack"
                     function_type, function= self.newSocket.data_rcv.split(',')
-                    self.fadeToBlack(self.r, self.g, self.b, )
+                    self.fadeToBlack(self.r, self.g, self.b )
                     time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,*BouncingBalls"):
