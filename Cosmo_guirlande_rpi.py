@@ -407,6 +407,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
     # Strobe(red, green, blue, StrobeCount, FlashDelay, EndPause)
     def Strobe(self, red, green, blue, StrobeCount, FlashDelay, EndPause):
+        red = int(red) 
+        green = int(green)
+        blue = int(blue)
         for j in range(StrobeCount):
             self.pixels.fill((red,green,blue))
             self.pixels.show()
@@ -419,6 +422,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
     # HalloweenEyes(red, green, blue, EyeWidth, EyeSpace, Fade, Steps, FadeDelay, EndPause)
     def HalloweenEyes(self, red, green, blue, EyeWidth, EyeSpace, Fade, Steps, FadeDelay, EndPause):
+        red = int(red) 
+        green = int(green)
+        blue = int(blue)
         self.pixels.fill((0,0,0))
         r = 0
         g = 0
