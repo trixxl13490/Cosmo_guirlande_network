@@ -318,9 +318,9 @@ class Cosmo_guirlande_rpi(threading.Thread):
     def colorAll2Color(self, c1, c2):
         for i in range(self.pixel_number):
             if(i % 2 == 0): # even
-                self.pixels[i] = int(c1)
+                self.pixels[i] = c1
             else: # odd   
-                self.pixels[i] = int(c2)
+                self.pixels[i] = c2
         self.pixels.show()
 
 
@@ -1515,7 +1515,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,colorAll2Color"):
                     self.state = "colorAll2Color"
                     function_type, function = self.newSocket.data_rcv.split(',')
-                    self.colorAll2Color((self.r, self.g, self.b), (255,165,0))
+                    self.colorAll2Color((int(self.r), int(self.g), int(self.b)), (255,165,0))
                     time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,FadeInOut"):
