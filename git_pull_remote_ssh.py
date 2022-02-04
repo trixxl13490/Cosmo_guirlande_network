@@ -37,7 +37,6 @@ ssh2.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', ti
 # kill GUI if running
 
 ssh_stdin2, ssh_stdout2, ssh_stderr2 = ssh2.exec_command("cd /home/pi/Cosmo_guirlande_network/ && sudo git pull")
-time.sleep(2.5)
 
 print("ss2 passed")
 
@@ -49,3 +48,6 @@ ssh3.connect(hostname='192.168.0.29', username='pi', password='vbcgxb270694', ti
 
 # kill GUI if running
 ssh_stdin3, ssh_stdout3, ssh_stderr3 = ssh3.exec_command("cd /home/pi/Cosmo_guirlande_network/ && sudo git pull")
+
+print("ss3 passed")
+time.sleep(2.5)

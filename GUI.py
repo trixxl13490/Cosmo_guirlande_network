@@ -129,11 +129,17 @@ class MainWin(QWidget):
                                     "RGBW_WHITE_RGB" ,"RGBW_WHITE_RGBW","RGBW_WHITE_W", "TEAL", "WHITE","YELLOW" ])
         self.type_color21.currentIndexChanged.connect(self.color2_change_demand12)
 
-        #Bouton Rainbow 1 Loop
+        #Bouton restart_demand
         self.button_restart_1 = QPushButton('restart', self)
         self.button_restart_1.setToolTip('button_restart_1')
         self.button_restart_1.setGeometry(10, 140, 100, 25)
         self.button_restart_1.clicked.connect(self.restart_demand)
+
+        #Bouton git_pull_demand
+        self.button_git_1 = QPushButton('git pull', self)
+        self.button_git_1.setToolTip('button_git_1')
+        self.button_git_1.setGeometry(110, 140, 100, 25)
+        self.button_git_1.clicked.connect(self.git_pull_demand)
 
         #Entree Frequence Strombo
         # Create textbox
@@ -2098,6 +2104,17 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
         #Force restart by SSH - paramiko lib
         subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
+
+    def git_pull_demand(self):
+        self.msg1 = 'cosmoguirlande,git_pull'
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+        #Force restart by SSH - paramiko lib
+        subprocess.Popen(args='python git_pull_remote_ssh.py', shell=True)
 
 
 
