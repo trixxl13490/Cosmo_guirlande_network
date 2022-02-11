@@ -350,7 +350,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             g = int(pos*3)
             b = int(255 - pos*3)
         return (r, g, b) if neopixel.ORDER == neopixel.RGB or neopixel.ORDER == neopixel.GRB else (r, g, b, 0)
-    '''
+    
     def rainbow_cycle(self,delay, cycles):
         for j in range(255 * cycles):
             for i in range(self.pixel_number):
@@ -360,7 +360,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 self.pixels[i] = self.wheel(pixel_index & 255)
             self.pixels.show()
             time.sleep(delay)
-
+    '''
     # RGBLoop(delay)
     def RGBLoop(self, delay):
         for j in range(3):
@@ -1894,7 +1894,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.colorWipe(self.r, self.g, self.b, 0 )
                     time.sleep(0.5)
-
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,theaterChaseRainbow"):
                     self.state = "theaterChaseRainbow"
