@@ -2544,7 +2544,7 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
             
     def Drain_demand_1(self):
-        self.msg1 = 'cosmoguirlande,Drain'
+        self.msg1 = 'cosmoguirlande,*Drain'
         self.newServer1.to_send = self.msg1
         if self.sync:
             self.newServer2.to_send = self.msg1
