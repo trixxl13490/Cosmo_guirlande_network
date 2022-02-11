@@ -136,11 +136,17 @@ class Cosmo_guirlande_rpi(threading.Thread):
         self.tcp_ip = tcp_ip
         self.tcp_port = tcp_port
         self.buffer_size = buffer_size
+        self.levelobj = (43, 73, 103, 135, 160, 188, 213, 236, 255, 272, 286, 295, 300)
+        self.levelgroups = (5, 9, 14, 17, 19, 23, 25, 28, 30, 32, 35, 39, 43)
+        self.PartyColors_p = (
+    ((0x55),(0x50),(0xAB)), ((0x84),(0x00),(0x7C)), ((0xB5),(0x00),(0x4B)), ((0xE5),(0x00),(0x1B)),
+    ((0xE8),(0x17),(0x00)), ((0xB8),(0x47),(0x00)), ((0xAB),(0x77),(0x00)), ((0xAB),(0xAB),(0x00)),
+    ((0xAB),(0x55),(0x00)), ((0xDD),(0x22),(0x00)), ((0xF2),(0x00),(0x0E)), ((0xC2),(0x00),(0x3E)),
+    ((0x8F),(0x00),(0x71)), ((0x5F),(0x00),(0xA1)), ((0x2F),(0x00),(0xD0)), ((0x00),(0x07),(0xF9))  )
 
         #Create Socket to communicate
         self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
         
-
         #Watchdog
         self.watchdog_count = 0
         self.state = ""
@@ -323,7 +329,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 self.pixels[i] = c2
         self.pixels.show()
 
-
     def wheel(pos):
         # Input a value 0 to 255 to get a color value.
         # The colours are a transition r - g - b - back to r.
@@ -344,7 +349,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
             g = int(pos*3)
             b = int(255 - pos*3)
         return (r, g, b) if neopixel.ORDER == neopixel.RGB or neopixel.ORDER == neopixel.GRB else (r, g, b, 0)
-
 
     def rainbow_cycle(self,delay, cycles):
         for j in range(255 * cycles):
@@ -550,7 +554,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
     
         time.sleep(ReturnDelay)
 
-
     def LeftToRight(self, red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
         red = int(red) 
         green = int(green)
@@ -567,7 +570,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
             time.sleep(SpeedDelay)
         
         time.sleep(ReturnDelay)
-
 
     def RightToLeft(self, red, green, blue, EyeSize, SpeedDelay, ReturnDelay):
         red = int(red) 
@@ -613,7 +615,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 self.pixels.fill((0,0,0))
 
         time.sleep(SpeedDelay)
-
 
     def Sparkle(self, red, green, blue, Count, SpeedDelay):
         red = int(red) 
@@ -1767,7 +1768,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
                 
-                ######################################################################################################################
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,colorAll2Color"):
                     self.state = "colorAll2Color"
                     function_type, function = self.newSocket.data_rcv.split(',')
@@ -1846,26 +1846,22 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     function_type, function = self.newSocket.data_rcv.split(',')
                     while self.newSocket.data_rcv.startswith('cosmoguirlande,Fire'):
                         self.Fire(55, 120,0, 100)
-                    time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,FireCustom"):
                     self.state = "FireCustom"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     while self.newSocket.data_rcv.startswith('cosmoguirlande,FireCustom'):
                         self.FireCustom(self.r, self.g, self.b )
-                    time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,meteorRain"):
                     self.state = "meteorRain"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.meteorRain(self.r, self.g, self.b, 10, 64, True, 1, 0 )
-                    time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,fadeToBlack"):
                     self.state = "fadeToBlack"
                     function_type, function= self.newSocket.data_rcv.split(',')
                     #self.fadeToBlack(self.r, self.g, self.b)
-                    time.sleep(0.5)
 
                 elif self.newSocket.data_rcv.startswith("cosmoguirlande,*BouncingBalls"):
                     self.state = "BouncingBalls"
@@ -1877,6 +1873,56 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.state = "BouncingColoredBalls"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.BouncingColoredBalls(3, ((255,0,0),(0,255,0),(0,0,255)), 1000)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Matrix"):
+                    self.state = "Matrix"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.pixels.fill((0, 0, 0))
+                    self.pixels.show()
+                    self.matrix(10, 0, 300) 
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*Drain"):
+                    self.state = "Drain"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.drain(self.levelobjcount, 0)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Pancake"):
+                    self.state = "Pancake"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.pancake(self.levelgroups, 0)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,HeatBeat"):
+                    self.state = "HeatBeat"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    # HeartBeat(red, green, blue, cycles):
+                    self.HeartBeat(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), 2)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbowWithGlitter"):
+                    self.state = "rainbowWithGlitter"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.rainbowWithGlitter(0, 7, 0, 100)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Confetti"):
+                    self.state = "Confetti"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.confetti(0.1, 1000)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Sinelon"):
+                    self.state = "Sinelon"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.sinelon(0, 230, 0, 500)
+                    time.sleep(0.5)
+
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,**BPM"):
+                    self.state = "BPM"
+                    function_type, function = self.newSocket.data_rcv.split(',')
+                    self.bpm(self.PartyColors_p, 0, 50)
                     time.sleep(0.5)
                 ######################################################################################################################
 
