@@ -411,7 +411,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
         g = color[1]
         b = color[2]
 
-        return color if self.ORDER == neopixel.RGB or self.ORDER == neopixel.GRB else (r, g, b, 0)
+        return color
 
     def brightnessRGB(self, red, green, blue, bright):
         r = (bright/256.0)*red
