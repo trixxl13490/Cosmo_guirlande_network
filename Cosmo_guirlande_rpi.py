@@ -790,8 +790,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
         #   SparkingRangeStart: (0- number of pixels) spark position random value, start range
         #   SparkingRangeEnd: (0- number of pixels) spark position random value, end range
         #   SpeedDelay: (0-...) slow down the effect by injecting a delay in Sec. 0=no delay, .05=50msec, 2=2sec
-
-
     def FireCustom(self, CoolingRangeStart, CoolingRangeEnd, Sparking, SparkingRangeStart, SparkingRangeEnd, SpeedDelay, FireColor, FireEffect, LoopCount):
         heat = []
         for i in range(self.pixel_number):
@@ -1313,6 +1311,222 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 if args.clear:
                     self.pixels.fill((0, 0, 0, 0))
 
+    def matrix(self, random_percent, delay, cycles):
+        for loop in range(cycles):
+            rand = random.randint(0, 100)
+
+            # set first pixel
+            if rand <= random_percent:
+                self.pixels[0] = self.wheelBrightLevel(random.randint(0, 255), 255)
+            else:
+                self.pixels[0] = (0,0,0)
+            
+            # show pixels 
+            self.pixels.show()
+            time.sleep(delay)
+
+            # rotate pixel positon
+            for i in range(self.num_pixels - 1, 0, -1):
+                self.pixels[i] = self.pixels[i-1]
+
+    def random_levels(self, NUM_LEVELS, delay, cycles ):
+        for loop in range(cycles):
+
+            level = random.randint(0, NUM_LEVELS)
+            if (NUM_LEVELS == level):
+                level = 0
+            self.light_level_random(level, 1)
+            self.pixels.show()
+            time.sleep(delay)
+
+    def light_level_random(self, level,  clearall ):
+        #levels = (58, 108, 149, 187, 224, 264, 292, 309, 321, 327, 336, 348) #this only works if you have 350 lights
+        #levels = (11, 20, 27, 34, 39, 43, 47, 50) #this works for 50 lights
+        #levels = (20, 34, 43, 50) #this works for 50 lights
+        levels = self.levelobj
+        if (clearall):
+            self.pixels.fill((0, 0, 0)) # clear all
+            self.pixels.show()
+        
+        startPxl = 0
+        if (level == 0):
+            startPxl = 0
+        else:
+            startPxl = levels[level-1]
+        
+        for i in range(startPxl, levels[level]):
+            self.pixels[i] = self.wheelBrightLevel(random.randint(0, 255), random.randint(50, 255))
+
+    def drain(self,level, delay):
+        interrupt = False
+        for pancakeLevel in range(level):
+
+            # only needed if you ouput to a small display 
+            # updateControlVars() 
+            
+            if (interrupt):
+                return
+            
+            for level in range(pancakeLevel, -1, -1):
+                # only needed if you ouput to a small display 
+                # updateControlVars()  
+                
+                if (interrupt) :
+                    return
+
+                self.clear_level(level)
+                if (level >= 1) :
+                    self.light_level_random(level-1, 0)
+
+                # show pixel values 
+                self.pixels.show()
+                time.sleep(delay)
+
+    def pancake(self, groupsObj, delay):
+        NUM_LEVELS = len(groupsObj)
+        for pancakeLevel in range(NUM_LEVELS):
+            
+            for level in range(NUM_LEVELS-1, pancakeLevel-1, -1):
+                # only needed if you ouput to a small display 
+                # updateControlVars()   
+
+                if (level < NUM_LEVELS-1):
+                    self.clear_level(level+1)
+                    
+                self.light_level_random(level, 0)
+
+                # show pixel values 
+                self.pixels.show()
+                time.sleep(delay)
+
+    def HeartBeat(self, redo, greeno, blueo, cycles):
+        for loop in range(cycles):
+            #redo =random.randint(0, 255)
+            #greeno = random.randint(0, 255)
+            #blueo = random.randint(0, 255)
+            
+            #strip.setPixelColor(2, redo, greeno, blueo)
+            self.pixels.fill((redo, greeno, blueo))
+            self.pixels.show()
+            time.sleep(.020)
+            
+            x = 3
+            for ii in range(1,252,x): #for ( ii = 1 ; ii <252 ; ii = ii = ii + x)
+                self.pixels.fill( self.brightnessRGB(redo, greeno, blueo, ii) ) #strip.setBrightness(ii)
+                self.pixels.show()
+                time.sleep(.005)
+
+            for ii in range(252,3,-x): #for (int ii = 252 ; ii > 3 ; ii = ii - x){
+                self.pixels.fill( self.brightnessRGB(redo, greeno, blueo, ii) ) #strip.setBrightness(ii)
+                self.pixels.show()
+                time.sleep(.003)
+
+            time.sleep(.0010)
+            
+            y = 6
+            for ii in range(1,252,y): #for (int ii = 1 ; ii <255 ; ii = ii = ii + y){
+                self.pixels.fill( self.brightnessRGB(redo, greeno, blueo, ii) ) #strip.setBrightness(ii)
+                self.pixels.show()
+                time.sleep(.002)
+
+            for ii in range(252,3,-y): #for (int ii = 255 ; ii > 1 ; ii = ii - y){
+                self.pixels.fill( self.brightnessRGB(redo, greeno, blueo, ii) ) #strip.setBrightness(ii)
+                self.pixels.show()
+                time.sleep(.003)
+        
+            time.sleep(.050) 
+           
+    def fill_rainbow(self, initialhue, deltahue, delay):
+        hue = initialhue
+        
+        for i in range(self.num_pixels):
+            self.pixels[i] =  self.wheel(hue) 
+            hue = hue + deltahue
+            if hue > 255:
+                hue = hue - 255
+            self.pixels.show()
+            time.sleep(delay)    
+
+    def addGlitter( self,chanceOfGlitter):
+        if random.randint(0, 100) < chanceOfGlitter :
+            index = random.randint(0, self.num_pixels-1)
+            self.pixels[ index ] = (255,255,255)
+
+    def rainbowWithGlitter(self, initialhue, deltahue, delay, cycles):
+        hue = initialhue
+        for loop in range(cycles):
+            # built-in FastLED rainbow, plus some random sparkly glitter
+            #rainbow() #fill_rainbow( leds, NUM_LEDS, gHue, 7);
+            self.fill_rainbow(hue, deltahue, 0)
+            self.addGlitter(80)
+
+            hue = hue + 1
+            if hue == 256:
+                hue = 0
+            time.sleep(delay)
+
+    def confetti(self, delay, cycles):
+        for loop in range(cycles):
+            # random colored speckles that blink in and fade smoothly
+            self.fadeall(10)
+            pos = random.randint(0, self.num_pixels-1)
+            hue = random.randint(0, 64)
+            #pixels[pos] += CHSV( gHue + random8(64), 200, 255);
+            self.pixels[pos] = self.wheel(hue)
+            self.pixels.show()
+            time.sleep(delay)
+
+    def sinelon(self, hue, fadescale, delay, cycles):
+        for loop in range(cycles):
+            # a colored dot sweeping back and forth, with fading trails
+            self.fadeall(fadescale) 
+            beatsin = (math.sin( loop/self.num_pixels))
+            pos = (self.num_pixels) * (beatsin+1)/2
+            
+            #pixels[pos] += CHSV( gHue, 255, 192)
+            self.pixels[int(pos)] = self.wheel(hue)
+            self.pixels.show()
+            time.sleep(delay)
+
+    def bpm(self, pallet, delay, cycles): 
+        # colored stripes pulsing at a defined Beats-Per-Minute (BPM)
+        """
+        uint8_t BeatsPerMinute = 62;
+        CRGBPalette16 palette = PartyColors_p;
+        uint8_t beat = beatsin8( BeatsPerMinute, 64, 255);
+        for( int i = 0; i < NUM_LEDS; i++) { //9948
+            leds[i] = ColorFromPalette(palette, gHue+(i*2), beat-gHue+(i*10));
+        """
+        gHue = 0
+        for loop in range(cycles):
+
+            #beat = beatsin8( BeatsPerMinute, 64, 255)
+            beatsin = (math.sin( loop/self.num_pixels))
+            delta = (255-64) * (beatsin+1)/2
+            beat = 64 + delta
+
+            for i in  range(0, self.num_pixels, 1):  #for( int i = 0; i < NUM_LEDS; i++) #9948
+                palColor = pallet[i % len(pallet) ]
+                
+                color = self.brightnessRGB(palColor[0], palColor[1], palColor[2], beat)
+                pixels[i] = color
+            self.pixels.show()
+            time.sleep(delay)
+
+    def juggle(self, fadescale, delay, cycles):
+        # eight colored dots, weaving in and out of sync with each other
+        for loop in range(cycles):
+            self.fadeall(fadescale)  #fadeToBlackBy( leds, NUM_LEDS, 20);
+            dothue = 0
+            for i in  range(0, 8, 1):  #for( int i = 0; i < 8; i++) {
+                #leds[beatsin16( i+7, 0, NUM_LEDS-1 )] |= CHSV(dothue, 200, 255);
+                beatsin = (math.sin( loop/self.num_pixels))
+                index = (i+7) * (beatsin+1)/2
+                pixels[int(index)] = self.wheel(dothue)
+                dothue += 32
+            self.pixels.show()
+            time.sleep(delay)
+
     #Check if main class is style alive - to be run on a thread
     def run(self):
         self.newSocket.start()
@@ -1703,6 +1917,42 @@ class Cosmo_guirlande_rpi(threading.Thread):
             if args.clear:
                 self.pixels.fill((0, 0, 0, 0))
 
+    def HeartBeat(redo, greeno, blueo, cycles):
+        for loop in range(cycles):
+            #redo =random.randint(0, 255)
+            #greeno = random.randint(0, 255)
+            #blueo = random.randint(0, 255)
+            
+            #strip.setPixelColor(2, redo, greeno, blueo)
+            pixels.fill((redo, greeno, blueo))
+            pixels.show()
+            time.sleep(.020)
+            
+            x = 3
+            for ii in range(1,252,x): #for ( ii = 1 ; ii <252 ; ii = ii = ii + x)
+                pixels.fill( brightnessRGB(redo, greeno, blueo, ii) ) #strip.setBrightness(ii)
+                pixels.show()
+                time.sleep(.005)
+
+            for ii in range(252,3,-x): #for (int ii = 252 ; ii > 3 ; ii = ii - x){
+                pixels.fill( brightnessRGB(redo, greeno, blueo, ii) ) #strip.setBrightness(ii)
+                pixels.show()
+                time.sleep(.003)
+
+            time.sleep(.0010)
+            
+            y = 6
+            for ii in range(1,252,y): #for (int ii = 1 ; ii <255 ; ii = ii = ii + y){
+                pixels.fill( brightnessRGB(redo, greeno, blueo, ii) ) #strip.setBrightness(ii)
+                pixels.show()
+                time.sleep(.002)
+
+            for ii in range(252,3,-y): #for (int ii = 255 ; ii > 1 ; ii = ii - y){
+                pixels.fill( brightnessRGB(redo, greeno, blueo, ii) ) #strip.setBrightness(ii)
+                pixels.show()
+                time.sleep(.003)
+        
+            time.sleep(.050) 
 if __name__ == '__main__':
     # Process arguments
     parser = argparse.ArgumentParser()

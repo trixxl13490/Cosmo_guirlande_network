@@ -484,7 +484,59 @@ class MainWin(QWidget):
         self.button_BouncingColoredBalls.setToolTip('BouncingColoredBalls')
         self.button_BouncingColoredBalls.setGeometry(410,870, 100, 25)
         self.button_BouncingColoredBalls.clicked.connect(self.BouncingColoredBalls_demand_1)
+        
+        #----------------------------------------------------------------------------------------
+        # Bouton Matrix
+        self.button_Matrix = QPushButton('Matrix', self)
+        self.button_Matrix.setToolTip('Matrix')
+        self.button_Matrix.setGeometry(410,900, 100, 25)
+        self.button_Matrix.clicked.connect(self.Matrix_demand_1)
 
+        # Bouton Drain
+        self.button_Drain = QPushButton('Drain', self)
+        self.button_Drain.setToolTip('Drain')
+        self.button_Drain.setGeometry(510,840, 100, 25)
+        self.button_Drain.clicked.connect(self.Drain_demand_1)
+        #----------------------------------------------------------------------------------------
+        # Bouton Pancake
+        self.button_Pancake = QPushButton('Pancake', self)
+        self.button_Pancake.setToolTip('Pancake')
+        self.button_Pancake.setGeometry(510,870, 100, 25)
+        self.button_Pancake.clicked.connect(self.Pancake_demand_1)
+
+        # Bouton HeartBeat
+        self.button_HeartBeat = QPushButton('HeartBeat', self)
+        self.button_HeartBeat.setToolTip('HeartBeat')
+        self.button_HeartBeat.setGeometry(510,900, 100, 25)
+        self.button_HeartBeat.clicked.connect(self.HeartBeat_demand_1)
+
+        #----------------------------------------------------------------------------------------
+        # Bouton rainbowGlitter
+        self.button_rainbowGlitter = QPushButton('rainbowGlitter', self)
+        self.button_rainbowGlitter.setToolTip('rainbowGlitter')
+        self.button_rainbowGlitter.setGeometry(610,840, 100, 25)
+        self.button_rainbowGlitter.clicked.connect(self.rainbowGlitter_demand_1)
+
+        # Bouton Confetti
+        self.button_Confetti = QPushButton('Confetti', self)
+        self.button_Confetti.setToolTip('Confetti')
+        self.button_Confetti.setGeometry(610,870, 100, 25)
+        self.button_Confetti.clicked.connect(self.Confetti_demand_1)
+
+        #----------------------------------------------------------------------------------------
+        # Bouton Sinelon
+        self.button_Sinelon = QPushButton('Sinelon', self)
+        self.button_Sinelon.setToolTip('Sinelon')
+        self.button_Sinelon.setGeometry(610,900, 100, 25)
+        self.button_Sinelon.clicked.connect(self.Sinelon_demand_1)
+
+        # Bouton BPM
+        self.button_BPM = QPushButton('BPM', self)
+        self.button_BPM.setToolTip('BPM')
+        self.button_BPM.setGeometry(710,840, 100, 25)
+        self.button_BPM.clicked.connect(self.BPM_demand_1)
+
+        #----------------------------------------------------------------------------------------
 
         # Slider Red 1
         self.sl_R1 = QSlider(Qt.Vertical, self)
@@ -2481,6 +2533,86 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
     
+    def Matrix_demand_1(self):
+        self.msg1 = 'cosmoguirlande,Matrix'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+            
+    def Drain_demand_1(self):
+        self.msg1 = 'cosmoguirlande,Drain'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+            
+    def Pancake_demand_1(self):
+        self.msg1 = 'cosmoguirlande,Pancake'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+            
+    def HeartBeat_demand_1(self):
+        self.msg1 = 'cosmoguirlande,HeartBeat'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+            
+    def rainbowGlitter_demand_1(self):
+        self.msg1 = 'cosmoguirlande,rainbowGlitter'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+            
+    def Confetti_demand_1(self):
+        self.msg1 = 'cosmoguirlande,Confetti'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+            
+    def Sinelon_demand_1(self):
+        self.msg1 = 'cosmoguirlande,Sinelon'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+            
+    def BPM_demand_1(self):
+        self.msg1 = 'cosmoguirlande,BPM'
+        self.newServer1.to_send = self.msg1
+        if self.sync:
+            self.newServer2.to_send = self.msg1
+            self.newServer3.to_send = self.msg1
+            self.newServer4.to_send = self.msg1
+            self.newServer5.to_send = self.msg1
+            self.newServer6.to_send = self.msg1
+
 
     # Slider Buttons functions
     def slider_R1(self, R1):
