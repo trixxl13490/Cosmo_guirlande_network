@@ -235,6 +235,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
         while self.newSocket.data_rcv.startswith('cosmoguirlande,color2'):
             animations.animate()
 
+    '''
     def rainbow_cycle(self, wait):
         for j in range(255):
             for i in range(self.pixel_number):
@@ -242,7 +243,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 self.pixels[i] = self.wheel(pixel_index & 255)
             self.pixels.show()
             time.sleep(wait)
-
+    '''
     def comet(self):
         comet = Comet(self.pixels, speed=0.01, color=self.color1, tail_length=10, bounce=True)
         animations = AnimationSequence(
