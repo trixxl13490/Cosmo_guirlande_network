@@ -137,6 +137,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
         self.tcp_port = tcp_port
         self.buffer_size = buffer_size
         self.levelobj = (43, 73, 103, 135, 160, 188, 213, 236, 255, 272, 286, 295, 300)
+        self.levelobjcount = len(self.levelobj)
         self.levelgroups = (5, 9, 14, 17, 19, 23, 25, 28, 30, 32, 35, 39, 43)
         self.PartyColors_p = (
     ((0x55),(0x50),(0xAB)), ((0x84),(0x00),(0x7C)), ((0xB5),(0x00),(0x4B)), ((0xE5),(0x00),(0x1B)),
