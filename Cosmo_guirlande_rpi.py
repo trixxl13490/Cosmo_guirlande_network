@@ -1327,7 +1327,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             time.sleep(delay)
 
             # rotate pixel positon
-            for i in range(self.num_pixels - 1, 0, -1):
+            for i in range(self.pixel_number - 1, 0, -1):
                 self.pixels[i] = self.pixels[i-1]
 
     def random_levels(self, NUM_LEVELS, delay, cycles ):
@@ -1440,7 +1440,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
     def fill_rainbow(self, initialhue, deltahue, delay):
         hue = initialhue
         
-        for i in range(self.num_pixels):
+        for i in range(self.pixel_number):
             self.pixels[i] =  self.wheel(hue) 
             hue = hue + deltahue
             if hue > 255:
@@ -1450,7 +1450,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
     def addGlitter( self,chanceOfGlitter):
         if random.randint(0, 100) < chanceOfGlitter :
-            index = random.randint(0, self.num_pixels-1)
+            index = random.randint(0, self.pixel_number-1)
             self.pixels[ index ] = (255,255,255)
 
     def rainbowWithGlitter(self, initialhue, deltahue, delay, cycles):
@@ -1470,7 +1470,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
         for loop in range(cycles):
             # random colored speckles that blink in and fade smoothly
             self.fadeall(10)
-            pos = random.randint(0, self.num_pixels-1)
+            pos = random.randint(0, self.pixel_number-1)
             hue = random.randint(0, 64)
             #pixels[pos] += CHSV( gHue + random8(64), 200, 255);
             self.pixels[pos] = self.wheel(hue)
@@ -1481,8 +1481,8 @@ class Cosmo_guirlande_rpi(threading.Thread):
         for loop in range(cycles):
             # a colored dot sweeping back and forth, with fading trails
             self.fadeall(fadescale) 
-            beatsin = (math.sin( loop/self.num_pixels))
-            pos = (self.num_pixels) * (beatsin+1)/2
+            beatsin = (math.sin( loop/self.pixel_number))
+            pos = (self.pixel_number) * (beatsin+1)/2
             
             #pixels[pos] += CHSV( gHue, 255, 192)
             self.pixels[int(pos)] = self.wheel(hue)
@@ -1502,15 +1502,15 @@ class Cosmo_guirlande_rpi(threading.Thread):
         for loop in range(cycles):
 
             #beat = beatsin8( BeatsPerMinute, 64, 255)
-            beatsin = (math.sin( loop/self.num_pixels))
+            beatsin = (math.sin( loop/self.pixel_number))
             delta = (255-64) * (beatsin+1)/2
             beat = 64 + delta
 
-            for i in  range(0, self.num_pixels, 1):  #for( int i = 0; i < NUM_LEDS; i++) #9948
+            for i in  range(0, self.pixel_number, 1):  #for( int i = 0; i < NUM_LEDS; i++) #9948
                 palColor = pallet[i % len(pallet) ]
                 
                 color = self.brightnessRGB(palColor[0], palColor[1], palColor[2], beat)
-                pixels[i] = color
+                self.pixels[i] = color
             self.pixels.show()
             time.sleep(delay)
 
@@ -1521,7 +1521,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             dothue = 0
             for i in  range(0, 8, 1):  #for( int i = 0; i < 8; i++) {
                 #leds[beatsin16( i+7, 0, NUM_LEDS-1 )] |= CHSV(dothue, 200, 255);
-                beatsin = (math.sin( loop/self.num_pixels))
+                beatsin = (math.sin( loop/self.pixel_number))
                 index = (i+7) * (beatsin+1)/2
                 pixels[int(index)] = self.wheel(dothue)
                 dothue += 32
