@@ -328,7 +328,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             else: # odd   
                 self.pixels[i] = c2
         self.pixels.show()
-'''
+    '''
     def wheel(pos):
         # Input a value 0 to 255 to get a color value.
         # The colours are a transition r - g - b - back to r.
@@ -349,7 +349,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             g = int(pos*3)
             b = int(255 - pos*3)
         return (r, g, b) if neopixel.ORDER == neopixel.RGB or neopixel.ORDER == neopixel.GRB else (r, g, b, 0)
-'''
+    '''
     def rainbow_cycle(self,delay, cycles):
         for j in range(255 * cycles):
             for i in range(self.pixel_number):
