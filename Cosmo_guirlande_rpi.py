@@ -1318,6 +1318,25 @@ class Cosmo_guirlande_rpi(threading.Thread):
         b = (bright/256.0)*blue
         return (int(r), int(g), int(b))
 
+def fadeall(self,scale):
+    for i in range(self.pixel_number): #for(int i = 0; i < NUM_LEDS; i++) 
+        #leds[i].nscale8(250)
+        
+        #get current color pf pixel
+        c = pixels[i]
+        red = c[0]
+        green = c[1]
+        blue = c[2]
+        
+        # scale color
+        #scale = 250
+        r = (scale/256.0)*red
+        g = (scale/256.0)*green
+        b = (scale/256.0)*blue
+
+        #change pixel
+        self.pixels[i] = (int(r),int(g),int(b))
+
     def matrix(self, random_percent, delay, cycles):
         for loop in range(cycles):
             rand = random.randint(0, 100)
