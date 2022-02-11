@@ -1323,7 +1323,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             #leds[i].nscale8(250)
             
             #get current color pf pixel
-            c = pixels[i]
+            c = self.pixels[i]
             red = c[0]
             green = c[1]
             blue = c[2]
