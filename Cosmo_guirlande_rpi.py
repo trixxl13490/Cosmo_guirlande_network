@@ -420,6 +420,18 @@ class Cosmo_guirlande_rpi(threading.Thread):
         b = (bright/256.0)*blue
         return (int(r), int(g), int(b))
 
+    def clear_level(self, level):
+        #levels = (58, 108, 149, 187, 224, 264, 292, 309, 321, 327, 336, 348) #this only works if you have 350 lights
+        #levels = (11, 20, 27, 34, 39, 43, 47, 50) #this works for 50 lights
+        #levels = (20, 34, 43, 50) #this works for 50 lights
+        levels = self.levelobj
+        startPxl = 0
+        if (level == 0):
+            startPxl = 0
+        else:
+            startPxl = levels[level-1]
+        for i in range(startPxl, levels[level]):
+            self.pixels[i] = (0,0,0)  #CRGB::Black;
 
     # FadeInOut(red, green, blue, delay)  
     def FadeInOut(self,red, green, blue, delay):
