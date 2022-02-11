@@ -1312,6 +1312,12 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 if args.clear:
                     self.pixels.fill((0, 0, 0, 0))
 
+    def brightnessRGB(self,red, green, blue, bright):
+        r = (bright/256.0)*red
+        g = (bright/256.0)*green
+        b = (bright/256.0)*blue
+        return (int(r), int(g), int(b))
+
     def matrix(self, random_percent, delay, cycles):
         for loop in range(cycles):
             rand = random.randint(0, 100)

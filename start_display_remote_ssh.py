@@ -16,96 +16,105 @@ IP_addres = socket.gethostbyname(h_name)
 
 
 #----------------------------------------------------------------------------------------------------------------------
-ssh3 = paramiko.SSHClient()
-ssh3.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh3.connect(hostname='192.168.0.29', username='pi', password='vbcgxb270694', timeout=5, port=22)
+try:
+    ssh3 = paramiko.SSHClient()
+    ssh3.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh3.connect(hostname='192.168.0.29', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
-# kill GUI if running
-ssh_stdin3, ssh_stdout3, ssh_stderr3 = ssh3.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+    # kill GUI if running
+    ssh_stdin3, ssh_stdout3, ssh_stderr3 = ssh3.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
 
-# Start GUI again on rpi
-channel3 = ssh3.invoke_shell()
-stdin3 = channel3.makefile('wb')
-stdout3 = channel3.makefile('rb')
+    # Start GUI again on rpi
+    channel3 = ssh3.invoke_shell()
+    stdin3 = channel3.makefile('wb')
+    stdout3 = channel3.makefile('rb')
 
-stdin3.write('''
-  export XAUTHORITY=/home/pi/.Xauthority
-  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 119 192.168.0.20 50003 1024 RGB'
-  ''')
-print("ss3 passed")
+    stdin3.write('''
+      export XAUTHORITY=/home/pi/.Xauthority
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 119 192.168.0.20 50003 1024 RGB'
+      ''')
+    print("ss3 passed")
+except socket.timeout:
+    print("ss3 timeout")
 #--------------------------------------------------------------------------------------------------------------------
+try:
+    #Create SSH connection with paramiko
+    ssh1 = paramiko.SSHClient()
+    ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh1.connect(hostname='192.168.0.5', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
-#Create SSH connection with paramiko
-ssh1 = paramiko.SSHClient()
-ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh1.connect(hostname='192.168.0.5', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    # kill GUI if running
+    ssh_stdin1, ssh_stdout1, ssh_stderr1 = ssh1.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
 
-# kill GUI if running
-ssh_stdin1, ssh_stdout1, ssh_stderr1 = ssh1.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+    # Start GUI again on rpi
+    channel1 = ssh1.invoke_shell()
+    stdin1 = channel1.makefile('wb')
+    stdout1 = channel1.makefile('rb')
 
-# Start GUI again on rpi
-channel1 = ssh1.invoke_shell()
-stdin1 = channel1.makefile('wb')
-stdout1 = channel1.makefile('rb')
+    stdin1.write('''
+      export XAUTHORITY=/home/pi/.Xauthority
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.20 50001 1024 RGBW'
+      ''')
 
-stdin1.write('''
-  export XAUTHORITY=/home/pi/.Xauthority
-  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.20 50001 1024 RGBW'
-  ''')
-
-#print(stdout1.read())
-print("ss1 passed")
-
+    #print(stdout1.read())
+    print("ss1 passed")
+except socket.timeout:
+    print("ss1 timeout")
 
 #----------------------------------------------------------------------------------------------------------------------
-ssh2 = paramiko.SSHClient()
-ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh2.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=5, port=22)
+try:
+    ssh2 = paramiko.SSHClient()
+    ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh2.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
-# kill GUI if running
+    # kill GUI if running
 
-ssh_stdin2, ssh_stdout2, ssh_stderr2 = ssh2.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
-time.sleep(2.5)
-
-
-# Start GUI again on rpi
-channel2 = ssh2.invoke_shell()
-stdin2 = channel2.makefile('wb')
-stdout2 = channel2.makefile('rb')
+    ssh_stdin2, ssh_stdout2, ssh_stderr2 = ssh2.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+    time.sleep(2.5)
 
 
-stdin2.write('''
-  export XAUTHORITY=/home/pi/.Xauthority
-  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.20 50002 1024 RGBW'
-  ''')
-print("ss2 passed")
+    # Start GUI again on rpi
+    channel2 = ssh2.invoke_shell()
+    stdin2 = channel2.makefile('wb')
+    stdout2 = channel2.makefile('rb')
+
+
+    stdin2.write('''
+      export XAUTHORITY=/home/pi/.Xauthority
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.20 50002 1024 RGBW'
+      ''')
+    print("ss2 passed")
+except socket.timeout:
+    print("ss2 timeout")
 #----------------------------------------------------------------------------------------------------------------------
-ssh2 = paramiko.SSHClient()
-ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-ssh2.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=5, port=22)
+try:
+    ssh2 = paramiko.SSHClient()
+    ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh2.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
-# kill GUI if running
+    # kill GUI if running
 
-ssh_stdin2, ssh_stdout2, ssh_stderr2 = ssh2.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
-time.sleep(2.5)
-
-
-# Start GUI again on rpi
-channel2 = ssh2.invoke_shell()
-stdin2 = channel2.makefile('wb')
-stdout2 = channel2.makefile('rb')
+    ssh_stdin2, ssh_stdout2, ssh_stderr2 = ssh2.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+    time.sleep(2.5)
 
 
-stdin2.write('''
-  export XAUTHORITY=/home/pi/.Xauthority
-  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.20 50002 1024 RGBW'
-  ''')
-print("ss2 passed")
+    # Start GUI again on rpi
+    channel2 = ssh2.invoke_shell()
+    stdin2 = channel2.makefile('wb')
+    stdout2 = channel2.makefile('rb')
 
 
+    stdin2.write('''
+      export XAUTHORITY=/home/pi/.Xauthority
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.20 50002 1024 RGBW'
+      ''')
+    print("ss2 passed")
+
+except socket.timeout:
+    print("ss2 timeout")
 
 
 '''
