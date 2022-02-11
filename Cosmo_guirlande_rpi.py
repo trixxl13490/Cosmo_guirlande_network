@@ -1966,7 +1966,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.pancake(self.levelgroups, 0)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,HeatBeat"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,HeartBeat"):
                     self.state = "HeatBeat"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     # HeartBeat(red, green, blue, cycles):
@@ -2035,7 +2035,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             if args.clear:
                 self.pixels.fill((0, 0, 0, 0))
 
-    def HeartBeat(redo, greeno, blueo, cycles):
+
         for loop in range(cycles):
             #redo =random.randint(0, 255)
             #greeno = random.randint(0, 255)
