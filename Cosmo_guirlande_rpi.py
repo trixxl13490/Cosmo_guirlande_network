@@ -1621,16 +1621,16 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 self.previous_state = self.state
 
                 # wait for animation type and threshold
-                if self.newSocket.data_rcv.startswith("cosmoguirlande,manual") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,manual"):
+                if self.newSocket.data_rcv.startswith("cosmoguirlande,manual")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,manual"):
                     print("manual control, do nothing while checkbox is on")
                     # time.sleep(0.3)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,strombo") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,strombo"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,strombo")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,strombo"):
                     self.state = "strombo"
                     self.stromboscope(self.color1, 0.05)
                     # time.sleep(0.3)
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,color1') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,color1'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,color1')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,color1'):
                     self.state = 'color1'
                     try:
                         function_type, function, self.color1 = self.newSocket.data_rcv.split(',')
@@ -1680,7 +1680,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     elif self.color1 == 'BLACK':
                         self.changeColor1String(BLACK)
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,color2') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,color2'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,color2')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,color2'):
                     self.state = 'color2'
                     try:
                         function_type, function, self.color2 = self.newSocket.data_rcv.split(',')
@@ -1728,16 +1728,16 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     elif self.color2 == 'BLACK':
                         self.changeColor2String(BLACK)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbow") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,rainbow") :
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbow")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,rainbow") :
                     self.state = "rainbow"
                     for j in range(2):
                         self.rainbow_cycle(0.01)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,blackout") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,blackout"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,blackout")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,blackout"):
                     self.state = "blackout"
                     self.blackout()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,chase'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,chase'):
                     self.state = "chase"
                     function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
                     try:
@@ -1750,7 +1750,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                         self.chase_size = 0
                     self.chase()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,comet'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,comet'):
                     self.state = "comet"
                     function_type, function, comet_speed, comet_tail = self.newSocket.data_rcv.split(',')
                     try:
@@ -1763,7 +1763,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                         self.comet_tail = 0
                     self.comet()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,sparkle'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,sparkle'):
                     self.state = "sparkle"
                     function_type, function, sparkle_speed, sparkle_num = self.newSocket.data_rcv.split(',')
                     try:
@@ -1776,7 +1776,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                         self.sparkle_num = 0
                     self.sparkle()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,pulse') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,pulse'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,pulse')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,pulse'):
                     self.state = "pulse"
                     function_type, function, pulse_period, pulse_speed = self.newSocket.data_rcv.split(',')
                     try:
@@ -1789,175 +1789,175 @@ class Cosmo_guirlande_rpi(threading.Thread):
                         self.pulse_speed = 0
                     self.pulse()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,solid') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,solid'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,solid')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,solid'):
                     self.state = "solid"
                     self.solid()
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,colorcycle'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,colorcycle'):
                     self.state = "colorcycle"
                     function_type, function, color1 , color2 = self.newSocket.data_rcv.split(',')
                     self.color1 = color1
                     self.color2 = color2
                     #☻self.colorcycle()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiScroll') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,dancingPiScroll'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiScroll')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,dancingPiScroll'):
                     self.state = "dancingPiScroll"
                     self.blackout()
                     self.dancingPiScroll()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiEnergy') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,dancingPiEnergy'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiEnergy')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,dancingPiEnergy'):
                     self.state = "dancingPiEnergy"
                     self.blackout()
                     self.dancingPiEnergy()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum'):
                     self.state = "dancingPiSpectrum"
                     self.blackout()
                     self.dancingPiSpectrum()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll'):
                     self.state = "stop_dancingPiScroll"
                     self.stop_dancingPiScroll()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiEnergy') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,stop_dancingPiEnergy'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiEnergy')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,stop_dancingPiEnergy'):
                     self.state = "stop_dancingPiEnergy"
                     self.stop_dancingPiEnergy()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum'):
                     self.state = "stop_dancingPiSpectrum"
                     self.stop_dancingPiSpectrum()
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,R") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,R') :
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,R")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,R') :
                     self.state = "R"
                     function_type, function, self.r = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,G") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,G'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,G")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,G'):
                     self.state = "G"
                     function_type, function, self.g = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,B") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,B'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,B")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,B'):
                     self.state = "B"
                     function_type, function, self.b = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,W") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,W'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,W")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,W'):
                     self.state = "W"
                     function_type, function, self.w = self.newSocket.data_rcv.split(',')
                     self.changeColor(self.r, self.g, self.b, self.w)
                     time.sleep(0.5)
                 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,colorAll2Color") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,colorAll2Color'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,colorAll2Color")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,colorAll2Color'):
                     self.state = "colorAll2Color"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.colorAll2Color((int(self.r), int(self.g), int(self.b)), (255,165,0))
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,FadeInOut") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,FadeInOut'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,FadeInOut")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,FadeInOut'):
                     self.state = "FadeInOut"
                     function_type, function= self.newSocket.data_rcv.split(',')
                     self.FadeInOut(self.r, self.g, self.b, 0)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Strobe") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,Strobe'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Strobe")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,Strobe'):
                     self.state = "Strobe"
                     function_type, function= self.newSocket.data_rcv.split(',')
                     self.Strobe(self.r, self.g, self.b,  10, 0, 1)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,HalloweenEyes") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,HalloweenEyes'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,HalloweenEyes")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,HalloweenEyes'):
                     self.state = "HalloweenEyes"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.HalloweenEyes(self.r, self.g, self.b, 1, 1, True, 10, 1, 3)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,CylonBounce") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,CylonBounce'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,CylonBounce")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,CylonBounce'):
                     self.state = "CylonBounce"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.CylonBounce(self.r, self.g, self.b, 2, 0, 0)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,NewKITT") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,NewKITT'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,NewKITT")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,NewKITT'):
                     self.state = "NewKITT"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.NewKITT(self.r, self.g, self.b, 4, 0, 0)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Twinkle") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,Twinkle'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Twinkle")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,Twinkle'):
                     self.state = "Twinkle"
                     function_type, function= self.newSocket.data_rcv.split(',')
                     self.Twinkle(self.r, self.g, self.b, 10, 0.1, False)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,TwinkleRandom") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,TwinkleRandom'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,TwinkleRandom")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,TwinkleRandom'):
                     self.state = "TwinkleRandom"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.TwinkleRandom(20, 0.1, False)
                     time.sleep(0.5)
  
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,SnowSparkle") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,SnowSparkle'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,SnowSparkle")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,SnowSparkle'):
                     self.state = "SnowSparkle"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.SnowSparkle(self.r, self.g, self.b, 100, 0.1, 0.3 )
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*RunningLights") or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,*RunningLights'):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*RunningLights")# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,*RunningLights'):
                     self.state = "RunningLights"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.RunningLights(self.r, self.g, self.b, 0)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,colorWipe") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,colorWipe"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,colorWipe")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,colorWipe"):
                     self.state = "colorWipe"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.colorWipe(self.r, self.g, self.b, 0 )
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,theaterChaseRainbow") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,theaterChaseRainbow")  :
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,theaterChaseRainbow")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,theaterChaseRainbow")  :
                     self.state = "theaterChaseRainbow"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.theaterChaseRainbow(0.1, 30)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Fire") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,Fire"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Fire")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,Fire"):
                     self.state = "Fire"
                     function_type, function = self.newSocket.data_rcv.split(',')
-                    while self.newSocket.data_rcv.startswith('cosmoguirlande,Fire') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,Fire'):
+                    while self.newSocket.data_rcv.startswith('cosmoguirlande,Fire')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,Fire'):
                         self.Fire(55, 120,0, 100)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,FireCustom") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,FireCustom"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,FireCustom")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,FireCustom"):
                     self.state = "FireCustom"
                     function_type, function = self.newSocket.data_rcv.split(',')
-                    while self.newSocket.data_rcv.startswith('cosmoguirlande,FireCustom') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,FireCustom'):
+                    while self.newSocket.data_rcv.startswith('cosmoguirlande,FireCustom')# or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,FireCustom'):
                         self.FireCustom(self.r, self.g, self.b )
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,meteorRain") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,meteorRain") :
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,meteorRain")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,meteorRain") :
                     self.state = "meteorRain"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.meteorRain(self.r, self.g, self.b, 10, 64, True, 1, 0 )
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,fadeToBlack") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,fadeToBlack"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,fadeToBlack")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,fadeToBlack"):
                     self.state = "fadeToBlack"
                     function_type, function= self.newSocket.data_rcv.split(',')
                     #self.fadeToBlack(self.r, self.g, self.b)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*BouncingBalls") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,*BouncingBalls"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*BouncingBalls")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,*BouncingBalls"):
                     self.state = "BouncingBalls"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.BouncingBalls(255, 0, 0, 3, 100) 
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*BouncingColoredBalls") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,*BouncingColoredBalls") :
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*BouncingColoredBalls")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,*BouncingColoredBalls") :
                     self.state = "BouncingColoredBalls"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.BouncingColoredBalls(3, ((255,0,0),(0,255,0),(0,0,255)), 1000)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Matrix") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,Matrix"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Matrix")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,Matrix"):
                     self.state = "Matrix"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.pixels.fill((0, 0, 0))
@@ -1965,44 +1965,44 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.matrix(10, 0, 300) 
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*Drain") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,*Drain"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,*Drain")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,*Drain"):
                     self.state = "Drain"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.drain(self.levelobjcount, 0)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Pancake") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,Pancake"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Pancake")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,Pancake"):
                     self.state = "Pancake"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.pancake(self.levelgroups, 0)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,HeartBeat") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,HeartBeat"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,HeartBeat")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,HeartBeat"):
                     self.state = "HeatBeat"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     # HeartBeat(red, green, blue, cycles):
                     self.HeartBeat(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255), 2)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbowWithGlitter") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,rainbowWithGlitter"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbowWithGlitter")# or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,rainbowWithGlitter"):
                     self.state = "rainbowWithGlitter"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.rainbowWithGlitter(0, 7, 0, 100)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Confetti") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,Confetti"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Confetti") # or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,Confetti"):
                     self.state = "Confetti"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.confetti(0.1, 1000)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Sinelon") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,Sinelon"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,Sinelon") # or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,Sinelon"):
                     self.state = "Sinelon"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.sinelon(0, 230, 0, 500)
                     time.sleep(0.5)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,**BPM") or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,**BPM"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,**BPM") # or self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,**BPM"):
                     self.state = "BPM"
                     function_type, function = self.newSocket.data_rcv.split(',')
                     self.bpm(self.PartyColors_p, 0, 50)
