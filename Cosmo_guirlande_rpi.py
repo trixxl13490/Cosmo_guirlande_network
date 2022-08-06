@@ -68,14 +68,16 @@ class Cosmo_Communication(threading.Thread):
                 line = line.encode()
                 connexion_serveur.send(line)
 
-                #Receive message
-                self.data_rcv = connexion_serveur.recv(self.buffer_size)
-                self.data_rcv = self.data_rcv.decode()
-                #print("data_rcv : ", self.data_rcv)
+                #Receive message - wait for it
+                while self.previous_message == self.newSocket.data_rcv:
+                    self.data_rcv = connexion_serveur.recv(self.buffer_size)
+                    self.data_rcv = self.data_rcv.decode()
+                    #print("data_rcv : ", self.data_rcv)
+                    time.sleep(0.05)
 
                 ##fermeture connexion
                 connexion_serveur.close()
-                time.sleep(0.1)
+                #time.sleep(0.1)
 
                 if self.data_rcv.find('stop_dancingPi') != -1:
                     print("close dancyPi from cosmo_communication class")
