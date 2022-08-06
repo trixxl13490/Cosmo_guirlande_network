@@ -150,7 +150,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
         #Create Socket to communicate
         self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
-        self.newSocket_mqtt = RPi_mqtt_socket()
+        #self.newSocket_mqtt = RPi_mqtt_socket()
         
         #Watchdog
         self.watchdog_count = 0
