@@ -1811,7 +1811,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.blackout()
                     self.dancingPiEnergy()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum' or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum') or self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum'):
                     self.state = "dancingPiSpectrum"
                     self.blackout()
                     self.dancingPiSpectrum()
