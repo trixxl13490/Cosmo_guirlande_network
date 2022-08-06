@@ -69,7 +69,7 @@ class Cosmo_Communication(threading.Thread):
                 connexion_serveur.send(line)
 
                 #Receive message - wait for it
-                while self.previous_message == self.newSocket.data_rcv:
+                while self.previous_message != self.newSocket.data_rcv:
                     self.data_rcv = connexion_serveur.recv(self.buffer_size)
                     self.data_rcv = self.data_rcv.decode()
                     #print("data_rcv : ", self.data_rcv)
