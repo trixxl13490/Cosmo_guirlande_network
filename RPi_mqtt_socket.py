@@ -4,7 +4,7 @@ import threading
 #Don't forget to install "sudo apt-get install -y mosquitto mosquitto-clients"
 
 class RPi_mqtt_socket(threading.Thread):
-    def __init__(self, mqtt_broker_ip):
+    def __init__(self):
         threading.Thread.__init__(self)
         self.data_rcv = ""
 
