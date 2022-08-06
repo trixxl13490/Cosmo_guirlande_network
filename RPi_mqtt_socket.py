@@ -20,6 +20,6 @@ class RPi_mqtt_socket(threading.Thread):
     cosmoguirlande.connect("localhost",1883,60)
     cosmoguirlande.on_connect = on_connect
     cosmoguirlande.on_message = on_message
-    cosmoguirlande.loop_forever()
+    #cosmoguirlande.loop_forever()
 
 
