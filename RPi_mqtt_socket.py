@@ -8,11 +8,11 @@ class RPi_mqtt_socket(threading.Thread):
         threading.Thread.__init__(self)
         self.data_rcv = ""
 
-    def on_connect(client, userdata, flags, rc):
+    def on_connect(self, client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
         client.subscribe("test1")
 
-    def on_message(client, userdata, msg):
+    def on_message(self, client, userdata, msg):
         print(str(msg))
         self.data_rcv = str(msg)
 
