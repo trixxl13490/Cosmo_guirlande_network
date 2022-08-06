@@ -1606,7 +1606,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
     #Check if main class is style alive - to be run on a thread
     def run(self):
         self.newSocket.start()
-        self.newSocket_mqtt.start()
+        #self.newSocket_mqtt.start()
         try:
             while True:
 
