@@ -1343,6 +1343,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 print("state :", self.state)
                 print("previous state :", self.state)
                 print('self.newSocket.data_rcv :', self.newSocket.data_rcv)
+                print('self.newSocket_mqtt.data_rcv :', self.newSocket_mqtt.data_rcv)
                 self.previous_state = self.state
 
                 # wait for animation type and threshold
@@ -1464,7 +1465,10 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
                 elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase') or  self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,chase'):
                     self.state = "chase"
-                    function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
+                    try:
+                        function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
+                    except :
+                        function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
                     try:
                         self.chase_speed = float(chase_speed)
                     except ValueError:
