@@ -10,7 +10,7 @@ class RPi_mqtt_socket(threading.Thread):
 
     def on_connect(self, client, userdata, flags, rc):
         print("Connected with result code "+str(rc))
-        self.client.subscribe("test1")
+        self.subscribe("test1")
 
     def on_message(self, client, userdata, msg):
         print(str(msg))
