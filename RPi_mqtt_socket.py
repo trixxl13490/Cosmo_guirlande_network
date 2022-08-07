@@ -16,7 +16,7 @@ class RPi_mqtt_socket(threading.Thread):
         self.cosmoguirlande.subscribe("test1")
 
     def on_message(self, client, userdata, msg):
-        x = json.loads(msg.payload.decode('utf-8'))
+        x = msg.payload.decode('utf-8')
         print(str(msg))
         print(str(x))
         self.data_rcv = str(msg)
