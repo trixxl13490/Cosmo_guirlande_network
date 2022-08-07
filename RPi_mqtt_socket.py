@@ -18,11 +18,13 @@ class RPi_mqtt_socket(threading.Thread):
         print(str(msg))
         self.data_rcv = str(msg)
 
+    def on_subscribe(self, mosq, obj, mid, granted_qos):
+        print("Subscribed: " + str(mid) + " " + str(granted_qos))
+        
     def run(self):
     # Assign event callbacks
         self.cosmoguirlande.on_connect = self.on_connect
         self.cosmoguirlande.on_message = self.on_message
-        self.cosmoguirlande.on_publish = self.on_publish
         self.cosmoguirlande.on_subscribe = self.on_subscribe
         self.on_connect.connect("localhost",1883,60)
         self.cosmoguirlande.loop_forever()
