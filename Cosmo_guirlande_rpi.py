@@ -149,7 +149,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
     ((0x8F),(0x00),(0x71)), ((0x5F),(0x00),(0xA1)), ((0x2F),(0x00),(0xD0)), ((0x00),(0x07),(0xF9))  )
 
         #Create Socket to communicate
-        self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
+        #self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
         self.newSocket_mqtt = RPi_mqtt_socket()
         
         #Watchdog
@@ -1087,283 +1087,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
             self.pixels.show()
             self.pixels.fill((0, 0, 0))
         
-
-        def run(self):
-            self.newSocket.start()
-            try:
-                while True:
-
-                    # Create Socket to communicate
-                    #self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
-                    #self.newSocket.start()
-
-                    print("Cosmoguirlande class run")
-                    print("state :", self.state)
-                    print("previous state :", self.state)
-                    print('self.newSocket.data_rcv :', self.newSocket.data_rcv)
-                    self.previous_state = self.state
-
-                    # wait for animation type and threshold
-                    if self.newSocket.data_rcv.startswith("cosmoguirlande,manual"):
-                        print("manual control, do nothing while checkbox is on")
-                        time.sleep(0.3)
-
-                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
-                        self.state = "strombo"
-                        self.stromboscope(self.color1, 0.05)
-                        time.sleep(0.3)
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,color1'):
-                        self.state = 'color1'
-                        function_type, function, self.color1 = self.newSocket.data_rcv.split(',')
-                        print("color1 :", self.color1)
-                        self.w = 0
-                        if self.color1 =='AMBER':
-                            self.changeColor1String(AMBER)
-                        elif self.color1 =='AQUA':
-                            self.changeColor1String(AQUA)
-                        elif self.color1 == 'YELLOW':
-                            self.changeColor1String(YELLOW)
-                        elif self.color1 == 'WHITE':
-                            self.changeColor1String(WHITE)
-                        elif self.color1 == 'TEAL':
-                            self.changeColor1String(TEAL)
-                        elif self.color1 == 'RGBW_WHITE_W':
-                            self.changeColor1String(RGBW_WHITE_W)
-                        elif self.color1 == 'RGBW_WHITE_RGBW':
-                            self.changeColor1String(RGBW_WHITE_RGBW)
-                        elif self.color1 == 'RGBW_WHITE_RGB':
-                            self.changeColor1String(RGBW_WHITE_RGB)
-                        elif self.color1 == 'RED':
-                            self.changeColor1String(RED)
-                        elif self.color1 == 'PURPLE':
-                            self.changeColor1String(PURPLE)
-                        elif self.color1 == 'PINK':
-                            self.changeColor1String(PINK)
-                        elif self.color1 == 'ORANGE':
-                            self.changeColor1String(ORANGE)
-                        elif self.color1 =='OLD_LACE':
-                            self.changeColor1String(OLD_LACE)
-                        elif self.color1 == 'MAGENTA':
-                            self.changeColor1String(MAGENTA)
-                        elif self.color1 == 'JADE':
-                            self.changeColor1String(JADE)
-                        elif self.color1 == 'GREEN':
-                            self.changeColor1String(GREEN)
-                        elif self.color1 =='GOLD':
-                            self.changeColor1String(GOLD)
-                        elif self.color1 == 'CYAN':
-                            self.changeColor1String(CYAN)
-                        elif self.color1 == 'BLUE':
-                            self.changeColor1String(BLUE)
-                        elif self.color1 == 'BLACK':
-                            self.changeColor1String(BLACK)
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,color2'):
-                        self.state = 'color2'
-                        function_type, function, self.color2 = self.newSocket.data_rcv.split(',')
-                        if self.color2 =='AMBER':
-                            self.changeColor2String(AMBER)
-                        elif self.color2 =='AQUA':
-                            self.changeColor2String(AQUA)
-                        elif self.color2 == 'YELLOW':
-                            self.changeColor2String(YELLOW)
-                        elif self.color2 == 'WHITE':
-                            self.changeColor2String(WHITE)
-                        elif self.color2 == 'TEAL':
-                            self.changeColor2String(TEAL)
-                        elif self.color2 == 'RGBW_WHITE_W':
-                            self.changeColor2String(RGBW_WHITE_W)
-                        elif self.color2 == 'RGBW_WHITE_RGBW':
-                            self.changeColor2String(RGBW_WHITE_RGBW)
-                        elif self.color2 == 'RGBW_WHITE_RGB':
-                            self.changeColor2String(RGBW_WHITE_RGB)
-                        elif self.color2 == 'RED':
-                            self.changeColor2String(RED)
-                        elif self.color2 == 'PURPLE':
-                            self.changeColor2String(PURPLE)
-                        elif self.color2 == 'PINK':
-                            self.changeColor2String(PINK)
-                        elif self.color2 == 'ORANGE':
-                            self.changeColor2String(ORANGE)
-                        elif self.color2 =='OLD_LACE':
-                            self.changeColor2String(OLD_LACE)
-                        elif self.color2 == 'MAGENTA':
-                            self.changeColor2String(MAGENTA)
-                        elif self.color2 == 'JADE':
-                            self.changeColor2String(JADE)
-                        elif self.color2 == 'GREEN':
-                            self.changeColor2String(GREEN)
-                        elif self.color2 =='GOLD':
-                            self.changeColor2String(GOLD)
-                        elif self.color2 == 'CYAN':
-                            self.changeColor2String(CYAN)
-                        elif self.color2 == 'BLUE':
-                            self.changeColor2String(BLUE)
-                        elif self.color2 == 'BLACK':
-                            self.changeColor2String(BLACK)
-
-                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbow"):
-                        self.state = "rainbow"
-                        for j in range(2):
-                            self.rainbow_cycle(0.01)
-
-                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,blackout"):
-                        self.state = "blackout"
-                        self.blackout()
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase'):
-                        self.state = "chase"
-                        function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
-                        try:
-                            self.chase_speed = float(chase_speed)
-                        except ValueError:
-                            self.chase_speed = 0
-                        try:
-                            self.chase_size = int(chase_size)
-                        except ValueError:
-                            self.chase_size = 0
-                        self.chase()
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet'):
-                        self.state = "comet"
-                        function_type, function, comet_speed, comet_tail = self.newSocket.data_rcv.split(',')
-                        try:
-                            self.comet_speed = float(comet_speed)
-                        except ValueError:
-                            self.comet_speed = 0
-                        try:
-                            self.comet_tail = int(comet_tail)
-                        except ValueError:
-                            self.comet_tail = 0
-                        self.comet()
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle'):
-                        self.state = "sparkle"
-                        function_type, function, sparkle_speed, sparkle_num = self.newSocket.data_rcv.split(',')
-                        try:
-                            self.sparkle_speed = float(sparkle_speed)
-                        except ValueError:
-                            self.sparkle_speed = 0
-                        try:
-                            self.sparkle_num = int(sparkle_num)
-                        except ValueError:
-                            self.sparkle_num = 0
-                        self.sparkle()
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
-                        self.state = "pulse"
-                        function_type, function, pulse_period, pulse_speed = self.newSocket.data_rcv.split(',')
-                        try:
-                            self.pulse_period = float(pulse_period)
-                        except ValueError:
-                            self.pulse_period = 0
-                        try:
-                            self.pulse_speed = float(pulse_speed)
-                        except ValueError:
-                            self.pulse_speed = 0
-                        self.pulse()
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,solid'):
-                        self.state = "solid"
-                        self.solid()
-                        time.sleep(0.5)
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,colorcycle'):
-                        self.state = "colorcycle"
-                        function_type, function, color1 , color2 = self.newSocket.data_rcv.split(',')
-                        self.color1 = color1
-                        self.color2 = color2
-                        #☻self.colorcycle()
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiScroll'):
-                        self.state = "dancingPiScroll"
-                        self.blackout()
-                        self.dancingPiScroll()
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiEnergy'):
-                        self.state = "dancingPiEnergy"
-                        self.blackout()
-                        self.dancingPiEnergy()
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum'):
-                        self.state = "dancingPiSpectrum"
-                        self.blackout()
-                        self.dancingPiSpectrum()
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll'):
-                        self.state = "stop_dancingPiScroll"
-                        self.stop_dancingPiScroll()
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiEnergy'):
-                        self.state = "stop_dancingPiEnergy"
-                        self.stop_dancingPiEnergy()
-
-                    elif self.newSocket.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum'):
-                        self.state = "stop_dancingPiSpectrum"
-                        self.stop_dancingPiSpectrum()
-
-                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,R"):
-                        self.state = "R"
-                        function_type, function, self.r = self.newSocket.data_rcv.split(',')
-                        self.changeColor(self.r, self.g, self.b, self.w)
-                        time.sleep(0.5)
-
-                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,G"):
-                        self.state = "G"
-                        function_type, function, self.g = self.newSocket.data_rcv.split(',')
-                        self.changeColor(self.r, self.g, self.b, self.w)
-                        time.sleep(0.5)
-
-                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,B"):
-                        self.state = "B"
-                        function_type, function, self.b = self.newSocket.data_rcv.split(',')
-                        self.changeColor(self.r, self.g, self.b, self.w)
-                        time.sleep(0.5)
-
-                    elif self.newSocket.data_rcv.startswith("cosmoguirlande,W"):
-                        self.state = "W"
-                        function_type, function, self.w = self.newSocket.data_rcv.split(',')
-                        self.changeColor(self.r, self.g, self.b, self.w)
-                        time.sleep(0.5)
-
-                    elif self.state == "nothing":
-                        #increse count if last states are "main"
-                        if self.previous_state == "nothing":
-                            self.watchdog_count = self.watchdog_count +1
-                            print("watchdog_count :",self.watchdog_count)
-                            time.sleep(0.5)
-                        #if no messages since last 10 sec (10 "main state), start again
-                        elif self.watchdog_count == 20:
-                            self.watchdog_count = 0
-                            self.run()
-                        self.previous_state = self.state
-
-                    elif self.state == "restart":
-                        self.state = "restart"
-                        # Del former, create a new one and start it
-                        '''self.newSocket.connexion_serveur.close()
-                        self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
-                        self.newSocket.start()'''
-
-                    else:
-                        print("nothing")
-                        self.state = "nothing"
-                        time.sleep(1)
-
-                    self.previous_message = self.newSocket.data_rcv
-
-
-            except TypeError:
-                print("type error")
-                self.run()
-
-            except KeyboardInterrupt:
-                print("keyboard interrupt, blackout LED")
-                self.state = "keyboard"
-                if args.clear:
-                    self.pixels.fill((0, 0, 0, 0))
-
     def brightnessRGB(self,red, green, blue, bright):
         r = (bright/256.0)*red
         g = (bright/256.0)*green
@@ -1607,14 +1330,14 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
     #Check if main class is style alive - to be run on a thread
     def run(self):
-        self.newSocket.start()
+        #self.newSocket.start()
         #self.newSocket_mqtt.start()
         try:
             while True:
 
                 # Create Socket to communicate
-                #self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
-                #self.newSocket.start()
+                self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
+                self.newSocket.start()
 
                 print("Cosmoguirlande class run")
                 print("state :", self.state)
@@ -2036,7 +1759,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     # time.sleep(1)
 
                 self.previous_message = self.newSocket.data_rcv
-
+                self.newSocket.close()
 
 
         except TypeError:
