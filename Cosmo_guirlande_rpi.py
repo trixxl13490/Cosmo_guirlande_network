@@ -1763,7 +1763,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     # time.sleep(1)
 
                 self.previous_message = self.newSocket.data_rcv
-                self.newSocket_mqtt.data_rcv = ""
+                #self.newSocket_mqtt.data_rcv = ""
                 #self.newSocket.close()
 
         except TypeError:
