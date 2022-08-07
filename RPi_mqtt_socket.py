@@ -26,3 +26,7 @@ class RPi_mqtt_socket(threading.Thread):
         self.cosmoguirlande.on_subscribe = self.on_subscribe
         self.cosmoguirlande.loop_forever()
 
+if __name__ == '__main__':
+    
+    newSocket_mqtt = RPi_mqtt_socket()
+    newSocket_mqtt.start()
