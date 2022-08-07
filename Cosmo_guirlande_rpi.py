@@ -39,7 +39,7 @@ class Cosmo_Communication(threading.Thread):
         self.tcp_ip = str(tcp_ip)
         self.tcp_port = tcp_port
         self.buffer_size = buffer_size
-        self.data_rcv = "blackout"
+        self.data_rcv = ""
         self.state = ""
 
 
