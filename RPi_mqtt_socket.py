@@ -8,8 +8,8 @@ class RPi_mqtt_socket(threading.Thread):
         threading.Thread.__init__(self)
         self.data_rcv = ""
 
-    def on_connect(self, client):
-        #print("Connected with result code "+str(rc))
+    def on_connect(self, client, userdata, flags, rc):
+        print("Connected with result code "+str(rc))
         client.subscribe("test1")
 
     def on_message(self, client, userdata, msg):
@@ -20,6 +20,6 @@ class RPi_mqtt_socket(threading.Thread):
     cosmoguirlande.connect("localhost",1883,60)
     cosmoguirlande.on_connect = on_connect
     cosmoguirlande.on_message = on_message
-    #cosmoguirlande.loop_forever()
+    cosmoguirlande.loop_forever()
 
 
