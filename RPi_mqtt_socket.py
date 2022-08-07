@@ -19,7 +19,7 @@ class RPi_mqtt_socket(threading.Thread):
         x = msg.payload.decode('utf-8')
         print(str(msg))
         print(str(x))
-        self.data_rcv = str(msg)
+        self.data_rcv = x
         print("self.data_rcv: ", self.data_rcv)
 
     def on_subscribe(self, mosq, obj, mid, granted_qos):
