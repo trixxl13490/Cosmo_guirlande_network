@@ -12,12 +12,12 @@ cosmoguirlande_7 = mqtt.Client()
 cosmoguirlande_1.connect("192.168.1.53",1883, 60)
 cosmoguirlande_1.publish("test1", "cosmoguirlande,Sinelon");
 
-cosmoguirlande_2.connect("192.168.0.36",1883,60)
+'''cosmoguirlande_2.connect("192.168.0.36",1883,60)
 cosmoguirlande_2.publish("test1", "Hello world!");
 
 cosmoguirlande_3.connect("192.168.0.7",1883,60)
 cosmoguirlande_3.publish("test1", "Hello world!");
 
 cosmoguirlande_4.connect("192.168.0.5",1883,60)
-cosmoguirlande_4.publish("test1", "Hello world!");
+cosmoguirlande_4.publish("test1", "Hello world!");'''
 
