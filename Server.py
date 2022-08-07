@@ -78,7 +78,7 @@ class Server(threading.Thread):
                             # Peut planter si le message contient des caractères spéciaux
                             msg_recu = msg_recu.decode()
                             self.message = msg_recu
-                            #print("message reçu :", self.message)
+                            print("message reçu :", self.message)
                             msg = bytes(self.to_send, encoding='utf8')
                             if self.to_send != self.checkup:
                                 self.checkup = msg
