@@ -12,7 +12,7 @@ class RPi_mqtt_socket(threading.Thread):
 
     def on_connect(self, mqttc, mosq, obj,rc):
         print("Connected with result code "+str(rc))
-        self.subscribe("test1")
+        self.cosmoguirlande.subscribe("test1")
 
     def on_message(self, client, userdata, msg):
         print(str(msg))
