@@ -19,7 +19,7 @@ try:
     #Create SSH connection with paramiko
     ssh1 = paramiko.SSHClient()
     ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh1.connect(hostname='192.168.1.53', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh1.connect(hostname='192.168.1.43', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
     # kill GUI if running
     ssh_stdin1, ssh_stdout1, ssh_stderr1 = ssh1.exec_command("cd /home/pi/Cosmo_guirlande_network/ && sudo git pull")
@@ -33,7 +33,7 @@ except socket.timeout:
 try:
     ssh2 = paramiko.SSHClient()
     ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh2.connect(hostname='192.168.0.7', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh2.connect(hostname='192.168.1.45', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
     # kill GUI if running
@@ -49,7 +49,7 @@ except socket.timeout:
 try:
     ssh3 = paramiko.SSHClient()
     ssh3.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh3.connect(hostname='192.168.0.36', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh3.connect(hostname='192.168.1.53', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
     # kill GUI if running
@@ -65,7 +65,7 @@ except socket.timeout:
 try:
     ssh4 = paramiko.SSHClient()
     ssh4.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh4.connect(hostname='192.168.0.36', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh4.connect(hostname='192.168.1.67', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
     # kill GUI if running
@@ -76,3 +76,18 @@ try:
 
 except socket.timeout:
     print("ss4 timeout")
+
+#----------------------------------------------------------------------------------------------------------------------
+try:
+    ssh5 = paramiko.SSHClient()
+    ssh5.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh5.connect(hostname='192.168.1.15', username='pi', password='vbcgxb270694', timeout=5, port=22)
+
+    # kill GUI if running
+    ssh_stdin5, ssh_stdout5, ssh_stderr5 =  ssh5.exec_command("cd /home/pi/Cosmo_guirlande_network/ && sudo git pull")
+
+    print("ss5 passed")
+    time.sleep(2.5)
+
+except socket.timeout:
+    print("ss5 timeout")
