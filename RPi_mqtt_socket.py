@@ -5,12 +5,12 @@ import threading
 
 class RPi_mqtt_socket(threading.Thread):
     cosmoguirlande=mqtt.Client()
-    
+
     def __init__(self):
         threading.Thread.__init__(self)
         self.data_rcv = ""
 
-    def on_connect(self, client, userdata, flags, rc):
+    def on_connect(self, mqttc, mosq, obj,rc):
         print("Connected with result code "+str(rc))
         self.subscribe("test1")
 
