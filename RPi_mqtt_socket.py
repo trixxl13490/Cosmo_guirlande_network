@@ -20,10 +20,11 @@ class RPi_mqtt_socket(threading.Thread):
 
     def run(self):
     # Assign event callbacks
-        self.cosmoguirlande.on_connect = self.on_connect.connect("localhost",1883,60)
+        self.cosmoguirlande.on_connect = self.on_connect
         self.cosmoguirlande.on_message = self.on_message
         self.cosmoguirlande.on_publish = self.on_publish
         self.cosmoguirlande.on_subscribe = self.on_subscribe
+        self.on_connect.connect("localhost",1883,60)
         self.cosmoguirlande.loop_forever()
 
 if __name__ == '__main__':
