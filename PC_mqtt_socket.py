@@ -9,8 +9,8 @@ cosmoguirlande_5 = mqtt.Client()
 cosmoguirlande_6 = mqtt.Client()
 cosmoguirlande_7 = mqtt.Client()
 
-cosmoguirlande_1.connect("192.168.0.50",1883, 60)
-cosmoguirlande_1.publish("test1", "Hello world!");
+cosmoguirlande_1.connect("192.168.1.53",1883, 60)
+cosmoguirlande_1.publish("test1", "cosmoguirlande,Sinelon");
 
 cosmoguirlande_2.connect("192.168.0.36",1883,60)
 cosmoguirlande_2.publish("test1", "Hello world!");
