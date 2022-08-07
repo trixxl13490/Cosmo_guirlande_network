@@ -72,8 +72,8 @@ class Cosmo_Communication(threading.Thread):
                 #while self.previous_message != self.newSocket.data_rcv:
                 self.data_rcv = connexion_serveur.recv(self.buffer_size)
                 self.data_rcv = self.data_rcv.decode()
-                #print("data_rcv : ", self.data_rcv)
-                time.sleep(0.5)
+                print("data_rcv : ", self.data_rcv)
+                #time.sleep(0.5)
 
                 ##fermeture connexion
                 connexion_serveur.close()
@@ -149,7 +149,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
     ((0x8F),(0x00),(0x71)), ((0x5F),(0x00),(0xA1)), ((0x2F),(0x00),(0xD0)), ((0x00),(0x07),(0xF9))  )
 
         #Create Socket to communicate
-        #self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
+        self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
         self.newSocket_mqtt = RPi_mqtt_socket()
         
         #Watchdog
@@ -1330,14 +1330,14 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
     #Check if main class is style alive - to be run on a thread
     def run(self):
-        #self.newSocket.start()
-        #self.newSocket_mqtt.start()
+        self.newSocket.start()
+        self.newSocket_mqtt.start()
         try:
             while True:
 
                 # Create Socket to communicate
-                self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
-                self.newSocket.start()
+                '''self.newSocket = Cosmo_Communication(self.guirlande_number, self.pixel_number, self.tcp_ip, self.tcp_port, self.buffer_size)
+                self.newSocket.start()'''
 
                 print("Cosmoguirlande class run")
                 print("state :", self.state)
@@ -1807,6 +1807,8 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 time.sleep(.003)
         
             time.sleep(.050) 
+
+
 if __name__ == '__main__':
     # Process arguments
     parser = argparse.ArgumentParser()
