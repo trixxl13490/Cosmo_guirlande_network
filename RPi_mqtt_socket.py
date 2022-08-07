@@ -16,10 +16,10 @@ class RPi_mqtt_socket(threading.Thread):
         print(str(msg))
         self.data_rcv = str(msg)
 
-    self.cosmoguirlande=mqtt.Client()
-    self.cosmoguirlande.connect("localhost",1883,60)
-    self.cosmoguirlande.on_connect = on_connect
-    self.cosmoguirlande.on_message = on_message
-    self.cosmoguirlande.loop_forever()
+    cosmoguirlande=mqtt.Client()
+    cosmoguirlande.connect("localhost",1883,60)
+    cosmoguirlande.on_connect = on_connect
+    cosmoguirlande.on_message = on_message
+    cosmoguirlande.loop_forever()
 
 
