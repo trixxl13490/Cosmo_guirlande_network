@@ -1738,7 +1738,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     # time.sleep(0.5) 
                 ######################################################################################################################
                 # wait for animation type and threshold
-                if self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,manual") :
+                elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,manual") :
                     print("manual control, do nothing while checkbox is on")
                     # time.sleep(0.3)
 
