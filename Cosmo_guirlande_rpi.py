@@ -1468,7 +1468,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     try:
                         function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
                     except :
-                        function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
+                        function_type, function, chase_speed, chase_size = self.newSocket_mqtt.data_rcv.split(',')
                     try:
                         self.chase_speed = float(chase_speed)
                     except ValueError:
