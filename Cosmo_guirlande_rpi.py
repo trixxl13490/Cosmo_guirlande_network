@@ -1759,8 +1759,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     # time.sleep(1)
 
                 self.previous_message = self.newSocket.data_rcv
-                self.newSocket.close()
-
+                self.newSocket.connexion_serveur.close()
 
         except TypeError:
             print("type error")
