@@ -17,7 +17,7 @@ class RPi_mqtt_socket(threading.Thread):
     def on_message(self, client, userdata, msg):
         print(str(msg))
         self.data_rcv = str(msg)
-        print("self.data_rcv: ", self.data_rcv))
+        print("self.data_rcv: ", self.data_rcv)
 
     def on_subscribe(self, mosq, obj, mid, granted_qos):
         print("Subscribed: " + str(mid) + " " + str(granted_qos))
