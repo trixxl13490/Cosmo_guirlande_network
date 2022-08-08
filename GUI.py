@@ -12,6 +12,8 @@ from PyQt5.QtGui import QPixmap, QImage
 from PyQt5.QtWidgets import QLabel, QApplication, QWidget, QDesktopWidget, QCheckBox, QMessageBox, QSlider, QPushButton, QInputDialog, QLineEdit, QComboBox
 import paramiko
 import subprocess
+import paho.mqtt.client as mqtt
+
 ############################################
 # GUI
 ############################################
@@ -30,25 +32,36 @@ class MainWin(QWidget):
     IP_addres = socket.gethostbyname(h_name)
     # Create Server1 object
     newServer1 = Server.Server(IP_addres, 50001, 1024)
-    newServer1.start()
+    #newServer1.start()
     # Create Server2 object
     newServer2 = Server.Server(IP_addres, 50002, 1024)
-    newServer2.start()
+    #newServer2.start()
     # Create Server3 object
     newServer3 = Server.Server(IP_addres, 50003, 1024)
-    newServer3.start()
+    #newServer3.start()
     # Create Server4 object
     newServer4 = Server.Server(IP_addres, 50004, 1024)
-    newServer4.start()
+    #newServer4.start()
     # Create Server5 object
     newServer5 = Server.Server(IP_addres, 50005, 1024)
-    newServer5.start()
+    #newServer5.start()
     # Create Server5 object
     newServer6 = Server.Server(IP_addres, 50006, 1024)
-    newServer6.start()
+    #newServer6.start()
     # Create Server5 object
     newServer7 = Server.Server(IP_addres, 50007, 1024)
-    newServer7.start()
+    #newServer7.start()
+
+    cosmoguirlande_1 = mqtt.Client()
+    cosmoguirlande_2 = mqtt.Client()
+    cosmoguirlande_3 = mqtt.Client()
+    cosmoguirlande_4 = mqtt.Client()
+    cosmoguirlande_5 = mqtt.Client()
+    cosmoguirlande_6 = mqtt.Client()
+    cosmoguirlande_7 = mqtt.Client()
+
+    cosmoguirlande_1.connect("192.168.1.67",1883, 60)
+    
 
     IPValue = ""
     IPValue_2 = ""
@@ -2188,6 +2201,8 @@ class MainWin(QWidget):
         self.newServer6.to_send = self.msg1
         self.newServer7.to_send = self.msg1
 
+        self.cosmoguirlande_1.publish("test1", self.msg1);
+
     def color1_change_demand11(self):
         print("selection changed ", self.type_color11.currentText())
         self.msg1 = 'cosmoguirlande,color1,' + str(( self.type_color11.currentText()))
@@ -2198,6 +2213,8 @@ class MainWin(QWidget):
         self.newServer5.to_send = self.msg1
         self.newServer6.to_send = self.msg1
         self.newServer7.to_send = self.msg1
+
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def color2_change_demand12(self):
@@ -2211,6 +2228,7 @@ class MainWin(QWidget):
         self.newServer6.to_send = self.msg1
         self.newServer7.to_send = self.msg1
 
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def blackout_demand(self):
@@ -2224,6 +2242,7 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
 
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
     def rainbow_demand(self):
         self.msg1 = 'cosmoguirlande,rainbow'
@@ -2235,6 +2254,8 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def strombo_demand(self):
@@ -2248,6 +2269,7 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
 
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
     def chase_demand_1(self):
         self.msg1 = 'cosmoguirlande,chase,' + self.textbox_chase_speed.text() + ',' + self.textbox_chase_size.text()
@@ -2259,6 +2281,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def comet_demand_1(self):
@@ -2271,6 +2294,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def sparkle_demand_1(self):
@@ -2283,6 +2307,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def pulse_demand_1(self):
@@ -2295,6 +2320,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def solid_demand_1(self):
@@ -2307,6 +2333,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def colorcycle_demand_1(self):
@@ -2319,6 +2346,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def sync_demand(self, state):
@@ -2330,6 +2358,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
 
@@ -2343,6 +2372,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
 
@@ -2356,6 +2386,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
 
@@ -2369,6 +2400,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def stop_dancingPiEnergy_demand_1(self):
@@ -2381,6 +2413,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def colorAll2Color_demand_1(self):
@@ -2394,6 +2427,7 @@ class MainWin(QWidget):
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
 
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
     def FadeInOut_demand_1(self):
         self.msg1 = 'cosmoguirlande,FadeInOut'
@@ -2405,6 +2439,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def Strobe_demand_1(self):
@@ -2417,6 +2452,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def HalloweenEyes_demand_1(self):
@@ -2429,6 +2465,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def CylonBounce_demand_1(self):
@@ -2441,6 +2478,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def NewKITT_demand_1(self):
@@ -2453,6 +2491,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def Twinkle_demand_1(self):
@@ -2465,6 +2504,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def TwinkleRandom_demand_1(self):
@@ -2477,6 +2517,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def SnowSparkle_demand_1(self):
@@ -2489,6 +2530,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def RunningLights_demand_1(self):
@@ -2501,6 +2543,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def colorWipe_demand_1(self):
@@ -2513,6 +2556,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def theaterChaseRainbow_demand_1(self):
@@ -2525,6 +2569,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def Fire_demand_1(self):
@@ -2537,6 +2582,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def FireCustom_demand_1(self):
@@ -2549,6 +2595,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def FadeInOut_demand_1(self):
@@ -2561,6 +2608,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def fadeToBlack_demand_1(self):
@@ -2573,6 +2621,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def BouncingBalls_demand_1(self):
@@ -2585,6 +2634,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def BouncingColoredBalls_demand_1(self):
@@ -2597,6 +2647,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
     
     def meteorRain_demand_1(self):
@@ -2609,6 +2660,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
     
     def Matrix_demand_1(self):
@@ -2621,6 +2673,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
             
     def Drain_demand_1(self):
@@ -2633,6 +2686,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
             
     def Pancake_demand_1(self):
@@ -2645,6 +2699,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
             
     def HeartBeat_demand_1(self):
@@ -2657,6 +2712,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
             
     def rainbowGlitter_demand_1(self):
@@ -2669,6 +2725,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
             
     def Confetti_demand_1(self):
@@ -2681,6 +2738,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
             
     def Sinelon_demand_1(self):
@@ -2693,6 +2751,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
             
     def BPM_demand_1(self):
@@ -2705,6 +2764,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
 
@@ -2719,6 +2779,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def slider_G1(self, G1):
@@ -2731,6 +2792,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def slider_B1(self, B1):
@@ -2743,6 +2805,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def slider_W1(self, W1):
@@ -2755,6 +2818,7 @@ class MainWin(QWidget):
             self.newServer5.to_send = self.msg1
             self.newServer6.to_send = self.msg1
             self.newServer7.to_send = self.msg1
+        self.cosmoguirlande_1.publish("test1", self.msg1);
 
 
     def on_click_ip(self):
