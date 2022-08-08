@@ -2174,6 +2174,8 @@ class MainWin(QWidget):
             self.newServer7.to_send = self.msg1
         #Force restart by SSH - paramiko lib
         subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
+        self.cosmoguirlande_1.connect("192.168.1.67",1883, 60)
+
 
     def git_pull_demand(self):
         self.msg1 = 'cosmoguirlande,git_pull'
