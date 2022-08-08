@@ -1740,12 +1740,12 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 ######################################################################################################################
                 if self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,manual") :
                     print("manual control, do nothing while checkbox is on")
-                    # time.sleep(0.3)
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,strombo") :
                     self.state = "strombo"
                     self.stromboscope(self.color1, 0.05)
-                    # time.sleep(0.3)
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,color1') :
                     self.state = 'color1'
@@ -1793,6 +1793,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                         self.changeColor1String(BLUE)
                     elif self.color1 == 'BLACK':
                         self.changeColor1String(BLACK)
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,color2') :
                     self.state = 'color2'
@@ -1838,15 +1839,18 @@ class Cosmo_guirlande_rpi(threading.Thread):
                         self.changeColor2String(BLUE)
                     elif self.color2 == 'BLACK':
                         self.changeColor2String(BLACK)
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,rainbow")  :
                     self.state = "rainbow"
                     for j in range(2):
                         self.rainbow_cycle(0.01)
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,blackout") :
                     self.state = "blackout"
                     self.blackout()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,chase') :
                     self.state = "chase"
@@ -1863,6 +1867,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     except ValueError:
                         self.chase_size = 0
                     self.chase()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,comet') :
                     self.state = "comet"
@@ -1876,6 +1881,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     except ValueError:
                         self.comet_tail = 0
                     self.comet()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,sparkle') :
                     self.state = "sparkle"
@@ -1889,6 +1895,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     except ValueError:
                         self.sparkle_num = 0
                     self.sparkle()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,pulse') :
                     self.state = "pulse"
@@ -1902,11 +1909,12 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     except ValueError:
                         self.pulse_speed = 0
                     self.pulse()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,solid') :
                     self.state = "solid"
                     self.solid()
-                    time.sleep(0.5)
+                    time.sleep(0.05)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,colorcycle') :
                     self.state = "colorcycle"
@@ -1914,33 +1922,40 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.color1 = color1
                     self.color2 = color2
                     #☻self.colorcycle()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,dancingPiScroll') :
                     self.state = "dancingPiScroll"
                     self.blackout()
                     self.dancingPiScroll()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,dancingPiEnergy') :
                     self.state = "dancingPiEnergy"
                     self.blackout()
                     self.dancingPiEnergy()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,dancingPiSpectrum') :
                     self.state = "dancingPiSpectrum"
                     self.blackout()
                     self.dancingPiSpectrum()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,stop_dancingPiScroll') :
                     self.state = "stop_dancingPiScroll"
                     self.stop_dancingPiScroll()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,stop_dancingPiEnergy') :
                     self.state = "stop_dancingPiEnergy"
                     self.stop_dancingPiEnergy()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,stop_dancingPiSpectrum') :
                     self.state = "stop_dancingPiSpectrum"
                     self.stop_dancingPiSpectrum()
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,R") :
                     self.state = "R"
@@ -1970,7 +1985,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.state = "colorAll2Color"
                     function_type, function = self.newSocket_mqtt.data_rcv.split(',')
                     self.colorAll2Color((int(self.r), int(self.g), int(self.b)), (255,165,0))
-                    # time.sleep(0.5) 
+                    time.sleep(0.03)
 
                 elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,FadeInOut"):
                     self.state = "FadeInOut"
