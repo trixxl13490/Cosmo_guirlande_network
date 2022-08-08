@@ -19,7 +19,7 @@ IP_addres = socket.gethostbyname(h_name)
 try:
     ssh1 = paramiko.SSHClient()
     ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh1.connect(hostname='192.168.0.9', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh1.connect(hostname='192.168.1.67', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
     # kill GUI if running
@@ -32,7 +32,7 @@ try:
 
     stdin1.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 60 192.168.1.16 50001 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.1.16 50001 1024 RGBW'
       ''')
     print("ss1 passed")
 except socket.timeout:

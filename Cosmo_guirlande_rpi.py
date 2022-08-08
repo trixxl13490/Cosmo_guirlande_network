@@ -1347,16 +1347,16 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 self.previous_state = self.state
 
                 # wait for animation type and threshold
-                if self.newSocket.data_rcv.startswith("cosmoguirlande,manual") or  self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,manual"):
+                if self.newSocket.data_rcv.startswith("cosmoguirlande,manual"):
                     print("manual control, do nothing while checkbox is on")
                     # time.sleep(0.3)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,strombo") or  self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,strombo"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,strombo"):
                     self.state = "strombo"
                     self.stromboscope(self.color1, 0.05)
                     # time.sleep(0.3)
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,color1') or  self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,color1'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,color1'):
                     self.state = 'color1'
                     try:
                         function_type, function, self.color1 = self.newSocket.data_rcv.split(',')
@@ -1406,7 +1406,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     elif self.color1 == 'BLACK':
                         self.changeColor1String(BLACK)
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,color2') or  self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,color2'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,color2') :
                     self.state = 'color2'
                     try:
                         function_type, function, self.color2 = self.newSocket.data_rcv.split(',')
@@ -1454,16 +1454,16 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     elif self.color2 == 'BLACK':
                         self.changeColor2String(BLACK)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbow") or  self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,rainbow") :
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,rainbow") :
                     self.state = "rainbow"
                     for j in range(2):
                         self.rainbow_cycle(0.01)
 
-                elif self.newSocket.data_rcv.startswith("cosmoguirlande,blackout") or  self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,blackout"):
+                elif self.newSocket.data_rcv.startswith("cosmoguirlande,blackout"):
                     self.state = "blackout"
                     self.blackout()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase') or  self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,chase'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,chase'):
                     self.state = "chase"
                     try:
                         function_type, function, chase_speed, chase_size = self.newSocket.data_rcv.split(',')
@@ -1479,7 +1479,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                         self.chase_size = 0
                     self.chase()
 
-                elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet') or  self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,comet'):
+                elif self.newSocket.data_rcv.startswith('cosmoguirlande,comet') :
                     self.state = "comet"
                     function_type, function, comet_speed, comet_tail = self.newSocket.data_rcv.split(',')
                     try:
