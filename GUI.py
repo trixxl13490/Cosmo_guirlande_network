@@ -60,7 +60,7 @@ class MainWin(QWidget):
     cosmoguirlande_6 = mqtt.Client()
     cosmoguirlande_7 = mqtt.Client()
 
-    cosmoguirlande_1.connect("192.168.1.67",1883, 60)
+    cosmoguirlande_1.connect("192.168.1.43",1883, 60)
     
 
     IPValue = ""
@@ -2174,7 +2174,14 @@ class MainWin(QWidget):
             self.newServer7.to_send = self.msg1
         #Force restart by SSH - paramiko lib
         subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
-        self.cosmoguirlande_1.connect("192.168.1.67",1883, 60)
+        
+        try:
+            self.cosmoguirlande_1.connect("192.168.1.67",1883, 60)
+        except:
+            print('timeout')
+            time.sleep(1)
+            self.cosmoguirlande_1.connect("192.168.1.67",1883, 60)
+
 
 
     def git_pull_demand(self):
