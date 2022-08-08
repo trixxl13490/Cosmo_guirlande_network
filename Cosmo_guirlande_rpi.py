@@ -2136,7 +2136,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     function_type, function = self.newSocket_mqtt.data_rcv.split(',')
                     self.bpm(self.PartyColors_p, 0, 50)
                   
-
                 elif self.state == "nothing":
                     #increse count if last states are "main"
                     if self.previous_state == "nothing":
@@ -2175,7 +2174,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             if args.clear:
                 self.pixels.fill((0, 0, 0, 0))
 
-
+        '''
         for loop in range(cycles):
             #redo =random.randint(0, 255)
             #greeno = random.randint(0, 255)
@@ -2210,7 +2209,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 pixels.show()
                 time.sleep(.003)
         
-            time.sleep(.050) 
+            time.sleep(.050) '''
 
 
 if __name__ == '__main__':
