@@ -1,0 +1,53 @@
+{
+    "filename": "IP_configuration",
+
+    "guirlande": [
+        {
+            "name": "cosmoguirlande1",
+            "IP": "192.168.0.50",
+            "port": 50001,
+            "LED_number": 144,
+            "color": "RGBW"
+        },
+
+        {
+            "name": "cosmoguirlande2",
+            "IP": "192.168.0.5",
+            "port": 50002,
+            "LED_number": 144,
+            "color": "RGBW"
+        },
+
+        {
+            "name": "cosmoguirlande3",
+            "IP": "192.168.0.5",
+            "port": 50003,
+            "LED_number": 144,
+            "color": "RGBW"
+        },
+
+        {
+            "name": "cosmoguirlande4",
+            "IP": "192.168.0.5",
+            "port": 50004,
+            "LED_number": 144,
+            "color": "RGBW"
+        },
+
+        {
+            "name": "cosmoguirlande5",
+            "IP": "192.168.0.5",
+            "port": 50005,
+            "LED_number": 60,
+            "color": "RGBW"
+        },
+
+        {
+            "name": "cosmoguirlande6",
+            "IP": "192.168.0.5",
+            "port": 50006,
+            "LED_number": 112,
+            "color": "RGB"
+        }
+    ]
+}

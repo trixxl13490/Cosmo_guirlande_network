@@ -19,7 +19,7 @@ try:
     #Create SSH connection with paramiko
     ssh1 = paramiko.SSHClient()
     ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh1.connect(hostname='192.168.1.67', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh1.connect(hostname='192.168.0.50', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
     # kill GUI if running
     ssh_stdin1, ssh_stdout1, ssh_stderr1 = ssh1.exec_command("cd /home/pi/Cosmo_guirlande_network/ && sudo git pull")
