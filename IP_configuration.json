@@ -20,7 +20,7 @@
 
         {
             "name": "cosmoguirlande3",
-            "IP": "192.168.0.5",
+            "IP": "192.168.0.29",
             "port": 50003,
             "LED_number": 144,
             "color": "RGBW"
@@ -28,7 +28,7 @@
 
         {
             "name": "cosmoguirlande4",
-            "IP": "192.168.0.5",
+            "IP": "192.168.0.8",
             "port": 50004,
             "LED_number": 144,
             "color": "RGBW"
@@ -36,7 +36,7 @@
 
         {
             "name": "cosmoguirlande5",
-            "IP": "192.168.0.5",
+            "IP": "192.168.0.52",
             "port": 50005,
             "LED_number": 60,
             "color": "RGBW"
@@ -44,7 +44,7 @@
 
         {
             "name": "cosmoguirlande6",
-            "IP": "192.168.0.5",
+            "IP": "192.168.0.51",
             "port": 50006,
             "LED_number": 112,
             "color": "RGB"
