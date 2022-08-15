@@ -36,18 +36,10 @@
 
         {
             "name": "cosmoguirlande5",
-            "IP": "192.168.0.52",
+            "IP": "192.168.0.36",
             "port": 50005,
             "LED_number": 60,
             "color": "RGBW"
-        },
-
-        {
-            "name": "cosmoguirlande6",
-            "IP": "192.168.0.51",
-            "port": 50006,
-            "LED_number": 112,
-            "color": "RGB"
         }
     ]
 }

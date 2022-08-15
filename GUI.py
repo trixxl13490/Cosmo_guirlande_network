@@ -2198,13 +2198,6 @@ class MainWin(QWidget):
 
     def restart_demand(self):
         self.msg1 = 'cosmoguirlande,restart'
-        if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
         #Force restart by SSH - paramiko lib
         subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
 
@@ -2220,28 +2213,13 @@ class MainWin(QWidget):
 
     def git_pull_demand(self):
         self.msg1 = 'cosmoguirlande,git_pull'
-        if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
 
-            
         #Force restart by SSH - paramiko lib
         subprocess.Popen(args='python git_pull_remote_ssh.py', shell=True)
 
     def manual_demand_1(self):
         print("selection changed ", self.type_color11.currentText())
         self.msg1 = 'cosmoguirlande,manual'
-        self.newServer1.to_send = self.msg1
-        self.newServer2.to_send = self.msg1
-        self.newServer3.to_send = self.msg1
-        self.newServer4.to_send = self.msg1
-        self.newServer5.to_send = self.msg1
-        self.newServer6.to_send = self.msg1
-        self.newServer7.to_send = self.msg1
 
         i = 0
         for elt in strip_configuration["guirlande"]:
@@ -2255,13 +2233,6 @@ class MainWin(QWidget):
     def color1_change_demand11(self):
         print("selection changed ", self.type_color11.currentText())
         self.msg1 = 'cosmoguirlande,color1,' + str(( self.type_color11.currentText()))
-        self.newServer1.to_send = self.msg1
-        self.newServer2.to_send = self.msg1
-        self.newServer3.to_send = self.msg1
-        self.newServer4.to_send = self.msg1
-        self.newServer5.to_send = self.msg1
-        self.newServer6.to_send = self.msg1
-        self.newServer7.to_send = self.msg1
 
         i = 0
         for elt in strip_configuration["guirlande"]:
@@ -2275,13 +2246,6 @@ class MainWin(QWidget):
     def color2_change_demand12(self):
         print("selection changed ", self.type_color21.currentText())
         self.msg1 = 'cosmoguirlande,color2,' + str(( self.type_color21.currentText()))
-        self.newServer1.to_send = self.msg1
-        self.newServer2.to_send = self.msg1
-        self.newServer3.to_send = self.msg1
-        self.newServer4.to_send = self.msg1
-        self.newServer5.to_send = self.msg1
-        self.newServer6.to_send = self.msg1
-        self.newServer7.to_send = self.msg1
 
         i = 0
         for elt in strip_configuration["guirlande"]:
@@ -2294,15 +2258,7 @@ class MainWin(QWidget):
 
     def blackout_demand(self):
         self.msg1 = 'cosmoguirlande,blackout'
-        self.newServer1.to_send = self.msg1
-        if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
-
+        self.objs[0].publish("test1", self.msg1)
         i = 0
         for elt in strip_configuration["guirlande"]:
             try:
@@ -2313,455 +2269,528 @@ class MainWin(QWidget):
 
     def rainbow_demand(self):
         self.msg1 = 'cosmoguirlande,rainbow'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def strombo_demand(self):
         self.msg1 = 'cosmoguirlande,strombo'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def chase_demand_1(self):
         self.msg1 = 'cosmoguirlande,chase,' + self.textbox_chase_speed.text() + ',' + self.textbox_chase_size.text()
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def comet_demand_1(self):
         self.msg1 = 'cosmoguirlande,comet,' + self.textbox_comet_speed.text() + ',' + self.textbox_comet_tail.text()
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def sparkle_demand_1(self):
         self.msg1 = 'cosmoguirlande,sparkle,' + self.textbox_sparkle_speed.text() + ',' + self.textbox_sparkle_num_sparkles.text()
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def pulse_demand_1(self):
         self.msg1 = 'cosmoguirlande,pulse,'+ self.textbox_pulse_period.text() + ',' + self.textbox_pulse_speed.text()
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def solid_demand_1(self):
         self.msg1 = 'cosmoguirlande,solid'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def colorcycle_demand_1(self):
         self.msg1 = 'cosmoguirlande,colorcycle,'+ str((self.type_color11.currentText())) + ',' + str((self.type_color21.currentText()))
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def sync_demand(self, state):
         self.sync = not self.sync
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def dancingPiScroll_demand_1(self):
         self.msg1 = 'cosmoguirlande,dancingPiScroll'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def dancingPiEnergy_demand_1(self):
         self.msg1 = 'cosmoguirlande,dancingPiEnergy'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def dancingPiSpectrum_demand_1(self):
         self.msg1 = 'cosmoguirlande,dancingPiSpectrum'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def stop_dancingPiEnergy_demand_1(self):
         self.msg1 = 'cosmoguirlande,stop_dancingPiEnergy'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def colorAll2Color_demand_1(self):
         self.msg1 = 'cosmoguirlande,colorAll2Color'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def FadeInOut_demand_1(self):
         self.msg1 = 'cosmoguirlande,FadeInOut'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def Strobe_demand_1(self):
         self.msg1 = 'cosmoguirlande,Strobe'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def HalloweenEyes_demand_1(self):
         self.msg1 = 'cosmoguirlande,HalloweenEyes'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def CylonBounce_demand_1(self):
         self.msg1 = 'cosmoguirlande,CylonBounce'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def NewKITT_demand_1(self):
         self.msg1 = 'cosmoguirlande,NewKITT'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def Twinkle_demand_1(self):
         self.msg1 = 'cosmoguirlande,Twinkle'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def TwinkleRandom_demand_1(self):
         self.msg1 = 'cosmoguirlande,TwinkleRandom'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def SnowSparkle_demand_1(self):
         self.msg1 = 'cosmoguirlande,SnowSparkle'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def RunningLights_demand_1(self):
         self.msg1 = 'cosmoguirlande,*RunningLights'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def colorWipe_demand_1(self):
         self.msg1 = 'cosmoguirlande,colorWipe'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def theaterChaseRainbow_demand_1(self):
         self.msg1 = 'cosmoguirlande,theaterChaseRainbow'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def Fire_demand_1(self):
         self.msg1 = 'cosmoguirlande,Fire'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def FireCustom_demand_1(self):
         self.msg1 = 'cosmoguirlande,FireCustom'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def FadeInOut_demand_1(self):
         self.msg1 = 'cosmoguirlande,FadeInOut'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def fadeToBlack_demand_1(self):
         self.msg1 = 'cosmoguirlande,fadeToBlack'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def BouncingBalls_demand_1(self):
         self.msg1 = 'cosmoguirlande,*BouncingBalls'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def BouncingColoredBalls_demand_1(self):
         self.msg1 = 'cosmoguirlande,*BouncingColoredBalls'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def meteorRain_demand_1(self):
         self.msg1 = 'cosmoguirlande,meteorRain'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def Matrix_demand_1(self):
         self.msg1 = 'cosmoguirlande,Matrix'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
     
     def Drain_demand_1(self):
         self.msg1 = 'cosmoguirlande,*Drain'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
   
     def Pancake_demand_1(self):
         self.msg1 = 'cosmoguirlande,Pancake'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
      
     def HeartBeat_demand_1(self):
         self.msg1 = 'cosmoguirlande,HeartBeat'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
       
     def rainbowGlitter_demand_1(self):
         self.msg1 = 'cosmoguirlande,rainbowGlitter'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
 
     def Confetti_demand_1(self):
         self.msg1 = 'cosmoguirlande,Confetti'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
    
     def Sinelon_demand_1(self):
         self.msg1 = 'cosmoguirlande,Sinelon'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
  
     def BPM_demand_1(self):
         self.msg1 = 'cosmoguirlande,**BPM'
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
-
+            i = 0
+            for elt in strip_configuration["guirlande"]:
+                try:
+                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt["IP"])
+                i = i+1
+ 
     # Slider Buttons functions
     def slider_R1(self, R1):
         self.msg1 = 'cosmoguirlande,R,' + str((R1))
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
-
             i = 0
             for elt in strip_configuration["guirlande"]:
                 try:
@@ -2772,15 +2801,8 @@ class MainWin(QWidget):
 
     def slider_G1(self, G1):
         self.msg1 = 'cosmoguirlande,G,' + str((G1))
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
-
             i = 0
             for elt in strip_configuration["guirlande"]:
                 try:
@@ -2791,15 +2813,8 @@ class MainWin(QWidget):
 
     def slider_B1(self, B1):
         self.msg1 = 'cosmoguirlande,B,' + str((B1))
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
-
             i = 0
             for elt in strip_configuration["guirlande"]:
                 try:
@@ -2811,15 +2826,8 @@ class MainWin(QWidget):
 
     def slider_W1(self, W1):
         self.msg1 = 'cosmoguirlande,W,' + str((W1))
-        self.newServer1.to_send = self.msg1
+        self.objs[0].publish("test1", self.msg1)
         if self.sync:
-            self.newServer2.to_send = self.msg1
-            self.newServer3.to_send = self.msg1
-            self.newServer4.to_send = self.msg1
-            self.newServer5.to_send = self.msg1
-            self.newServer6.to_send = self.msg1
-            self.newServer7.to_send = self.msg1
-
             i = 0
             for elt in strip_configuration["guirlande"]:
                 try:
@@ -2844,12 +2852,12 @@ class MainWin(QWidget):
     def color2_change_demand21(self):
         print("selection changed ", self.type_color22.currentText())
         self.msg2 = 'cosmoguirlande,color1,' + str(( self.type_color21.currentText()))
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def color2_change_demand22(self):
         print("selection changed ", self.type_color22.currentText())
         self.msg2 = 'cosmoguirlande,color2,' + str(( self.type_color22.currentText()))
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def on_click_ip_2(self):
         self.IPValue_2 = self.textbox_IP_2.text()
@@ -2867,67 +2875,67 @@ class MainWin(QWidget):
 
     def blackout_demand_2(self):
         self.msg2 ='cosmoguirlande,blackout'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def rainbow_demand_2(self):
         self.msg2 = 'cosmoguirlande,rainbow'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def strombo_demand_2(self):
         self.msg2 = 'cosmoguirlande,strombo'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def chase_demand_2(self):
         self.msg2 = 'cosmoguirlande,chase' +',' + self.textbox_chase_speed_2.text() + ',' + self.textbox_chase_size_2.text()
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def comet_demand_2(self):
         self.msg2 = 'cosmoguirlande,comet'+ ',' +self.textbox_comet_speed_2.text() + ',' + self.textbox_comet_tail_2.text()
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def sparkle_demand_2(self):
         self.msg2 = 'cosmoguirlande,sparkle' +',' + self.textbox_sparkle_speed_2.text() + ',' + self.textbox_sparkle_num_sparkles_2.text()
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def pulse_demand_2(self):
         self.msg2 = 'cosmoguirlande,pulse'  +',' + self.textbox_pulse_period_2.text() + ',' + self.textbox_pulse_speed_2.text() 
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def solid_demand_2(self):
         self.msg2 = 'cosmoguirlande,solid'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def colorcycle_demand_2(self):
         self.msg2 = 'cosmoguirlande,colorcycle'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def sync_demand_2(self):
         self.msg2 = 'cosmoguirlande,sync'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def dancingPiScroll_demand_2(self):
         self.msg2 = 'cosmoguirlande,dancingPiScroll'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def dancingPiEnergy_demand_2(self):
         self.msg2 = 'cosmoguirlande,dancingPiEnergy'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def dancingPiSpectrum_demand_2(self):
         self.msg2 = 'cosmoguirlande,dancingPiSpectrum'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def stop_dancingPiEnergy_demand_2(self):
         self.msg2 = 'cosmoguirlande,stop_dancingPiEnergy'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def stop_dancingPiSpectrum_demand_2(self):
         self.msg2 = 'cosmoguirlande,stop_dancingPiSpectrum'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def stop_dancingPiScroll_demand_2(self):
         self.msg2 = 'cosmoguirlande,stop_dancingPiScroll'
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     # Slider Buttons functions
     def slider_R2(self, R2):
@@ -2936,15 +2944,15 @@ class MainWin(QWidget):
 
     def slider_G2(self, G2):
         self.msg2 = 'cosmoguirlande,G,' + str((G2))
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def slider_B2(self, B2):
         self.msg2 = 'cosmoguirlande,B,' + str((B2))
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def slider_W2(self, W2):
         self.msg2 = 'cosmoguirlande,W,' + str((W2))
-        self.newServer2.to_send = self.msg2
+        self.objs[1].publish("test1", self.msg2)
     #########################################################################################################Strip 3
     def on_click_strombo_3_frequency(self):
         Strombo_frequency = self.textbox_port.text()
@@ -2955,13 +2963,13 @@ class MainWin(QWidget):
     def color3_change_demand31(self):
         print("selection changed ", self.type_color31.currentText())
         self.msg3 = 'cosmoguirlande,color1,' + str(( self.type_color31.currentText()))
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
         print("change color 3 method 1")
 
     def color3_change_demand32(self):
         print("selection changed ", self.type_color32.currentText())
         self.msg3 = 'cosmoguirlande,color2,' + str(( self.type_color32.currentText()))
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
         print("change color 3 method 2")
 
     def on_click_ip_3(self):
@@ -2974,67 +2982,67 @@ class MainWin(QWidget):
 
     def blackout_demand_3(self):
         self.msg3 ='cosmoguirlande,blackout'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def rainbow_demand_3(self):
         self.msg3 = 'cosmoguirlande,rainbow'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def strombo_demand_3(self):
         self.msg3 = 'cosmoguirlande,strombo'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def chase_demand_3(self):
         self.msg3 = 'cosmoguirlande,chase'+ ',' +self.textbox_chase_speed_3.text() + ',' + self.textbox_chase_size_3.text()
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def comet_demand_3(self):
         self.msg3 = 'cosmoguirlande,comet' +',' + self.textbox_comet_speed_3.text() + ',' + self.textbox_comet_tail_3.text()
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def sparkle_demand_3(self):
         self.msg3 = 'cosmoguirlande,sparkle'+',' + self.textbox_sparkle_speed_3.text() + ',' + self.textbox_sparkle_num_sparkles_3.text()
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def pulse_demand_3(self):
         self.msg3 = 'cosmoguirlande,pulse'+ ',' +self.textbox_pulse_period_3.text() + ',' + self.textbox_pulse_speed_3.text()
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def solid_demand_3(self):
         self.msg3 = 'cosmoguirlande,solid'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def colorcycle_demand_3(self):
         self.msg3 = 'cosmoguirlande,colorcycle'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def sync_demand_3(self):
         self.msg3 = 'cosmoguirlande,sync'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def dancingPiScroll_demand_3(self):
         self.msg3 = 'cosmoguirlande,dancingPiScroll'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def dancingPiEnergy_demand_3(self):
         self.msg3 = 'cosmoguirlande,dancingPiEnergy'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def dancingPiSpectrum_demand_3(self):
         self.msg3 = 'cosmoguirlande,dancingPiSpectrum'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def stop_dancingPiEnergy_demand_3(self):
         self.msg3 = 'cosmoguirlande,stop_dancingPiEnergy'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def stop_dancingPiSpectrum_demand_3(self):
         self.msg3 = 'cosmoguirlande,stop_dancingPiSpectrum'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def stop_dancingPiScroll_demand_3(self):
         self.msg3 = 'cosmoguirlande,stop_dancingPiScroll'
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     # Slider Buttons functions
     def slider_R3(self, R3):
@@ -3043,26 +3051,26 @@ class MainWin(QWidget):
 
     def slider_G3(self, G3):                             
         self.msg3 = 'cosmoguirlande,G,' + str((G3))
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def slider_B3(self, B3):
         self.msg3 = 'cosmoguirlande,B,' + str((B3))
-        self.newServer3.to_send = self.msg3
+        self.objs[2].publish("test1", self.msg3)
 
     def slider_W3(self, W3):
         self.msg3 = 'cosmoguirlande,W,' + str((W3))
-        self.newServer3.to_send = self.msg3              
+        self.objs[2].publish("test1", self.msg3)              
 
     #########################################################################################################Strip 4
     def color4_change_demand41(self):
         print("selection changed ", self.type_color44.currentText())
         self.msg4 = 'cosmoguirlande,color1,' + str((self.type_color41.currentText()))
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def color4_change_demand42(self):
         print("selection changed ", self.type_color44.currentText())
         self.msg4 = 'cosmoguirlande,color2,' + str((self.type_color42.currentText()))
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def on_click_ip_4(self):
         self.IPValue_4 = self.textbox_IP_4.text()
@@ -3080,111 +3088,111 @@ class MainWin(QWidget):
 
     def blackout_demand_4(self):
         self.msg4 = 'cosmoguirlande,blackout'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def rainbow_demand_4(self):
         self.msg4 = 'cosmoguirlande,rainbow'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def strombo_demand_4(self):
         self.msg4 = 'cosmoguirlande,strombo'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def theaterChase_demand_4(self):
         self.msg4 = 'cosmoguirlande,theaterChase'+ self.textbox_chase_speed_4.text() + ',' + self.textbox_chase_size_4.text()
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def theaterChaseRainbow_demand_4(self):
         self.msg4 = 'cosmoguirlande,theaterChaseRainbow'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def multiColorWipe_demand_4(self):
         self.msg4 = 'cosmoguirlande,multiColorWipe'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def sync_demand_4(self):
         self.msg4 = 'cosmoguirlande,sync'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def dancingPiScroll_demand_4(self):
         self.msg4 = 'cosmoguirlande,dancingPiScroll'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def dancingPiEnergy_demand_4(self):
         self.msg4 = 'cosmoguirlande,dancingPiEnergy'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def dancingPiSpectrum_demand_4(self):
         self.msg4 = 'cosmoguirlande,dancingPiSpectrum'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def stop_dancingPiEnergy_demand_4(self):
         self.msg4 = 'cosmoguirlande,stop_dancingPiEnergy'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def stop_dancingPiSpectrum_demand_4(self):
         self.msg4 = 'cosmoguirlande,stop_dancingPiSpectrum'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def stop_dancingPiScroll_demand_4(self):
         self.msg4 = 'cosmoguirlande,stop_dancingPiScroll'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def strombo_demand_4(self):
         self.msg4 = 'cosmoguirlande,strombo'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def chase_demand_4(self):
         self.msg4 = 'cosmoguirlande,chase'+',' + self.textbox_chase_speed_4.text() + ',' + self.textbox_chase_size_4.text()
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def comet_demand_4(self):
         self.msg4 = 'cosmoguirlande,comet' +',' + self.textbox_comet_speed_4.text() + ',' + self.textbox_comet_tail_4.text()
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def sparkle_demand_4(self):
         self.msg4 = 'cosmoguirlande,sparkle'+',' + self.textbox_sparkle_speed_4.text() + ',' + self.textbox_sparkle_num_sparkles_4.text()
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def pulse_demand_4(self):
         self.msg4 = 'cosmoguirlande,pulse'+',' + self.textbox_pulse_period_4.text() + ',' + self.textbox_pulse_speed_4.text()
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def solid_demand_4(self):
         self.msg4 = 'cosmoguirlande,solid'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def colorcycle_demand_4(self):
         self.msg4 = 'cosmoguirlande,colorcycle'
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     # Slider Buttons functions
     def slider_R4(self, R4):
         self.msg4 = 'cosmoguirlande,R,' + str((R4))
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def slider_G4(self, G4):
         self.msg4 = 'cosmoguirlande,G,' + str((G4))
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def slider_B4(self, B4):
         self.msg4 = 'cosmoguirlande,B,' + str((B4))
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     def slider_W4(self, W4):
         self.msg4 = 'cosmoguirlande,W,' + str((W4))
-        self.newServer4.to_send = self.msg4
+        self.objs[3].publish("test1", self.msg4)
 
     #########################################################################################################Strip 5
     def color5_change_demand51(self):
         print("selection changed ", self.type_color55.currentText())
         self.msg5 = 'cosmoguirlande,color1,' + str(( self.type_color51.currentText()))
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def color5_change_demand52(self):
         print("selection changed ", self.type_color55.currentText())
         self.msg5 = 'cosmoguirlande,color2,' + str(( self.type_color52.currentText()))
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def on_click_ip_5(self):
         self.IPValue_5 = self.textbox_IP_5.text()
@@ -3202,92 +3210,92 @@ class MainWin(QWidget):
 
     def blackout_demand_5(self):
         self.msg5 = 'cosmoguirlande,blackout'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def rainbow_demand_5(self):
         self.msg5 = 'cosmoguirlande,rainbow'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def strombo_demand_5(self):
         self.msg5 = 'cosmoguirlande,strombo'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def theaterChase_demand_5(self):
         self.msg5 = 'cosmoguirlande,theaterChase'+ self.textbox_chase_speed_5.text() + ',' + self.textbox_chase_size_6.text()
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def theaterChaseRainbow_demand_5(self):
         self.msg5 = 'cosmoguirlande,theaterChaseRainbow'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def multiColorWipe_demand_5(self):
         self.msg5 = 'cosmoguirlande,multiColorWipe'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def sync_demand_5(self):
         self.msg5 = 'cosmoguirlande,sync'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def strombo_demand_5(self):
         self.msg5 = 'cosmoguirlande,strombo'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def chase_demand_5(self):
         self.msg5 = 'cosmoguirlande,chase'+',' + self.textbox_chase_speed_6.text() + ',' + self.textbox_chase_size_6.text()
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def comet_demand_5(self):
         self.msg5 = 'cosmoguirlande,comet' +',' + self.textbox_comet_speed_5.text() + ',' + self.textbox_comet_tail_5.text()
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def sparkle_demand_5(self):
         self.msg5 = 'cosmoguirlande,sparkle' +',' + self.textbox_sparkle_speed_5.text() + ',' + self.textbox_sparkle_num_sparkles_5.text()
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def pulse_demand_5(self):
         self.msg5 = 'cosmoguirlande,pulse'+',' + self.textbox_pulse_period_5.text() + ',' + self.textbox_pulse_speed_5.text()
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def solid_demand_5(self):
         self.msg5 = 'cosmoguirlande,solid'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def colorcycle_demand_5(self):
         self.msg5 = 'cosmoguirlande,colorcycle'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def dancingPiScroll_demand_5(self):
         self.msg5 = 'cosmoguirlande,dancingPiScroll'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def dancingPiEnergy_demand_5(self):
         self.msg5 = 'cosmoguirlande,dancingPiEnergy'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def dancingPiSpectrum_demand_5(self):
         self.msg5 = 'cosmoguirlande,dancingPiSpectrum'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def stop_dancingPiEnergy_demand_5(self):
         self.msg5 = 'cosmoguirlande,stop_dancingPiEnergy'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def stop_dancingPiSpectrum_demand_5(self):
         self.msg5 = 'cosmoguirlande,stop_dancingPiSpectrum'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def stop_dancingPiScroll_demand_5(self):
         self.msg5 = 'cosmoguirlande,stop_dancingPiScroll'
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     # Slider Buttons functions
     def slider_R5(self, R5):
         self.msg5 = 'cosmoguirlande,R,' + str((R5))
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def slider_G5(self, G5):
         self.msg5 = 'cosmoguirlande,G,' + str((G5))
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     def slider_B5(self, B5):
         self.msg5 = 'cosmoguirlande,B,' + str((B5))
@@ -3295,18 +3303,18 @@ class MainWin(QWidget):
 
     def slider_W5(self, W5):
         self.msg5 = 'cosmoguirlande,W,' + str((W5))
-        self.newServer5.to_send = self.msg5
+        self.objs[4].publish("test1", self.msg5)
 
     #########################################################################################################Strip 6
     def color6_change_demand61(self):
         print("selection changed ", self.type_color66.currentText())
         self.msg6 = 'cosmoguirlande,color1,' + str(( self.type_color61.currentText()))
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def color6_change_demand62(self):
         print("selection changed ", self.type_color66.currentText())
         self.msg6 = 'cosmoguirlande,color2,' + str(( self.type_color62.currentText()))
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def on_click_ip_6(self):
         self.IPValue_6 = self.textbox_IP_6.text()
@@ -3324,100 +3332,100 @@ class MainWin(QWidget):
 
     def blackout_demand_6(self):
         self.msg6 = 'cosmoguirlande,blackout'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def rainbow_demand_6(self):
         self.msg6 = 'cosmoguirlande,rainbow'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def strombo_demand_6(self):
         self.msg6 = 'cosmoguirlande,strombo'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def theaterChase_demand_6(self):
         self.msg6 = 'cosmoguirlande,theaterChase'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def theaterChaseRainbow_demand_6(self):
         self.msg6 = 'cosmoguirlande,theaterChaseRainbow'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def multiColorWipe_demand_6(self):
         self.msg6 = 'cosmoguirlande,multiColorWipe'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def sync_demand_6(self):
         self.msg6 = 'cosmoguirlande,sync'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def strombo_demand_6(self):
         self.msg6 = 'cosmoguirlande,strombo'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def chase_demand_6(self):
         self.msg6 = 'cosmoguirlande,chase'+',' + self.textbox_chase_speed_6.text() + ',' + self.textbox_chase_size_6.text()
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def comet_demand_6(self):
         self.msg6 = 'cosmoguirlande,comet' +',' + self.textbox_comet_speed_6.text() + ',' + self.textbox_comet_tail_6.text()
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def sparkle_demand_6(self):
         self.msg6 = 'cosmoguirlande,sparkle' +',' + self.textbox_sparkle_speed_6.text() + ',' + self.textbox_sparkle_num_sparkles_6.text()
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def pulse_demand_6(self):
         self.msg6 = 'cosmoguirlande,pulse'+',' + self.textbox_pulse_period_6.text() + ',' + self.textbox_pulse_speed_6.text()
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def solid_demand_6(self):
         self.msg6 = 'cosmoguirlande,solid'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def colorcycle_demand_6(self):
         self.msg6 = 'cosmoguirlande,colorcycle'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def dancingPiScroll_demand_6(self):
         self.msg6 = 'cosmoguirlande,dancingPiScroll'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def dancingPiEnergy_demand_6(self):
         self.msg6 = 'cosmoguirlande,dancingPiEnergy'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def dancingPiSpectrum_demand_6(self):
         self.msg6 = 'cosmoguirlande,dancingPiSpectrum'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def stop_dancingPiEnergy_demand_6(self):
         self.msg6 = 'cosmoguirlande,stop_dancingPiEnergy'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def stop_dancingPiSpectrum_demand_6(self):
         self.msg6 = 'cosmoguirlande,stop_dancingPiSpectrum'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def stop_dancingPiScroll_demand_6(self):
         self.msg6 = 'cosmoguirlande,stop_dancingPiScroll'
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     # Slider Buttons functions
     def slider_R6(self, R6):
         self.msg6 = 'cosmoguirlande,R,' + str((R6))
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def slider_G6(self, G6):
         self.msg6 = 'cosmoguirlande,G,' + str((G6))
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def slider_B6(self, B6):
         self.msg6 = 'cosmoguirlande,B,' + str((B6))
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
     def slider_W6(self, W6):
         self.msg6 = 'cosmoguirlande,W,' + str((W6))
-        self.newServer6.to_send = self.msg6
+        self.objs[5].publish("test1", self.msg6)
 
 
 if __name__ == '__main__':
