@@ -1,7 +1,8 @@
 import paramiko
-import argparse
+import json
 import socket
 import time
+
 
 '''
 You need first to setup Pi with:
@@ -14,6 +15,25 @@ You need first to setup Pi with:
 h_name = socket.gethostname()
 IP_addres = socket.gethostbyname(h_name)
 
+#Load config files with IP, port & LED number
+conf_file = open('IP_configuration.json')
+strip_configuration = json.load(conf_file)
+
+for elt in strip_configuration["guirlande"]:
+#for i in range(len(strip_configuration['guirlande'])):
+    
+        #Create SSH connection with paramiko
+    ssh = paramiko.SSHClient()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    ssh.connect(hostname=elt["IP"], username='pi', password='vbcgxb270694', timeout=5, port=22)
+
+    # kill GUI if running
+    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd /home/pi/Cosmo_guirlande_network/ && sudo git pull")
+
+    #print(stdout1.read())
+    print("ssh passed")
+
+"""
 #--------------------------------------------------------------------------------------------------------------------
 try:
     #Create SSH connection with paramiko
@@ -91,3 +111,4 @@ try:
 
 except socket.timeout:
     print("ss5 timeout")
+"""

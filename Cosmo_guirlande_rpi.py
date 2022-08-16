@@ -1854,10 +1854,11 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,chase') :
                     self.state = "chase"
-                    try:
-                        function_type, function, chase_speed, chase_size = self.newSocket_mqtt.data_rcv.split(',')
-                    except :
-                        function_type, function, chase_speed, chase_size = self.newSocket_mqtt_mqtt.data_rcv.split(',')
+
+                    function_type, function, chase_speed, chase_size = self.newSocket_mqtt_mqtt.data_rcv.split(',')
+                    print("chase parameter : \n" )
+                    print("\n chase_speed : ", chase_speed)
+                    print("\n chase_size : ", chase_speed)
                     try:
                         self.chase_speed = float(chase_speed)
                     except ValueError:
@@ -1872,6 +1873,10 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,comet') :
                     self.state = "comet"
                     function_type, function, comet_speed, comet_tail = self.newSocket_mqtt.data_rcv.split(',')
+                    
+                    print("comet parameter : \n" )
+                    print("\n comet_speed : ", comet_speed)
+                    print("\n comet_tail : ", comet_tail)
                     try:
                         self.comet_speed = float(comet_speed)
                     except ValueError:
@@ -1886,6 +1891,11 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,sparkle') :
                     self.state = "sparkle"
                     function_type, function, sparkle_speed, sparkle_num = self.newSocket_mqtt.data_rcv.split(',')
+
+                    print("sparkle parameter : \n" )
+                    print("\n sparkle_speed : ", sparkle_speed)
+                    print("\n sparkle_num : ", sparkle_num)
+
                     try:
                         self.sparkle_speed = float(sparkle_speed)
                     except ValueError:
@@ -1900,6 +1910,11 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,pulse') :
                     self.state = "pulse"
                     function_type, function, pulse_period, pulse_speed = self.newSocket_mqtt.data_rcv.split(',')
+
+                    print("pulse parameter : \n" )
+                    print("\n pulse_period : ", pulse_period)
+                    print("\n pulse_speed : ", pulse_speed)
+
                     try:
                         self.pulse_period = float(pulse_period)
                     except ValueError:
@@ -2158,7 +2173,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 else:
                     print("nothing")
                     self.state = "nothing"
-                    # time.sleep(1)
+                    time.sleep(0.01)
 
                 self.previous_message = self.newSocket.data_rcv
                 #self.newSocket_mqtt.data_rcv = ""
