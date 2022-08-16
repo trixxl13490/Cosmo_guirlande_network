@@ -29,14 +29,9 @@ ssh.connect(hostname=str(args.rpi_IP), username='pi', password='vbcgxb270694', t
 # kill GUI if running
 ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
 
-
-
 channel = ssh.invoke_shell()
 stdin = channel.makefile('wb')
 stdout= channel.makefile('rb')
-
-
-
 
 """print("args.rpi_IP : ", args.rpi_IP)
 
@@ -54,7 +49,7 @@ print('\n')"""
 
 
 #launch on RPI
-print("1")
+"""print("1")
 stdin.write(cmd)
 time.sleep(1)
 
@@ -64,7 +59,7 @@ time.sleep(1)
 
 print("3")
 stdin.write(cmd2)
-time.sleep(1)
+time.sleep(1)"""
 
 """print("4")
 stdin.write(cmd_bis)
@@ -83,7 +78,42 @@ print("6")
 stdin.write(cmd_ter)
 time.sleep(1)"""
 
+print("7")
 stdin.write("'''")
 stdin.write("export XAUTHORITY=/home/pi/.Xauthority")
-stdin.write("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py "  + str(args.guirlande_number) + ' ' + str(args.num_pixel) + ' ' + str(args.rpi_IP) + ' ' + str(args.tcp_port) + ' ' + str(args.buffer_size))
+stdin.write("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py "  + str(args.guirlande_number) + ' ' + str(args.num_pixel) + ' ' + str(args.rpi_IP) + ' ' + str(args.tcp_port) + ' ' + str(args.buffer_size) + "'")
 stdin.write("'''")
+time.sleep(1)
+
+print("8")
+print("cmd sent : export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py " + str(args.guirlande_number) + ' ' + str(args.num_pixel) + ' ' + str(args.rpi_IP) + ' ' + str(args.tcp_port) + ' ' + str(args.buffer_size) + "'")
+stdin.write("export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py " + str(args.guirlande_number) + ' ' + str(args.num_pixel) + ' ' + str(args.rpi_IP) + ' ' + str(args.tcp_port) + ' ' + str(args.buffer_size) + "'")
+time.sleep(1)
+
+print("9")
+#Create SSH connection with paramiko
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+channel = ssh.invoke_shell()
+stdin = channel.makefile('wb')
+stdout= channel.makefile('rb')
+
+ssh.connect(hostname=str(args.rpi_IP), username='pi', password='vbcgxb270694', timeout=2, port=22)
+print("cmd sent : export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py " + str(args.guirlande_number) + ' ' + str(args.num_pixel) + ' ' + str(args.rpi_IP) + ' ' + str(args.tcp_port) + ' ' + str(args.buffer_size) + "'")
+stdin.write("export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py " + str(args.guirlande_number) + ' ' + str(args.num_pixel) + ' ' + str(args.rpi_IP) + ' ' + str(args.tcp_port) + ' ' + str(args.buffer_size) + "'")
+time.sleep(1)
+
+print("10")
+#Create SSH connection with paramiko
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+channel = ssh.invoke_shell()
+stdin = channel.makefile('wb')
+stdout= channel.makefile('rb')
+
+ssh.connect(hostname=str(args.rpi_IP), username='pi', password='vbcgxb270694', timeout=2, port=22)
+print("cmd sent : export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py "  + str(args.guirlande_number) + ' ' + str(args.num_pixel) + ' ' + str(args.rpi_IP) + ' ' + str(args.tcp_port) + ' ' + str(args.buffer_size) + "'")
+stdin.write("export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py " + str(args.guirlande_number) + ' ' + str(args.num_pixel) + ' ' + str(args.rpi_IP) + ' ' + str(args.tcp_port) + ' ' + str(args.buffer_size) + "'")
+time.sleep(1)

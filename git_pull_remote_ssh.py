@@ -4,12 +4,6 @@ import socket
 import time
 
 
-'''
-You need first to setup Pi with:
-
-
-'''
-
 #All args here: args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size
 #Get Server (this computer) IP address
 h_name = socket.gethostname()
@@ -21,17 +15,19 @@ strip_configuration = json.load(conf_file)
 
 for elt in strip_configuration["guirlande"]:
 #for i in range(len(strip_configuration['guirlande'])):
-    
+    try:
         #Create SSH connection with paramiko
-    ssh = paramiko.SSHClient()
-    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh.connect(hostname=elt["IP"], username='pi', password='vbcgxb270694', timeout=5, port=22)
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(hostname=elt["IP"], username='pi', password='vbcgxb270694', timeout=5, port=22)
 
-    # kill GUI if running
-    ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd /home/pi/Cosmo_guirlande_network/ && sudo git pull")
+        # kill GUI if running
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd /home/pi/Cosmo_guirlande_network/ && sudo git pull")
 
-    #print(stdout1.read())
-    print("ssh passed")
+        #print(stdout1.read())
+        print("ssh passed")
+    except socket.timeout:
+        print("socket.timeout, device must be offline : ", elt["IP"])
 
 """
 #--------------------------------------------------------------------------------------------------------------------

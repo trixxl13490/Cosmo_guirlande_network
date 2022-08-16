@@ -1855,7 +1855,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 elif self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,chase') :
                     self.state = "chase"
 
-                    function_type, function, chase_speed, chase_size = self.newSocket_mqtt_mqtt.data_rcv.split(',')
+                    function_type, function, chase_speed, chase_size = self.newSocket_mqtt.data_rcv.split(',')
                     print("chase parameter : \n" )
                     print("\n chase_speed : ", chase_speed)
                     print("\n chase_size : ", chase_speed)

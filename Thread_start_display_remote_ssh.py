@@ -23,30 +23,35 @@ class Thread_start_display_remote_ssh(threading.Thread):
     self.ip = ip
 
 
-def run(self):
-    #try:
-      ssh = paramiko.SSHClient()
-      ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-      ssh.connect(hostname=self.ip, username='pi', password='vbcgxb270694', timeout=5, port=22)
+  def run(self):
+      #try:
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh.connect(hostname=self.ip, username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
-      # kill GUI if running
-      ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+        # kill GUI if running
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
 
-      # Start GUI again on rpi
-      channel = ssh.invoke_shell()
-      stdin = channel.makefile('wb')
-      stdout = channel.makefile('rb')
+        # Start GUI again on rpi
+        channel = ssh.invoke_shell()
+        stdin = channel.makefile('wb')
+        stdout = channel.makefile('rb')
 
-      stdin.write(self.message)
+        stdin.write(self.message)
 
-    #except:
-    #  time.sleep(1)
+      #except:
+      #  time.sleep(1)
 
 if __name__ == "__main__":
-    ssh1 = Thread_start_display_remote_ssh("export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.5 50001 1024'"
+    ssh1 = Thread_start_display_remote_ssh("export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.20 50001 1024'"
       ,"192.168.0.5")
-    ssh2 = Thread_start_display_remote_ssh("export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.26 50002 1024'"
-      ,"192.168.0.26")
-    ssh3 = Thread_start_display_remote_ssh("export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 30 192.168.0.29 50003 1024'"
+    ssh2 = Thread_start_display_remote_ssh("export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 30 192.168.0.20 50002 1024'"
+      ,"192.168.0.8")
+    ssh3 = Thread_start_display_remote_ssh("export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 30 192.168.0.20 50003 1024'"
       ,"192.168.0.29")
+    ssh4 = Thread_start_display_remote_ssh("export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 30 192.168.0.20 50003 1024'"
+      ,"192.168.0.36")
+    ssh5 = Thread_start_display_remote_ssh("export XAUTHORITY=/home/pi/.Xauthority  DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 30 192.168.0.20 50003 1024'"
+      ,"192.168.0.50")
+
