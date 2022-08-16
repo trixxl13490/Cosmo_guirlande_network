@@ -187,7 +187,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             advance_interval=5,
             auto_clear=True,
         )
-        while self.newSocket.data_rcv.startswith('cosmoguirlande,strombo'):
+        while self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,strombo'):
             animations.animate()
 
     def blackout(self):
@@ -197,7 +197,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             advance_interval=5,
             auto_clear=True,
         )
-        while self.newSocket.data_rcv.startswith('cosmoguirlande,blackout'):
+        while self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,blackout'):
             animations.animate()
 
     def changeColor(self, r, g, b, w):
@@ -226,7 +226,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             advance_interval=5,
             auto_clear=True,
         )
-        while self.newSocket.data_rcv.startswith('cosmoguirlande,color1'):
+        while self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,color1'):
             animations.animate()
 
     def changeColor2String(self, color):
@@ -237,7 +237,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             advance_interval=5,
             auto_clear=True,
         )
-        while self.newSocket.data_rcv.startswith('cosmoguirlande,color2'):
+        while self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,color2'):
             animations.animate()
 
     def rainbow_cycle(self, wait):
@@ -255,7 +255,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             advance_interval=5,
             auto_clear=True,
         )
-        while self.newSocket.data_rcv.startswith('cosmoguirlande,comet'):
+        while self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,comet'):
             animations.animate()
 
     def chase(self):
@@ -265,7 +265,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             advance_interval=5,
             auto_clear=True,
         )
-        while self.newSocket.data_rcv.startswith('cosmoguirlande,chase'):
+        while self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,chase'):
             animations.animate()
 
     def pulse(self):
@@ -276,7 +276,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             auto_clear=True,
         )
         animations.animate()
-        while self.newSocket.data_rcv.startswith('cosmoguirlande,pulse'):
+        while self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,pulse'):
             animations.animate()
 
     def sparkle(self):
@@ -286,7 +286,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
             advance_interval=5,
             auto_clear=True,
         )
-        while self.newSocket.data_rcv.startswith('cosmoguirlande,sparkle'):
+        while self.newSocket_mqtt.data_rcv.startswith('cosmoguirlande,sparkle'):
             animations.animate()
 
     def solid(self):
@@ -2192,7 +2192,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
         '''except TypeError:
             print("type error")
             self.run()'''
-            
+
         '''
         for loop in range(cycles):
             #redo =random.randint(0, 255)
