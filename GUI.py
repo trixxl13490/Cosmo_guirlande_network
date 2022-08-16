@@ -2772,6 +2772,7 @@ class MainWin(QWidget):
             i = 0
             for elt in strip_configuration["guirlande"]:
                 try:
+                    self.objs[i].connect(elt["IP"],1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
                     print("could not connect to :  ", elt["IP"])
@@ -2784,6 +2785,7 @@ class MainWin(QWidget):
             i = 0
             for elt in strip_configuration["guirlande"]:
                 try:
+                    self.objs[i].connect(elt["IP"],1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
                     print("could not connect to :  ", elt["IP"])
@@ -2796,6 +2798,7 @@ class MainWin(QWidget):
             i = 0
             for elt in strip_configuration["guirlande"]:
                 try:
+                    self.objs[i].connect(elt["IP"],1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
                     print("could not connect to :  ", elt["IP"])
@@ -2809,6 +2812,7 @@ class MainWin(QWidget):
             i = 0
             for elt in strip_configuration["guirlande"]:
                 try:
+                    self.objs[i].connect(elt["IP"],1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
                     print("could not connect to :  ", elt["IP"])
