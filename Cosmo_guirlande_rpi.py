@@ -2179,10 +2179,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 #self.newSocket_mqtt.data_rcv = ""
                 #self.newSocket.close()
 
-        """except TypeError:
-            print("type error")
-            self.run()"""
-
         except KeyboardInterrupt:
             print("keyboard interrupt, blackout LED")
             self.state = "keyboard"
@@ -2193,6 +2189,10 @@ class Cosmo_guirlande_rpi(threading.Thread):
             print("type error")
             self.run()
 
+        '''except TypeError:
+            print("type error")
+            self.run()'''
+            
         '''
         for loop in range(cycles):
             #redo =random.randint(0, 255)
