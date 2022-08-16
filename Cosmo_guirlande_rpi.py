@@ -149,7 +149,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
     ((0x8F),(0x00),(0x71)), ((0x5F),(0x00),(0xA1)), ((0x2F),(0x00),(0xD0)), ((0x00),(0x07),(0xF9))  )
 
         #Create Socket to communicate
-        self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
+        #self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
         self.newSocket_mqtt = RPi_mqtt_socket()
         
         #Watchdog
@@ -2188,6 +2188,10 @@ class Cosmo_guirlande_rpi(threading.Thread):
             self.state = "keyboard"
             if args.clear:
                 self.pixels.fill((0, 0, 0, 0))
+
+        except:
+            print("type error")
+            self.run()
 
         '''
         for loop in range(cycles):
