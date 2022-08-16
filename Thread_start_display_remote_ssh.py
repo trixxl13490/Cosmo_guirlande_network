@@ -35,6 +35,7 @@ class Thread_start_display_remote_ssh(threading.Thread):
 
         # kill GUI if running
         ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+        time.sleep(0.5)
 
         # Start GUI again on rpi
         channel = ssh.invoke_shell()

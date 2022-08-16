@@ -81,7 +81,7 @@ try:
 
     stdin3.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 144 192.168.1.16 50003 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 144 192.168.0.20 50003 1024 RGBW'
       ''')
     print("ss3 passed")
 except socket.timeout:
@@ -106,7 +106,7 @@ try:
 
     stdin4.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 4 144 192.168.1.16 50004 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 4 144 192.168.0.20 50004 1024 RGBW'
       ''')
     print("ss4 passed")
 
@@ -131,7 +131,7 @@ try:
 
     stdin5.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 5 144 192.168.1.16 50005 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 5 144 192.168.0.20 50005 1024 RGBW'
       ''')
     print("ss5 passed")
 

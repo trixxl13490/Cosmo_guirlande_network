@@ -39,28 +39,6 @@ class VNC_Window(threading.Thread):
 class MainWin(QWidget):
     h_name = socket.gethostname()
     IP_addres = socket.gethostbyname(h_name)
-    # Create Server1 object
-    newServer1 = Server.Server(IP_addres, 50001, 1024)
-    #newServer1.start()
-    # Create Server2 object
-    newServer2 = Server.Server(IP_addres, 50002, 1024)
-    #newServer2.start()
-    # Create Server3 object
-    newServer3 = Server.Server(IP_addres, 50003, 1024)
-    #newServer3.start()
-    # Create Server4 object
-    newServer4 = Server.Server(IP_addres, 50004, 1024)
-    #newServer4.start()
-    # Create Server5 object
-    newServer5 = Server.Server(IP_addres, 50005, 1024)
-    #newServer5.start()
-    # Create Server5 object
-    newServer6 = Server.Server(IP_addres, 50006, 1024)
-    #newServer6.start()
-    # Create Server5 object
-    newServer7 = Server.Server(IP_addres, 50007, 1024)
-    #newServer7.start()
-
 
     #-----------------------------------------------------Create a list of MQTT client
     
@@ -2199,7 +2177,7 @@ class MainWin(QWidget):
     def restart_demand(self):
         self.msg1 = 'cosmoguirlande,restart'
         #Force restart by SSH - paramiko lib
-        subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
+        subprocess.Popen(args='python Thread_start_display_remote_ssh.py', shell=True)
 
         #-----------------------------------------------------------------------
         i = 0
