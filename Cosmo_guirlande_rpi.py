@@ -1330,7 +1330,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
     #Check if main class is style alive - to be run on a thread
     def run(self):
-        self.newSocket.start()
+        #self.newSocket.start()
         self.newSocket_mqtt.start()
         try:
             while True:
@@ -1342,7 +1342,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 print("Cosmoguirlande class run")
                 print("state :", self.state)
                 print("previous state :", self.state)
-                print('self.newSocket.data_rcv :', self.newSocket.data_rcv)
+                #print('self.newSocket.data_rcv :', self.newSocket.data_rcv)
                 print('self.newSocket_mqtt.data_rcv :', self.newSocket_mqtt.data_rcv)
                 self.previous_state = self.state
 
@@ -2175,7 +2175,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.state = "nothing"
                     time.sleep(0.01)
 
-                self.previous_message = self.newSocket.data_rcv
+                self.previous_message = self.newSocket_mqtt.data_rcv
                 #self.newSocket_mqtt.data_rcv = ""
                 #self.newSocket.close()
 
