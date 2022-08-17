@@ -2177,7 +2177,8 @@ class MainWin(QWidget):
     def restart_demand(self):
         self.msg1 = 'cosmoguirlande,restart'
         #Force restart by SSH - paramiko lib
-        subprocess.Popen(args='python Thread_start_display_remote_ssh.py', shell=True)
+        #subprocess.Popen(args='python Thread_start_display_remote_ssh.py', shell=True)
+        subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
 
         #-----------------------------------------------------------------------
         i = 0
@@ -2922,7 +2923,7 @@ class MainWin(QWidget):
     # Slider Buttons functions
     def slider_R2(self, R2):
         self.msg2 = 'cosmoguirlande,R,' + str((R2))
-        self.newServer2.to_send =self.msg2
+        self.objs[1].publish("test1", self.msg2)
 
     def slider_G2(self, G2):
         self.msg2 = 'cosmoguirlande,G,' + str((G2))
