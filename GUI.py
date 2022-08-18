@@ -2177,8 +2177,8 @@ class MainWin(QWidget):
     def restart_demand(self):
         self.msg1 = 'cosmoguirlande,restart'
         #Force restart by SSH - paramiko lib
-        #subprocess.Popen(args='python Thread_start_display_remote_ssh.py', shell=True)
-        subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
+        subprocess.Popen(args='python Thread_start_display_remote_ssh.py', shell=True)
+        #subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
 
         #-----------------------------------------------------------------------
         i = 0

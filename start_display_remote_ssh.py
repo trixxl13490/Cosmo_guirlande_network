@@ -64,7 +64,7 @@ except socket.timeout:
 try:
     ssh3 = paramiko.SSHClient()
     ssh3.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh3.connect(hostname='192.168.0.29', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh3.connect(hostname='192.168.0.28', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
     # kill GUI if running
@@ -141,7 +141,7 @@ except socket.timeout:
 try:
     ssh6 = paramiko.SSHClient()
     ssh6.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh6.connect(hostname='192.168.1.50', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh6.connect(hostname='192.168.0.26', username='pi', password='vbcgxb270694', timeout=5, port=22)
     time.sleep(.5)
 
 
@@ -157,7 +157,7 @@ try:
 
     stdin6.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 6 144 192.168.1.16 50006 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 6 144 192.168.1.16 50006 1024 RGB'
       ''')
     print("ss6 passed")
 
@@ -167,8 +167,12 @@ except socket.timeout:
 try:
     ssh7 = paramiko.SSHClient()
     ssh7.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh7.connect(hostname='192.168.1.20', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh7.connect(hostname='192.168.0.16', username='pi', password='vbcgxb270694', timeout=5, port=22)
     time.sleep(.5)
+
+    # kill GUI if running
+    ssh_stdin7, ssh_stdout7, ssh_stderr7 = ssh7.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+    time.sleep(2.5)
 
     # Start GUI again on rpi
     channel7 = ssh7.invoke_shell()
@@ -178,9 +182,10 @@ try:
 
     stdin7.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 7 30 192.168.1.16 50007 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 7 70 192.168.0.20 50007 1024 RGB'
       ''')
     print("ss7 passed")
+    time.sleep(.5)
 
 except socket.timeout:
     print("ss7 timeout")
