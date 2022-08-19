@@ -32,11 +32,11 @@ class Thread_start_display_remote_ssh(threading.Thread):
         ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh1.connect(hostname=self.ip, username='pi', password='vbcgxb270694', timeout=5, port=22)
 
-        time.sleep(2)
+        #time.sleep(2)
 
         # kill GUI if running
         ssh_stdin, ssh_stdout, ssh_stderr = ssh1.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
-        time.sleep(1)
+        #time.sleep(1)
 
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
