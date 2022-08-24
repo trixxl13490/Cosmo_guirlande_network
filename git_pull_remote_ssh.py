@@ -21,8 +21,15 @@ for elt in strip_configuration["guirlande"]:
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
         ssh.connect(hostname=elt["IP"], username='pi', password='vbcgxb270694', timeout=5, port=22)
 
+        channel = ssh.invoke_shell()
+        stdin = channel.makefile('wb')
+        stdout = channel.makefile('rb')
+
         # kill GUI if running
         ssh_stdin, ssh_stdout, ssh_stderr = ssh.exec_command("cd /home/pi/Cosmo_guirlande_network/ && sudo git pull")
+
+        stdout.close()
+        stdin.close()
 
         #print(stdout1.read())
         print("ssh passed")
