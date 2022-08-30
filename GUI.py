@@ -55,6 +55,7 @@ class MainWin(QWidget):
         }'''
 
     i = 0
+    j = 0
     for elt in strip_configuration["guirlande"]:
 
         '''print(elt)
@@ -67,17 +68,38 @@ class MainWin(QWidget):
         #get color from JSON
         print("color : ", elt["color"])'''
         objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
-        device.append(elt["IP"])
-        i = i+1
+        
+        
 
     #for i in range(len(strip_configuration['guirlande'])):
         try:
+            
             objs[i].connect(elt["IP"],1883,60)
             print("publish blackout")
             objs[i].publish('test1', "cosmoguirlande,blackout")
+            device.append(elt["IP"])
         except:
             print("could not connect to :  ", elt["IP"])
+            #====================================================================test
+            print("strip_configuration['guirlande'] de j ", strip_configuration["guirlande"][j])
+            print("elt['IP']", elt["IP"])
+            del strip_configuration["guirlande"][i]
+            del objs[i]
+            #del device[i]
+            
+            #====================================================================fin test
+        
         i = i+1
+        j = j+1
+
+    for elt in strip_configuration["guirlande"]:
+        print(elt)
+
+    for elt in objs:
+        print(elt)
+
+    for elt in device:
+        print(elt)
 
     IPValue = ""
     IPValue_2 = ""
@@ -2191,6 +2213,7 @@ class MainWin(QWidget):
                 self.objs[i].connect(elt["IP"],1883,60)
             except:
                 print("could not connect to :  ", elt["IP"])
+
             i = i+1
         #-----------------------------------------------------------------------
 
@@ -2323,7 +2346,7 @@ class MainWin(QWidget):
 
     def pulse_demand_1(self):
         self.msg1 = 'cosmoguirlande,pulse,'+ self.textbox_pulse_period.text() + ',' + self.textbox_pulse_speed.text()
-        self.objs[0].connect(elt["IP"],1883,60)
+        self.objs[0].connect(self.device[0],1883,60)
         self.objs[0].publish("test1", self.msg1)
         if self.sync:
             i = 0
