@@ -289,83 +289,83 @@ try:
 
 			if touche == 67: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,Confetti")
+				send_message_sync("cosmoguirlande,B,140")
 
 			if touche == 68: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,HeartBeat")
+				send_message_sync("cosmoguirlande,B,156")
 
 			if touche == 69: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,fadeToBlack")
+				send_message_sync("cosmoguirlande,B,172")
 
 			if touche == 70: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,Fire")
+				send_message_sync("cosmoguirlande,B,188")
 
 			if touche == 71: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,Strobe")
+				send_message_sync("cosmoguirlande,B,204")
 
 			if touche == 72: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,FadeInOut")
+				send_message_sync("cosmoguirlande,Strobe")
 
 			if touche == 73: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,solid")
+				send_message_sync("cosmoguirlande,blackout")
 
 			if touche == 74: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,pulse,pulse_period,pulse_speed")
+				send_message_sync("cosmoguirlande,pulse,0.2,0.2")
 
 			if touche == 75: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,pulse,pulse_period,pulse_speed")
+				send_message_sync("cosmoguirlande,pulse,0.3,0.3")
 
 			if touche == 76: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,pulse,pulse_period,pulse_speed")
+				send_message_sync("cosmoguirlande,pulse,0.4,0.4")
 
 			if touche == 77: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,pulse,pulse_period,pulse_speed")
+				send_message_sync("cosmoguirlande,pulse,0.5,0.5")
 
 			if touche == 78: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,sparkle,sparkle_speed,sparkle_num")
+				send_message_sync("cosmoguirlande,pulse,0.5,0.5")
 
 			if touche == 79: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,sparkle,sparkle_speed,sparkle_num")
+				send_message_sync("cosmoguirlande,pulse,0.5,0.5")
 
 			if touche == 80: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,sparkle,sparkle_speed,sparkle_num")
+				send_message_sync("cosmoguirlande,sparkle,sparkle_speed,5")
 
 			if touche == 81: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,comet,comet_speed,comet_tail")
+				send_message_sync("cosmoguirlande,comet,comet_speed,3")
 
 			if touche == 82: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,comet,comet_speed,comet_tail")
+				send_message_sync("cosmoguirlande,comet,comet_speed,4")
 
 			if touche == 83: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,comet,comet_speed,comet_tail")
+				send_message_sync("cosmoguirlande,comet,comet_speed,5")
 
 			if touche == 84: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,chase,chase_speed,chase_size")
+				send_message_sync("cosmoguirlande,chase,chase_speed,3")
 
 			if touche == 85: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,chase,chase_speed,chase_size")
+				send_message_sync("cosmoguirlande,chase,chase_speed,4")
 
 			if touche == 86: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,chase,chase_speed,chase_size")
+				send_message_sync("cosmoguirlande,chase,chase_speed,5")
 
 			if touche == 87: #1st Do
 				#send mqtt commmande
@@ -373,27 +373,27 @@ try:
 
 			if touche == 88: #1st Do
 				#send mqtt commmande
-				send_message_sync("")
+				send_message_sync("cosmoguirlande,sparkle,sparkle_speed,3")
 
 			if touche == 89: #1st Do
 				#send mqtt commmande
-				send_message_sync("")
+				send_message_sync("cosmoguirlande,sparkle,sparkle_speed,3")
 
 			if touche == 90: #1st Do
 				#send mqtt commmande
-				send_message_sync("")
+				send_message_sync("cosmoguirlande,sparkle,sparkle_speed,3")
 
 			if touche == 91: #1st Do
 				#send mqtt commmande
-				send_message_sync("")
+				send_message_sync("cosmoguirlande,sparkle,sparkle_speed,3")
 
 			if touche == 92: #1st Do
 				#send mqtt commmande
-				send_message_sync("")
+				send_message_sync("cosmoguirlande,sparkle,sparkle_speed,3")
 
 			if touche == 93: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,rainbow")
+				send_message_sync("cosmoguirlande,sparkle,sparkle_speed,3")
 
 			if touche == 94: #1st Do
 				#send mqtt commmande

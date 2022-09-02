@@ -318,7 +318,7 @@ class MainWin(QWidget):
         #Entree pulse param period
         # Create textbox
         self.textbox_pulse_period= QLineEdit(self)
-        self.textbox_pulse_period.setText('0.1')
+        self.textbox_pulse_period.setText('0.2')
 
         self.textbox_pulse_period.setGeometry(210, 600, 50, 20)
         # Create a button in the window
