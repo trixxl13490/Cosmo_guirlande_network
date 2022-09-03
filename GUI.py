@@ -68,7 +68,8 @@ class MainWin(QWidget):
         #get color from JSON
         print("color : ", elt["color"])'''
         objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
-        
+        print(i)
+        print(j)
         
 
     #for i in range(len(strip_configuration['guirlande'])):
@@ -78,28 +79,32 @@ class MainWin(QWidget):
             print("publish blackout")
             objs[i].publish('test1', "cosmoguirlande,blackout")
             device.append(elt["IP"])
+            i = i+1
+            
         except:
             print("could not connect to :  ", elt["IP"])
             #====================================================================test
             print("strip_configuration['guirlande'] de j ", strip_configuration["guirlande"][j])
             print("elt['IP']", elt["IP"])
+            #device.pop(i)
             del strip_configuration["guirlande"][i]
             del objs[i]
-            #del device[i]
+            #del device[]
+            i = i+1
             
             #====================================================================fin test
         
-        i = i+1
+        
         j = j+1
 
-    for elt in strip_configuration["guirlande"]:
-        print(elt)
+        for elt in strip_configuration["guirlande"]:
+            print(elt)
 
-    for elt in objs:
-        print(elt)
+        for elt in objs:
+            print(elt)
 
-    for elt in device:
-        print(elt)
+        for elt in device:
+            print(elt)
 
     IPValue = ""
     IPValue_2 = ""
@@ -2264,8 +2269,11 @@ class MainWin(QWidget):
 
     def blackout_demand(self):
         self.msg1 = 'cosmoguirlande,blackout'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         i = 0
         for elt in strip_configuration["guirlande"]:
             try:
@@ -2276,8 +2284,11 @@ class MainWin(QWidget):
 
     def rainbow_demand(self):
         self.msg1 = 'cosmoguirlande,rainbow'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2290,8 +2301,11 @@ class MainWin(QWidget):
 
     def strombo_demand(self):
         self.msg1 = 'cosmoguirlande,strombo'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2304,8 +2318,11 @@ class MainWin(QWidget):
 
     def chase_demand_1(self):
         self.msg1 = 'cosmoguirlande,chase,' + self.textbox_chase_speed.text() + ',' + self.textbox_chase_size.text()
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2318,8 +2335,11 @@ class MainWin(QWidget):
 
     def comet_demand_1(self):
         self.msg1 = 'cosmoguirlande,comet,' + self.textbox_comet_speed.text() + ',' + self.textbox_comet_tail.text()
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2332,8 +2352,11 @@ class MainWin(QWidget):
 
     def sparkle_demand_1(self):
         self.msg1 = 'cosmoguirlande,sparkle,' + self.textbox_sparkle_speed.text() + ',' + self.textbox_sparkle_num_sparkles.text()
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2346,8 +2369,11 @@ class MainWin(QWidget):
 
     def pulse_demand_1(self):
         self.msg1 = 'cosmoguirlande,pulse,'+ self.textbox_pulse_period.text() + ',' + self.textbox_pulse_speed.text()
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2360,8 +2386,11 @@ class MainWin(QWidget):
 
     def solid_demand_1(self):
         self.msg1 = 'cosmoguirlande,solid'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2374,8 +2403,11 @@ class MainWin(QWidget):
 
     def colorcycle_demand_1(self):
         self.msg1 = 'cosmoguirlande,colorcycle,'+ str((self.type_color11.currentText())) + ',' + str((self.type_color21.currentText()))
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2400,8 +2432,11 @@ class MainWin(QWidget):
 
     def dancingPiScroll_demand_1(self):
         self.msg1 = 'cosmoguirlande,dancingPiScroll'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2414,8 +2449,11 @@ class MainWin(QWidget):
 
     def dancingPiEnergy_demand_1(self):
         self.msg1 = 'cosmoguirlande,dancingPiEnergy'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2428,8 +2466,11 @@ class MainWin(QWidget):
 
     def dancingPiSpectrum_demand_1(self):
         self.msg1 = 'cosmoguirlande,dancingPiSpectrum'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2442,8 +2483,11 @@ class MainWin(QWidget):
 
     def stop_dancingPiEnergy_demand_1(self):
         self.msg1 = 'cosmoguirlande,stop_dancingPiEnergy'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2456,8 +2500,11 @@ class MainWin(QWidget):
 
     def colorAll2Color_demand_1(self):
         self.msg1 = 'cosmoguirlande,colorAll2Color'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2470,8 +2517,11 @@ class MainWin(QWidget):
 
     def FadeInOut_demand_1(self):
         self.msg1 = 'cosmoguirlande,FadeInOut'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2484,8 +2534,11 @@ class MainWin(QWidget):
 
     def Strobe_demand_1(self):
         self.msg1 = 'cosmoguirlande,Strobe'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2498,8 +2551,11 @@ class MainWin(QWidget):
 
     def HalloweenEyes_demand_1(self):
         self.msg1 = 'cosmoguirlande,HalloweenEyes'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2512,8 +2568,11 @@ class MainWin(QWidget):
 
     def CylonBounce_demand_1(self):
         self.msg1 = 'cosmoguirlande,CylonBounce'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2526,8 +2585,11 @@ class MainWin(QWidget):
 
     def NewKITT_demand_1(self):
         self.msg1 = 'cosmoguirlande,NewKITT'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2540,8 +2602,11 @@ class MainWin(QWidget):
 
     def Twinkle_demand_1(self):
         self.msg1 = 'cosmoguirlande,Twinkle'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2554,8 +2619,11 @@ class MainWin(QWidget):
 
     def TwinkleRandom_demand_1(self):
         self.msg1 = 'cosmoguirlande,TwinkleRandom'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2568,8 +2636,11 @@ class MainWin(QWidget):
 
     def SnowSparkle_demand_1(self):
         self.msg1 = 'cosmoguirlande,SnowSparkle'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2582,8 +2653,11 @@ class MainWin(QWidget):
 
     def RunningLights_demand_1(self):
         self.msg1 = 'cosmoguirlande,*RunningLights'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2596,8 +2670,11 @@ class MainWin(QWidget):
 
     def colorWipe_demand_1(self):
         self.msg1 = 'cosmoguirlande,colorWipe'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2610,8 +2687,11 @@ class MainWin(QWidget):
 
     def theaterChaseRainbow_demand_1(self):
         self.msg1 = 'cosmoguirlande,theaterChaseRainbow'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2624,8 +2704,11 @@ class MainWin(QWidget):
 
     def Fire_demand_1(self):
         self.msg1 = 'cosmoguirlande,Fire'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2638,8 +2721,11 @@ class MainWin(QWidget):
 
     def FireCustom_demand_1(self):
         self.msg1 = 'cosmoguirlande,FireCustom'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2652,8 +2738,11 @@ class MainWin(QWidget):
 
     def FadeInOut_demand_1(self):
         self.msg1 = 'cosmoguirlande,FadeInOut'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2666,8 +2755,11 @@ class MainWin(QWidget):
 
     def fadeToBlack_demand_1(self):
         self.msg1 = 'cosmoguirlande,fadeToBlack'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2680,8 +2772,11 @@ class MainWin(QWidget):
 
     def BouncingBalls_demand_1(self):
         self.msg1 = 'cosmoguirlande,*BouncingBalls'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2694,8 +2789,11 @@ class MainWin(QWidget):
 
     def BouncingColoredBalls_demand_1(self):
         self.msg1 = 'cosmoguirlande,*BouncingColoredBalls'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2708,8 +2806,11 @@ class MainWin(QWidget):
 
     def meteorRain_demand_1(self):
         self.msg1 = 'cosmoguirlande,meteorRain'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2722,8 +2823,11 @@ class MainWin(QWidget):
 
     def Matrix_demand_1(self):
         self.msg1 = 'cosmoguirlande,Matrix'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2736,8 +2840,11 @@ class MainWin(QWidget):
     
     def Drain_demand_1(self):
         self.msg1 = 'cosmoguirlande,*Drain'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2750,8 +2857,11 @@ class MainWin(QWidget):
   
     def Pancake_demand_1(self):
         self.msg1 = 'cosmoguirlande,Pancake'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2764,8 +2874,11 @@ class MainWin(QWidget):
      
     def HeartBeat_demand_1(self):
         self.msg1 = 'cosmoguirlande,HeartBeat'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2778,8 +2891,11 @@ class MainWin(QWidget):
       
     def rainbowGlitter_demand_1(self):
         self.msg1 = 'cosmoguirlande,rainbowGlitter'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2792,8 +2908,11 @@ class MainWin(QWidget):
 
     def Confetti_demand_1(self):
         self.msg1 = 'cosmoguirlande,Confetti'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2806,8 +2925,11 @@ class MainWin(QWidget):
    
     def Sinelon_demand_1(self):
         self.msg1 = 'cosmoguirlande,Sinelon'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2820,8 +2942,11 @@ class MainWin(QWidget):
  
     def BPM_demand_1(self):
         self.msg1 = 'cosmoguirlande,**BPM'
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2835,8 +2960,11 @@ class MainWin(QWidget):
     # Slider Buttons functions
     def slider_R1(self, R1):
         self.msg1 = 'cosmoguirlande,R,' + str((R1))
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2849,8 +2977,11 @@ class MainWin(QWidget):
 
     def slider_G1(self, G1):
         self.msg1 = 'cosmoguirlande,G,' + str((G1))
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2863,8 +2994,11 @@ class MainWin(QWidget):
 
     def slider_B1(self, B1):
         self.msg1 = 'cosmoguirlande,B,' + str((B1))
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
@@ -2878,8 +3012,11 @@ class MainWin(QWidget):
 
     def slider_W1(self, W1):
         self.msg1 = 'cosmoguirlande,W,' + str((W1))
-        self.objs[0].connect(self.device[0],1883,60)
-        self.objs[0].publish("test1", self.msg1)
+        try:
+            self.objs[0].connect(self.device[0],1883,60)
+            self.objs[0].publish("test1", self.msg1)
+        except:
+            print("first strip on list not effective")
         if self.sync:
             i = 0
             for elt in strip_configuration["guirlande"]:
