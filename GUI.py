@@ -68,43 +68,38 @@ class MainWin(QWidget):
         #get color from JSON
         print("color : ", elt["color"])'''
         objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
-        print(i)
-        print(j)
-        
+        device.append(elt["IP"])
 
     #for i in range(len(strip_configuration['guirlande'])):
         try:
-            
             objs[i].connect(elt["IP"],1883,60)
             print("publish blackout")
             objs[i].publish('test1', "cosmoguirlande,blackout")
-            device.append(elt["IP"])
-            i = i+1
+                        
             
         except:
             print("could not connect to :  ", elt["IP"])
             #====================================================================test
             print("strip_configuration['guirlande'] de j ", strip_configuration["guirlande"][j])
             print("elt['IP']", elt["IP"])
-            #device.pop(i)
             del strip_configuration["guirlande"][i]
-            del objs[i]
-            #del device[]
-            i = i+1
+            objs.remove(objs[i])
+            device.remove(elt["IP"])
+            
             
             #====================================================================fin test
         
-        
+        i = i+1
         j = j+1
 
         for elt in strip_configuration["guirlande"]:
             print(elt)
 
-        for elt in objs:
-            print(elt)
+        for i, elt in enumerate(objs):
+            print("À l'indice {} se trouve {}.".format(i, elt))
 
-        for elt in device:
-            print(elt)
+        for i, elt in enumerate(device):
+            print("À l'indice {} se trouve {}.".format(i, elt))
 
     IPValue = ""
     IPValue_2 = ""
@@ -2210,6 +2205,47 @@ class MainWin(QWidget):
         #Force restart by SSH - paramiko lib
         subprocess.Popen(args='python Thread_start_display_remote_ssh.py', shell=True)
         #subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
+        i = 0
+        j = 0
+        for elt in strip_configuration["guirlande"]:
+            objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
+            print(i)
+            print(j)
+            
+
+        #for i in range(len(strip_configuration['guirlande'])):
+            try:
+                
+                objs[i].connect(elt["IP"],1883,60)
+                print("publish blackout")
+                objs[i].publish('test1', "cosmoguirlande,blackout")
+                self.device.append(elt["IP"])
+                i = i+1
+                
+            except:
+                print("could not connect to :  ", elt["IP"])
+                #====================================================================test
+                print("strip_configuration['guirlande'] de j ", strip_configuration["guirlande"][j])
+                print("elt['IP']", elt["IP"])
+                #device.pop(i)
+                del strip_configuration["guirlande"][i]
+                del objs[i]
+                #del self.device[]
+                i = i+1
+                
+                #====================================================================fin test
+            
+            
+            j = j+1
+
+            for elt in strip_configuration["guirlande"]:
+                print(elt)
+
+            for elt in objs:
+                print(elt)
+
+            for elt in self.device:
+                print(elt)
 
         #-----------------------------------------------------------------------
         i = 0
@@ -2941,7 +2977,9 @@ class MainWin(QWidget):
                 i = i+1
  
     def BPM_demand_1(self):
-        self.msg1 = 'cosmoguirlande,**BPM'
+        subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
+
+        '''self.msg1 = 'cosmoguirlande,**BPM'
         try:
             self.objs[0].connect(self.device[0],1883,60)
             self.objs[0].publish("test1", self.msg1)
@@ -2955,7 +2993,7 @@ class MainWin(QWidget):
                     self.objs[i].publish("test1", self.msg1)
                 except:
                     print("could not send to :  ", elt["IP"])
-                i = i+1
+                i = i+1'''
  
     # Slider Buttons functions
     def slider_R1(self, R1):
