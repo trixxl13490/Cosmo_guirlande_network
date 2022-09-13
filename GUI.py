@@ -57,10 +57,12 @@ class MainWin(QWidget):
     i = 0
     j = 0
     for elt in strip_configuration["guirlande"]:
+        device.append(elt["IP"])
 
-        '''print(elt)
+    for elt in strip_configuration["guirlande"]:
         #get IPs from JSON
         print("IP : ", elt["IP"])
+        '''print(elt)
         #get PORT from JSON
         print("port : ", elt["port"])        
         #get LED number from JSON
@@ -68,7 +70,7 @@ class MainWin(QWidget):
         #get color from JSON
         print("color : ", elt["color"])'''
         objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
-        device.append(elt["IP"])
+        
 
     #for i in range(len(strip_configuration['guirlande'])):
         try:
