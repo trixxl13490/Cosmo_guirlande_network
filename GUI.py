@@ -56,8 +56,8 @@ class MainWin(QWidget):
 
     i = 0
     j = 0
-    for elt in strip_configuration["guirlande"]:
-        device.append(elt["IP"])
+    '''for elt in strip_configuration["guirlande"]:
+        device.append(elt["IP"])'''
 
     for elt in strip_configuration["guirlande"]:
         #get IPs from JSON
@@ -76,6 +76,7 @@ class MainWin(QWidget):
         try:
             objs[i].connect(elt["IP"],1883,60)
             print("publish blackout")
+            device.append(elt["IP"])
             objs[i].publish('test1', "cosmoguirlande,blackout")
                         
             
@@ -84,10 +85,12 @@ class MainWin(QWidget):
             #====================================================================test
             print("strip_configuration['guirlande'] de j ", strip_configuration["guirlande"][j])
             print("elt['IP']", elt["IP"])
-            del strip_configuration["guirlande"][i]
-            objs.remove(objs[i])
-            device.remove(elt["IP"])
-            
+            '''del strip_configuration["guirlande"][i]
+            objs.remove(objs[i])'''
+            try:
+                device.remove(elt["IP"])
+            except ValueError:
+                pass
             
             #====================================================================fin test
         
@@ -2207,58 +2210,42 @@ class MainWin(QWidget):
         #Force restart by SSH - paramiko lib
         subprocess.Popen(args='python Thread_start_display_remote_ssh.py', shell=True)
         #subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
-        i = 0
-        j = 0
+        i=0
         for elt in strip_configuration["guirlande"]:
-            objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
-            print(i)
-            print(j)
-            
-
-        #for i in range(len(strip_configuration['guirlande'])):
             try:
-                
-                objs[i].connect(elt["IP"],1883,60)
+                self.objs[i].connect(elt["IP"],1883,60)
                 print("publish blackout")
-                objs[i].publish('test1', "cosmoguirlande,blackout")
                 self.device.append(elt["IP"])
-                i = i+1
+                self.objs[i].publish('test1', "cosmoguirlande,blackout")
+                            
                 
             except:
                 print("could not connect to :  ", elt["IP"])
                 #====================================================================test
-                print("strip_configuration['guirlande'] de j ", strip_configuration["guirlande"][j])
                 print("elt['IP']", elt["IP"])
-                #device.pop(i)
-                del strip_configuration["guirlande"][i]
-                del objs[i]
-                #del self.device[]
-                i = i+1
+                
+                try:
+                    '''del strip_configuration["guirlande"][i]
+                    self.objs.remove(self.objs[i])'''
+                    self.device.remove(elt["IP"])
+                except ValueError:
+                    pass
+                except IndexError:
+                    pass
                 
                 #====================================================================fin test
             
-            
-            j = j+1
+            i = i+1
 
             for elt in strip_configuration["guirlande"]:
                 print(elt)
 
-            for elt in objs:
-                print(elt)
+            for i, elt in enumerate(self.objs):
+                print("À l'indice {} se trouve {}.".format(i, elt))
 
-            for elt in self.device:
-                print(elt)
-
-        #-----------------------------------------------------------------------
-        i = 0
-        for elt in strip_configuration["guirlande"]:
-            try:
-                self.objs[i].connect(elt["IP"],1883,60)
-            except:
-                print("could not connect to :  ", elt["IP"])
-
-            i = i+1
-        #-----------------------------------------------------------------------
+            for i, elt in enumerate(self.device):
+                print("À l'indice {} se trouve {}.".format(i, elt))
+            #-----------------------------------------------------------------------
 
     def git_pull_demand(self):
         self.msg1 = 'cosmoguirlande,git_pull'
@@ -2271,12 +2258,13 @@ class MainWin(QWidget):
         self.msg1 = 'cosmoguirlande,manual'
 
         i = 0
-        for elt in strip_configuration["guirlande"]:
+        #for elt in strip_configuration["guirlande"]:
+        for elt in self.device:
             try:
-                self.objs[i].connect(elt["IP"],1883,60)
+                self.objs[i].connect(elt,1883,60)
                 self.objs[i].publish("test1", self.msg1)
             except:
-                print("could not send to :  ", elt["IP"])
+                print("could not send to :  ", elt)
             i = i+1
 
     def color1_change_demand11(self):
@@ -2284,12 +2272,13 @@ class MainWin(QWidget):
         self.msg1 = 'cosmoguirlande,color1,' + str(( self.type_color11.currentText()))
 
         i = 0
-        for elt in strip_configuration["guirlande"]:
+        #for elt in strip_configuration["guirlande"]:
+        for elt in self.device:
             try:
-                self.objs[i].connect(elt["IP"],1883,60)
+                self.objs[i].connect(elt,1883,60)
                 self.objs[i].publish("test1", self.msg1)
             except:
-                print("could not send to :  ", elt["IP"])
+                print("could not send to :  ", elt)
             i = i+1
 
     def color2_change_demand12(self):
@@ -2297,12 +2286,13 @@ class MainWin(QWidget):
         self.msg1 = 'cosmoguirlande,color2,' + str(( self.type_color21.currentText()))
 
         i = 0
-        for elt in strip_configuration["guirlande"]:
+        #for elt in strip_configuration["guirlande"]:
+        for elt in self.device:
             try:
-                self.objs[i].connect(elt["IP"],1883,60)
+                self.objs[i].connect(elt,1883,60)
                 self.objs[i].publish("test1", self.msg1)
             except:
-                print("could not send to :  ", elt["IP"])
+                print("could not send to :  ", elt)
             i = i+1
 
     def blackout_demand(self):
@@ -2312,13 +2302,16 @@ class MainWin(QWidget):
             self.objs[0].publish("test1", self.msg1)
         except:
             print("first strip on list not effective")
-        i = 0
-        for elt in strip_configuration["guirlande"]:
-            try:
-                self.objs[i].publish("test1", self.msg1)
-            except:
-                print("could not send to :  ", elt["IP"])
-            i = i+1
+        if self.sync:
+            i = 0 
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
+                try:
+                    self.objs[i].connect(elt,1883,60)
+                    self.objs[i].publish("test1", self.msg1)
+                except:
+                    print("could not send to :  ", elt)
+                i = i+1
 
     def rainbow_demand(self):
         self.msg1 = 'cosmoguirlande,rainbow'
@@ -2329,12 +2322,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def strombo_demand(self):
@@ -2346,12 +2340,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def chase_demand_1(self):
@@ -2363,12 +2358,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def comet_demand_1(self):
@@ -2380,12 +2376,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def sparkle_demand_1(self):
@@ -2397,12 +2394,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def pulse_demand_1(self):
@@ -2414,12 +2412,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def solid_demand_1(self):
@@ -2431,12 +2430,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def colorcycle_demand_1(self):
@@ -2448,24 +2448,26 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def sync_demand(self, state):
         self.sync = not self.sync
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def dancingPiScroll_demand_1(self):
@@ -2477,12 +2479,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def dancingPiEnergy_demand_1(self):
@@ -2494,12 +2497,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def dancingPiSpectrum_demand_1(self):
@@ -2511,12 +2515,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def stop_dancingPiEnergy_demand_1(self):
@@ -2528,12 +2533,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def colorAll2Color_demand_1(self):
@@ -2545,12 +2551,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def FadeInOut_demand_1(self):
@@ -2562,12 +2569,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def Strobe_demand_1(self):
@@ -2579,12 +2587,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def HalloweenEyes_demand_1(self):
@@ -2596,12 +2605,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def CylonBounce_demand_1(self):
@@ -2613,12 +2623,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def NewKITT_demand_1(self):
@@ -2630,12 +2641,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def Twinkle_demand_1(self):
@@ -2647,12 +2659,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def TwinkleRandom_demand_1(self):
@@ -2664,12 +2677,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def SnowSparkle_demand_1(self):
@@ -2681,12 +2695,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def RunningLights_demand_1(self):
@@ -2698,12 +2713,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def colorWipe_demand_1(self):
@@ -2715,12 +2731,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def theaterChaseRainbow_demand_1(self):
@@ -2732,12 +2749,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def Fire_demand_1(self):
@@ -2749,12 +2767,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def FireCustom_demand_1(self):
@@ -2766,12 +2785,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def FadeInOut_demand_1(self):
@@ -2783,12 +2803,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def fadeToBlack_demand_1(self):
@@ -2800,12 +2821,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def BouncingBalls_demand_1(self):
@@ -2817,12 +2839,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def BouncingColoredBalls_demand_1(self):
@@ -2834,12 +2857,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def meteorRain_demand_1(self):
@@ -2851,12 +2875,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def Matrix_demand_1(self):
@@ -2868,12 +2893,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
     
     def Drain_demand_1(self):
@@ -2885,12 +2911,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
   
     def Pancake_demand_1(self):
@@ -2902,12 +2929,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
      
     def HeartBeat_demand_1(self):
@@ -2919,12 +2947,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
       
     def rainbowGlitter_demand_1(self):
@@ -2936,12 +2965,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
 
     def Confetti_demand_1(self):
@@ -2953,12 +2983,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
    
     def Sinelon_demand_1(self):
@@ -2970,12 +3001,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not send to :  ", elt["IP"])
+                    print("could not send to :  ", elt)
                 i = i+1
  
     def BPM_demand_1(self):
@@ -3007,12 +3039,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not connect to :  ", elt["IP"])
+                    print("could not connect to :  ", elt)
                 i = i+1
 
     def slider_G1(self, G1):
@@ -3024,12 +3057,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not connect to :  ", elt["IP"])
+                    print("could not connect to :  ", elt)
                 i = i+1
 
     def slider_B1(self, B1):
@@ -3041,12 +3075,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not connect to :  ", elt["IP"])
+                    print("could not connect to :  ", elt)
                 i = i+1
 
 
@@ -3059,12 +3094,13 @@ class MainWin(QWidget):
             print("first strip on list not effective")
         if self.sync:
             i = 0
-            for elt in strip_configuration["guirlande"]:
+            #for elt in strip_configuration["guirlande"]:
+            for elt in self.device:
                 try:
-                    self.objs[i].connect(elt["IP"],1883,60)
+                    self.objs[i].connect(elt,1883,60)
                     self.objs[i].publish("test1", self.msg1)
                 except:
-                    print("could not connect to :  ", elt["IP"])
+                    print("could not connect to :  ", elt)
                 i = i+1
 
 

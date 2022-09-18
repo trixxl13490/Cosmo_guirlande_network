@@ -41,7 +41,7 @@ try:
     #Create SSH connection with paramiko
     ssh2 = paramiko.SSHClient()
     ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh2.connect(hostname='192.168.0.7', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh2.connect(hostname='192.168.0.8', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
     # kill GUI if running
     ssh_stdin2, ssh_stdout2, ssh_stderr2 = ssh2.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
@@ -204,7 +204,7 @@ except socket.timeout:
 try:
     ssh6 = paramiko.SSHClient()
     ssh6.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh6.connect(hostname='192.168.0.49', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh6.connect(hostname='192.168.0.2', username='pi', password='vbcgxb270694', timeout=5, port=22)
     time.sleep(.5)
 
 
