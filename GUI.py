@@ -56,8 +56,6 @@ class MainWin(QWidget):
 
     i = 0
     j = 0
-    '''for elt in strip_configuration["guirlande"]:
-        device.append(elt["IP"])'''
 
     for elt in strip_configuration["guirlande"]:
         #get IPs from JSON
@@ -85,8 +83,8 @@ class MainWin(QWidget):
             #====================================================================test
             print("strip_configuration['guirlande'] de j ", strip_configuration["guirlande"][j])
             print("elt['IP']", elt["IP"])
-            '''del strip_configuration["guirlande"][i]
-            objs.remove(objs[i])'''
+            #del strip_configuration["guirlande"][i]
+            objs.remove(objs[i])
             try:
                 device.remove(elt["IP"])
             except ValueError:
@@ -2211,6 +2209,7 @@ class MainWin(QWidget):
         subprocess.Popen(args='python Thread_start_display_remote_ssh.py', shell=True)
         #subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
         i=0
+        self.device = []
         for elt in strip_configuration["guirlande"]:
             try:
                 self.objs[i].connect(elt["IP"],1883,60)
@@ -2225,8 +2224,8 @@ class MainWin(QWidget):
                 print("elt['IP']", elt["IP"])
                 
                 try:
-                    '''del strip_configuration["guirlande"][i]
-                    self.objs.remove(self.objs[i])'''
+                    #del strip_configuration["guirlande"][i]
+                    self.objs.remove(self.objs[i])
                     self.device.remove(elt["IP"])
                 except ValueError:
                     pass
@@ -3084,7 +3083,6 @@ class MainWin(QWidget):
                     print("could not connect to :  ", elt)
                 i = i+1
 
-
     def slider_W1(self, W1):
         self.msg1 = 'cosmoguirlande,W,' + str((W1))
         try:
@@ -3102,7 +3100,6 @@ class MainWin(QWidget):
                 except:
                     print("could not connect to :  ", elt)
                 i = i+1
-
 
     def on_click_ip(self):
         self.IPValue = self.textbox_IP.text()
