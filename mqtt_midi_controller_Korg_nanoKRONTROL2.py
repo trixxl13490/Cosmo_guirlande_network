@@ -9,102 +9,68 @@ from __future__ import print_function
 import logging
 import sys
 import time
-
+import json
+import paho.mqtt.client as mqtt
 from rtmidi.midiutil import open_midiinput
 
 """identification des touches
     Mapping des touches / boutons / faders aux messages à envoye0r
     Commandes:
-
-'cosmoguirlande,color1'
-	'AMBER'
-	'AQUA'
-	'YELLOW'
-	'WHITE'
-	'TEAL'
-	'RGBW_WHITE_W'
-	'RGBW_WHITE_RGBW'
-	'RGBW_WHITE_RGB'
-	'RED'
-	'PURPLE'
-	'PINK'
-	'ORANGE'
-	'OLD_LACE'
-	'MAGENTA'
-	'JADE'
-	'GREEN'
-	'GOLD'
-	'CYAN'
-	'BLUE'
-	'BLACK'
-'cosmoguirlande,color2'
-	'AMBER'
-	'AQUA'
-	'YELLOW'
-	'WHITE'
-	'TEAL'
-	'RGBW_WHITE_W'
-	'RGBW_WHITE_RGBW'
-	'RGBW_WHITE_RGB'
-	'RED'
-	'PURPLE'
-	'PINK'
-	'ORANGE'
-	'OLD_LACE'
-	'MAGENTA'
-	'JADE'
-	'GREEN'
-	'GOLD'
-	'CYAN'
-	'BLUE'
-	'BLACK'
 "cosmoguirlande,strombo"
-"cosmoguirlande,rainbow"
 "cosmoguirlande,blackout"
 'cosmoguirlande,chase,chase_speed,chase_size'
 'cosmoguirlande,comet,comet_speed,comet_tail'
 'cosmoguirlande,sparkle,sparkle_speed,sparkle_num'
 'cosmoguirlande,pulse,pulse_period,pulse_speed
 'cosmoguirlande,solid'
-'cosmoguirlande,colorcycle'
-'cosmoguirlande,dancingPiScroll'
-'cosmoguirlande,dancingPiEnergy'
-'cosmoguirlande,dancingPiSpectrum'
-'cosmoguirlande,stop_dancingPiScroll'
-'cosmoguirlande,stop_dancingPiEnergy'
-'cosmoguirlande,stop_dancingPiSpectrum'
+"cosmoguirlande,Strobe"
+
+"cosmoguirlande,Fire"
 "cosmoguirlande,R,value"
 "cosmoguirlande,G,value"
 "cosmoguirlande,B,value"
-"cosmoguirlande,W,value"
-"cosmoguirlande,colorAll2Color"
-"cosmoguirlande,FadeInOut"
-"cosmoguirlande,Strobe"
-"cosmoguirlande,HalloweenEyes"
-"cosmoguirlande,CylonBounce"
-"cosmoguirlande,NewKITT"
-"cosmoguirlande,Twinkle"
-"cosmoguirlande,TwinkleRandom"
-"cosmoguirlande,SnowSparkle"
-"cosmoguirlande,*RunningLights"
-"cosmoguirlande,colorWipe"
-"cosmoguirlande,theaterChaseRainbow"
-"cosmoguirlande,Fire"
-"cosmoguirlande,FireCustom"
-"cosmoguirlande,meteorRain"
-"cosmoguirlande,fadeToBlack"
-"cosmoguirlande,*BouncingBalls"
-"cosmoguirlande,*BouncingColoredBalls"
-"cosmoguirlande,Matrix"
-"cosmoguirlande,*Drain"
-"cosmoguirlande,Pancake"
-"cosmoguirlande,HeartBeat"
-"cosmoguirlande,rainbowWithGlitter"
-"cosmoguirlande,Confetti"
-"cosmoguirlande,Sinelon"
-"cosmoguirlande,**BPM"
 """
+'''----------------------------------------
+Méthode détection & connexion Guirlande:
+----------------------------------------'''
+device = []
+conf_file = open('IP_configuration.json')
+strip_configuration = json.load(conf_file)
+i = 0
+for elt in strip_configuration["guirlande"]:
+	objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
+	device.append(elt["IP"])
+	print(device[i])
+	i = i+1
 
+
+'''----------------------------------------
+Méthode envoi message :
+----------------------------------------'''
+def send_message(strip_number, command):
+	print("strip_number: ", strip_number)
+	print("command: ", command)
+	msg = command
+	try:
+		objs[strip_number-1].connect(device[strip_number],1883,60)
+		objs[strip_number-1].publish("test1", msg)
+	except:
+		print("could not send to :  ", device[strip_number-1])
+
+'''----------------------------------------
+Méthode envoi message sync :
+----------------------------------------'''
+def send_message_sync(command):
+	print("command: ", command)
+	msg = command
+	i = 0
+	for elt in strip_configuration["guirlande"]:
+		try:
+			objs[i].connect(device[i],1883,60)
+			objs[i].publish("test1", msg)
+		except:
+			print("could not send to :  ", device[i])
+		i = i+1
 
 log = logging.getLogger('midiin_poll')
 logging.basicConfig(level=logging.DEBUG)
@@ -121,126 +87,232 @@ except (EOFError, KeyboardInterrupt):
 
 print("Entering main loop. Press Control-C to exit.")
 try:
-    timer = time.time()
-    while True:
-        msg = midiin.get_message()
+	timer = time.time()
+	while True:
+		msg = midiin.get_message()
 
-        if msg:
-            message, deltatime = msg
-            timer += deltatime
-            print("[%s] @%0.6f %r" % (port_name, timer, message))
-            print("type(message) :", type(message))
-            for elt in message:
-                print("element de message: ", elt)
+		if msg:
+			message, deltatime = msg
+			timer += deltatime
+			print("[%s] @%0.6f %r" % (port_name, timer, message))
 
+			groupe_touche, touche, velocity = message
+			#-----------------------------------------------------------------------------Slim buttons
+			if groupe_touche== 144 and touche == 86: #1st Do
+				#send mqtt commmande
+				send_message_sync("cosmoguirlande,blackout")
+						
+			elif groupe_touche== 144 and touche == 82: #1st Do
+				#send mqtt commmande
+				send_message_sync("cosmoguirlande,strombo")
 
-        '''
-		slim_button1 = [176,16,value]
-		slim_button2 = [176,16,value]
-		slim_button3 = [176,16,value]
-		slim_button4 = [176,16,value]
-		slim_button5 = [176,16,value]
+			elif groupe_touche== 144 and touche == 84: #1st Do
+				#send mqtt commmande
+				send_message_sync("cosmoguirlande,chase,0.1,5")
+						
+			elif groupe_touche== 144 and touche == 85: #1st Do
+				#send mqtt commmande
+				send_message_sync("cosmoguirlande,comet,0.1,5'")
 
-		button1 = [224,value,value]
-		button1 = [176,16,value]
-		button1 = [224,value,value]
-		button1 = [224,value,value]
-		button1 = [176,16,value]
+			#-----------------------------------------------------------------------------buttons
 
-		
-		
-		potar1 = [176,16,value]
-		fader1 = [224,value,value]
-		side_button11 = [144,8,value]
-		side_button12 = [144,16,value]
-		side_button13 = [144,0,value]
+			elif groupe_touche== 144 and touche == 91: #1st Do
+				#send mqtt commmande
+				send_message_sync("cosmoguirlande,sparkle,0.1,5'")
 
-		potar2 = [176,17,value]
-		fader2 = [225,value,value]
-		side_button21 = [144,9,value]
-		side_button22 = [144,17,value]
-		side_button23 = [144,1,value]
+			elif groupe_touche== 144 and touche == 92: #1st Do
+				#send mqtt commmande
+				send_message_sync("cosmoguirlande,pulse,0.1,0.2")
+						
+			elif groupe_touche== 144 and touche == 93: #1st Do
+				#send mqtt commmande
+				send_message_sync("cosmoguirlande,Strobe")
 
-		potar3 = [176,18,value]
-		fader3 = [226,value,value]
-		side_button31 = [144,value,value]
-		side_button32 = [144,value,value]
-		side_button33 = [144,value,value]
+			elif groupe_touche== 144 and touche == 94: #1st Do
+				#send mqtt commmande
+				send_message_sync("cosmoguirlande,Fire")
 
-		potar4 = [176,19,value]
-		fader4 =[227,value,value]
-		side_button41 = [144,value,value]
-		side_button42 = [144,value,value]
-		side_button43 = [144,value,value]
+			elif groupe_touche== 144 and touche == 95: #1st Do
+				#send mqtt commmande
+				send_message_sync("cosmoguirlande,restart")
+				#FONCTION RESTART HERE
 
-		potar5 = [176,20,value]
-		fader5 = [228,value,value]
-		side_button51 = [144,value,value]
-		side_button52 = [144,value,value]
-		side_button53 = [144,value,value]
+			#-----------------------------------------------------------------------------column1
 
-		potar6 = [176,21,value]
-		fader6 = [229,value,value]
-		side_button61 = [144,value,value]
-		side_button62 = [144,value,value]
-		side_button63 = [144,value,value]
+			elif groupe_touche== 176 and touche == 16: #1st Do
+				#send mqtt commmande
+				pass
 
-		potar7 = [176,22,value]
-		fader7 = [230,value,value]
-		side_button71 = [144,value,value]
-		side_button72 = [144,value,value]
-		side_button73 = [144,value,value]
+			elif groupe_touche== 224 : #1st Do
+				#send mqtt commmande
+				send_message(1, "cosmoguirlande," + color1 + ',' + str(velocity) )
+						
+			elif groupe_touche== 144 and touche == 8 and velocity>0: #R1
+				#send mqtt commmande
+				color1 = 'R'
 
-		potar8 = [176,23,value]
-		fader8 = [231,value,value]
-		side_button81 = [144,value,value]
-		side_button82 = [144,value,value]
-		side_button83 = [144,value,value]
+			elif groupe_touche== 144 and touche == 16 and velocity>0: #G1
+				#send mqtt commmande
+				color1 = 'G'
 
-		----------------------------------------
-		EX. Mapping touches
-		Piano Yamaha 
-		----------------------------------------
-		touches 1 = do = 36 
-		touche  -1 = do = 96
-		potar1 = 
+			elif groupe_touche== 144 and touche == 0 and velocity>0: #B1
+				#send mqtt commmande
+				color1 = 'B'
 
-		----------------------------------------
-		Méthode détection & connexion Guirlande:
-		----------------------------------------
-		conf_file = open('IP_configuration.json')
-		strip_configuration = json.load(conf_file)
-		i = 0
-		for elt in strip_configuration["guirlande"]:
-			objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
-			device.append(elt["IP"])
-			i = i+1
+			#-----------------------------------------------------------------------------column2
 
+			elif groupe_touche== 176 and touche == 17: #1st Do
+				#send mqtt commmande
+				pass
 
-		----------------------------------------
-		Méthode envoi message :
-		----------------------------------------
-		msg1 = 'cosmoguirlande,chase,' + speed.text() + ',' + chase_size.text()
-		i = 0
-		for elt in strip_configuration["guirlande"]:
-			try:
-				objs[i].connect(device[i],1883,60)
-				objs[i].publish("test1", self.msg1)
-			except:
-				print("could not send to :  ", device[i])
-			i = i+1
+			elif groupe_touche== 225 : #1st Do
+				#send mqtt commmande
+				send_message(2, "cosmoguirlande," + color2 + ',' + str(velocity) )
+						
+			elif groupe_touche== 144 and touche == 9 and velocity>0: #R2
+				#send mqtt commmande
+				color2 = 'R'
 
+			elif groupe_touche== 144 and touche == 17 and velocity>0: #G2
+				#send mqtt commmande
+				color2 = 'G'
 
-		----------------------------------------
-		Exemple Mapping Touche
-		----------------------------------------
-		Groupe_touche, touche, Velocity = message
-		if touche = "do" and velocity >=10:
-			#send mqtt commmande
+			elif groupe_touche== 144 and touche == 1 and velocity>0: #B2
+				#send mqtt commmande
+				color2 = 'B'
 
-		----------------------------------------
+			#-----------------------------------------------------------------------------column3
 
-		'''
+			elif groupe_touche== 176 and touche == 18: #1st Do
+				#send mqtt commmande
+				pass
+
+			elif groupe_touche== 226 : #1st Do
+				#send mqtt commmande
+				send_message(3, "cosmoguirlande," + color3 + ',' + str(velocity) )
+						
+			elif groupe_touche== 144 and touche == 10 and velocity>0: #R3
+				#send mqtt commmande
+				color3 = 'R'
+
+			elif groupe_touche== 144 and touche == 18 and velocity>0: #G3
+				#send mqtt commmande
+				color3 = 'G'
+
+			elif groupe_touche== 144 and touche == 2 and velocity>0: #B3
+				#send mqtt commmande
+				color3 = 'B'
+
+			#-----------------------------------------------------------------------------column4
+
+			elif groupe_touche== 176 and touche == 19: #1st Do
+				#send mqtt commmande
+				pass
+
+			elif groupe_touche== 227 : #1st Do
+				#send mqtt commmande
+				send_message(4, "cosmoguirlande," + color4 + ',' + str(velocity) )
+						
+			elif groupe_touche== 144 and touche == 11 and velocity>0: #R4
+				#send mqtt commmande
+				color4 = 'R'
+
+			elif groupe_touche== 144 and touche == 19 and velocity>0: #G4
+				#send mqtt commmande
+				color4 = 'G'
+
+			elif groupe_touche== 144 and touche == 3 and velocity>0: #B4
+				#send mqtt commmande
+				color4 = 'B'
+
+			#-----------------------------------------------------------------------------column5
+
+			elif groupe_touche== 176 and touche == 20: #1st Do
+				#send mqtt commmande
+				pass
+
+			elif groupe_touche== 228 : #1st Do
+				#send mqtt commmande
+				send_message(5, "cosmoguirlande," + color5 + ',' + str(velocity) )
+						
+			elif groupe_touche== 144 and touche == 12 and velocity>0: #R5
+				#send mqtt commmande
+				color5 = 'R'
+
+			elif groupe_touche== 144 and touche == 20 and velocity>0: #G5
+				#send mqtt commmande
+				color5 = 'G'
+
+			elif groupe_touche== 144 and touche == 4 and velocity>0: #B5
+				#send mqtt commmande
+				color5 = 'B'
+
+			#-----------------------------------------------------------------------------column6
+
+			elif groupe_touche== 176 and touche == 21: #1st Do
+				#send mqtt commmande
+				pass
+
+			elif groupe_touche== 229 : #1st Do
+				#send mqtt commmande
+				send_message(6, "cosmoguirlande," + color6 + ',' + str(velocity) )
+						
+			elif groupe_touche== 144 and touche == 13 and velocity>0: #R6
+				#send mqtt commmande
+				color6 = 'R'
+
+			elif groupe_touche== 144 and touche == 21 and velocity>0: #G6
+				#send mqtt commmande
+				color6 = 'G'
+
+			elif groupe_touche== 144 and touche == 5 and velocity>0: #B6
+				#send mqtt commmande
+				color6 = 'B'
+
+			#-----------------------------------------------------------------------------column7
+
+			elif groupe_touche== 176 and touche == 22: #1st Do
+				#send mqtt commmande
+				pass
+
+			elif groupe_touche== 230 : #1st Do
+				#send mqtt commmande
+				send_message(7, "cosmoguirlande," + color7 + ',' + str(velocity) )
+						
+			elif groupe_touche== 144 and touche == 14 and velocity>0: #R7
+				#send mqtt commmande
+				color7 = 'R'
+
+			elif groupe_touche== 144 and touche == 22 and velocity>0: #G7
+				#send mqtt commmande
+				color7 = 'G'
+
+			elif groupe_touche== 144 and touche == 6 and velocity>0: #B7
+				#send mqtt commmande
+				color7 = 'B'
+
+			#-----------------------------------------------------------------------------column8
+
+			elif groupe_touche== 176 and touche == 23: #1st Do
+				#send mqtt commmande
+				pass
+
+			elif groupe_touche== 231 : #1st Do
+				#send mqtt commmande
+				send_message(8, "cosmoguirlande," + color8 + ',' + str(velocity) )
+						
+			elif groupe_touche== 144 and touche == 15 and velocity>0: #R8
+				#send mqtt commmande
+				color8 = 'R'
+
+			elif groupe_touche== 144 and touche == 23 and velocity>0: #G8
+				#send mqtt commmande
+				color8 = 'G'
+
+			elif groupe_touche== 144 and touche == 7 and velocity>0: #B8
+				#send mqtt commmande
+				color8 = 'B'
+
 
 except KeyboardInterrupt:
     print('')
