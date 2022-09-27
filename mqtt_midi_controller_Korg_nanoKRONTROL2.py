@@ -139,19 +139,7 @@ try:
 
 			groupe_touche, touche, velocity = message
 
-			'''if abs(velocity - previous_velocity) > 10:
-				latency_flag = False
-				print("too big step between former and new value")'''
-
-			#-----------------------------------------------------------------------------Reduction lattence fader pour sync mode
-			#print("(timer - previous_timer): ", (timer - previous_timer))
 			latency_flag = True
-			'''if (groupe_touche == 224 or groupe_touche == 225  or groupe_touche == 226  or groupe_touche == 227 
-			 or groupe_touche == 228  or groupe_touche == 229  or groupe_touche == 230  or groupe_touche == 231 ) and (timer - previous_timer) > 0.01 :
-				latency_flag = False
-				print("ignore to reduce latency")
-				
-				pass'''
 
 			#-----------------------------------------------------------------------------Anti rebond fin de course fader pour sync mode
 			if (groupe_touche == 224 or groupe_touche == 225  or groupe_touche == 226  or groupe_touche == 227 
@@ -221,12 +209,12 @@ try:
 			elif groupe_touche== 224 : #Color1 fader
 				#send mqtt commmande
 				print("abs(velocity - previous_velocity) : ", abs(velocity - previous_velocity))
-
+				
 				if sync :					
-					send_message_sync("cosmoguirlande," + color1 + ',' + str(velocity) )
+					send_message_sync("cosmoguirlande," + color1 + ',' + str(velocity*2) )
 
 					#reduce latency by emptying midi message buffer, to be improved
-					if velocity >0:
+					if velocity >0 or velocity<127:
 						for i in range(15):
 							msg = midiin.get_message()
 
@@ -253,7 +241,7 @@ try:
 
 			elif groupe_touche== 225 : #Color2 fader
 				#send mqtt commmande
-				send_message(2, "cosmoguirlande," + color2 + ',' + str(velocity) )
+				send_message(2, "cosmoguirlande," + color2 + ',' + str(velocity*2) )
 						
 			elif groupe_touche== 144 and touche == 9 and velocity>0: #R2
 				#send mqtt commmande
@@ -275,7 +263,7 @@ try:
 
 			elif groupe_touche== 226 : #Color3 fader
 				#send mqtt commmande
-				send_message(3, "cosmoguirlande," + color3 + ',' + str(velocity) )
+				send_message(3, "cosmoguirlande," + color3 + ',' + str(velocity*2) )
 						
 			elif groupe_touche== 144 and touche == 10 and velocity>0: #R3
 				#send mqtt commmande
@@ -297,7 +285,7 @@ try:
 
 			elif groupe_touche== 227 : #Color4 fader
 				#send mqtt commmande
-				send_message(4, "cosmoguirlande," + color4 + ',' + str(velocity) )
+				send_message(4, "cosmoguirlande," + color4 + ',' + str(velocity*2) )
 						
 			elif groupe_touche== 144 and touche == 11 and velocity>0: #R4
 				#send mqtt commmande
@@ -319,7 +307,7 @@ try:
 
 			elif groupe_touche== 228 : #Color5 fader
 				#send mqtt commmande
-				send_message(5, "cosmoguirlande," + color5 + ',' + str(velocity) )
+				send_message(5, "cosmoguirlande," + color5 + ',' + str(velocity*2) )
 						
 			elif groupe_touche== 144 and touche == 12 and velocity>0: #R5
 				#send mqtt commmande
@@ -341,7 +329,7 @@ try:
 
 			elif groupe_touche== 229 : #Color6 fader
 				#send mqtt commmande
-				send_message(6, "cosmoguirlande," + color6 + ',' + str(velocity) )
+				send_message(6, "cosmoguirlande," + color6 + ',' + str(velocity*2) )
 						
 			elif groupe_touche== 144 and touche == 13 and velocity>0: #R6
 				#send mqtt commmande
@@ -363,7 +351,7 @@ try:
 
 			elif groupe_touche== 230 : ##Color7 fader
 				#send mqtt commmande
-				send_message(7, "cosmoguirlande," + color7 + ',' + str(velocity) )
+				send_message(7, "cosmoguirlande," + color7 + ',' + str(velocity*2) )
 						
 			elif groupe_touche== 144 and touche == 14 and velocity>0: #R7
 				#send mqtt commmande
@@ -385,7 +373,8 @@ try:
 
 			elif groupe_touche== 231 : #Color8 fader
 				#send mqtt commmande
-				send_message(8, "cosmoguirlande," + color8 + ',' + str(velocity) )
+				send_message(8, "cosmoguirlande," + color8 + ',' + str(velocity*2) )
+				send_message(9, "cosmoguirlande," + color8 + ',' + str(velocity*2) )
 						
 			elif groupe_touche== 144 and touche == 15 and velocity>0: #R8
 				#send mqtt commmande
