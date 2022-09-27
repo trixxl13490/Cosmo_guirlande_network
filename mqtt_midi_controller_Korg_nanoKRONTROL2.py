@@ -12,6 +12,7 @@ import time
 import json
 import paho.mqtt.client as mqtt
 from rtmidi.midiutil import open_midiinput
+import subprocess
 
 """identification des touches
     Mapping des touches / boutons / faders aux messages à envoye0r
@@ -38,11 +39,34 @@ conf_file = open('IP_configuration.json')
 strip_configuration = json.load(conf_file)
 i = 0
 for elt in strip_configuration["guirlande"]:
+	print("i :", i)
+	#get IPs from JSON
+	print("IP : ", elt["IP"])
 	objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
-	device.append(elt["IP"])
-	print(device[i])
+	
+	try:
+		objs[i].connect(elt["IP"],1883,60)
+		print("publish blackout")
+		device.append(elt["IP"])
+		objs[i].publish('test1', "cosmoguirlande,blackout")
+					
+		
+	except:
+		print("could not connect to :  ", elt["IP"])
+		#====================================================================test
+		print("elt['IP']", elt["IP"])
+		#del strip_configuration["guirlande"][i]
+		#objs.remove(objs[i])
+		try:
+			device.remove(elt["IP"])
+		except ValueError:
+			pass
 	i = i+1
 
+for i, elt in enumerate(device):
+	print("À l'indice {} se trouve {}.".format(i, elt))
+		#====================================================================fin test
+	
 
 '''----------------------------------------
 Méthode envoi message :
@@ -65,20 +89,37 @@ def send_message_sync(command):
 	msg = command
 	i = 0
 	for elt in strip_configuration["guirlande"]:
+		#print("i :", i)
 		try:
 			objs[i].connect(device[i],1883,60)
 			objs[i].publish("test1", msg)
+		except IndexError:
+			pass
 		except:
 			print("could not send to :  ", device[i])
 		i = i+1
 
+#global varibales
 log = logging.getLogger('midiin_poll')
 logging.basicConfig(level=logging.DEBUG)
+sync = False
+color1 = ''
+color2 = ''
+color3 = ''
+color4 = ''
+color5 = ''
+color6 = ''
+color7 = ''
+color8 = ''
+previous_velocity = 0
+previous_timer = 0
+latency_flag = True
 
 # Prompts user for MIDI input port, unless a valid port number or name
 # is given as the first argument on the command line.
 # API backend defaults to ALSA on Linux.
-port = sys.argv[1] if len(sys.argv) > 1 else None
+#port = sys.argv[1] if len(sys.argv) > 1 else None
+port = 0
 
 try:
     midiin, port_name = open_midiinput(port)
@@ -97,14 +138,47 @@ try:
 			print("[%s] @%0.6f %r" % (port_name, timer, message))
 
 			groupe_touche, touche, velocity = message
+
+			'''if abs(velocity - previous_velocity) > 10:
+				latency_flag = False
+				print("too big step between former and new value")'''
+
+			#-----------------------------------------------------------------------------Reduction lattence fader pour sync mode
+			#print("(timer - previous_timer): ", (timer - previous_timer))
+			latency_flag = True
+			'''if (groupe_touche == 224 or groupe_touche == 225  or groupe_touche == 226  or groupe_touche == 227 
+			 or groupe_touche == 228  or groupe_touche == 229  or groupe_touche == 230  or groupe_touche == 231 ) and (timer - previous_timer) > 0.01 :
+				latency_flag = False
+				print("ignore to reduce latency")
+				
+				pass'''
+
+			#-----------------------------------------------------------------------------Anti rebond fin de course fader pour sync mode
+			if (groupe_touche == 224 or groupe_touche == 225  or groupe_touche == 226  or groupe_touche == 227 
+			 or groupe_touche == 228  or groupe_touche == 229  or groupe_touche == 230  or groupe_touche == 231 ) and abs(velocity - previous_velocity) > 10:
+				latency_flag = False
+				print("too big step between former and new value")
+				pass
 			#-----------------------------------------------------------------------------Slim buttons
-			if groupe_touche== 144 and touche == 86: #1st Do
+			elif groupe_touche== 144 and touche == 46 and velocity == 127: #1st Do
+				#send mqtt commmande
+				sync = not(sync)
+						
+			elif groupe_touche== 144 and touche == 47: #1st Do
+				#send mqtt commmande
+				send_message_sync("cosmoguirlande,strombo")
+							
+			elif groupe_touche== 144 and touche == 86: #1st Do
 				#send mqtt commmande
 				send_message_sync("cosmoguirlande,blackout")
+				'''send_message_sync("cosmoguirlande,R,0")
+				send_message_sync("cosmoguirlande,G,0")
+				send_message_sync("cosmoguirlande,B,0")'''
+
 						
 			elif groupe_touche== 144 and touche == 82: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,strombo")
+				send_message_sync("cosmoguirlande,*BouncingBalls")
 
 			elif groupe_touche== 144 and touche == 84: #1st Do
 				#send mqtt commmande
@@ -112,17 +186,17 @@ try:
 						
 			elif groupe_touche== 144 and touche == 85: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,comet,0.1,5'")
+				send_message_sync("cosmoguirlande,comet,0.1,5")
 
 			#-----------------------------------------------------------------------------buttons
 
 			elif groupe_touche== 144 and touche == 91: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,sparkle,0.1,5'")
+				send_message_sync("cosmoguirlande,sparkle,0.1,5")
 
 			elif groupe_touche== 144 and touche == 92: #1st Do
 				#send mqtt commmande
-				send_message_sync("cosmoguirlande,pulse,0.1,0.2")
+				send_message_sync("cosmoguirlande,pulse,0.2,0.2")
 						
 			elif groupe_touche== 144 and touche == 93: #1st Do
 				#send mqtt commmande
@@ -132,20 +206,32 @@ try:
 				#send mqtt commmande
 				send_message_sync("cosmoguirlande,Fire")
 
-			elif groupe_touche== 144 and touche == 95: #1st Do
+			elif groupe_touche== 144 and touche == 95 and velocity == 127: #1st Do
 				#send mqtt commmande
 				send_message_sync("cosmoguirlande,restart")
 				#FONCTION RESTART HERE
-
+				subprocess.Popen(args='python Thread_start_display_remote_ssh.py', shell=True)
+				subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
 			#-----------------------------------------------------------------------------column1
 
 			elif groupe_touche== 176 and touche == 16: #1st Do
 				#send mqtt commmande
 				pass
 
-			elif groupe_touche== 224 : #1st Do
+			elif groupe_touche== 224 : #Color1 fader
 				#send mqtt commmande
-				send_message(1, "cosmoguirlande," + color1 + ',' + str(velocity) )
+				print("abs(velocity - previous_velocity) : ", abs(velocity - previous_velocity))
+
+				if sync :					
+					send_message_sync("cosmoguirlande," + color1 + ',' + str(velocity) )
+
+					#reduce latency by emptying midi message buffer, to be improved
+					if velocity >0:
+						for i in range(15):
+							msg = midiin.get_message()
+
+				elif not(sync):
+					send_message(1, "cosmoguirlande," + color1 + ',' + str(velocity) )
 						
 			elif groupe_touche== 144 and touche == 8 and velocity>0: #R1
 				#send mqtt commmande
@@ -165,7 +251,7 @@ try:
 				#send mqtt commmande
 				pass
 
-			elif groupe_touche== 225 : #1st Do
+			elif groupe_touche== 225 : #Color2 fader
 				#send mqtt commmande
 				send_message(2, "cosmoguirlande," + color2 + ',' + str(velocity) )
 						
@@ -187,7 +273,7 @@ try:
 				#send mqtt commmande
 				pass
 
-			elif groupe_touche== 226 : #1st Do
+			elif groupe_touche== 226 : #Color3 fader
 				#send mqtt commmande
 				send_message(3, "cosmoguirlande," + color3 + ',' + str(velocity) )
 						
@@ -209,7 +295,7 @@ try:
 				#send mqtt commmande
 				pass
 
-			elif groupe_touche== 227 : #1st Do
+			elif groupe_touche== 227 : #Color4 fader
 				#send mqtt commmande
 				send_message(4, "cosmoguirlande," + color4 + ',' + str(velocity) )
 						
@@ -231,7 +317,7 @@ try:
 				#send mqtt commmande
 				pass
 
-			elif groupe_touche== 228 : #1st Do
+			elif groupe_touche== 228 : #Color5 fader
 				#send mqtt commmande
 				send_message(5, "cosmoguirlande," + color5 + ',' + str(velocity) )
 						
@@ -253,7 +339,7 @@ try:
 				#send mqtt commmande
 				pass
 
-			elif groupe_touche== 229 : #1st Do
+			elif groupe_touche== 229 : #Color6 fader
 				#send mqtt commmande
 				send_message(6, "cosmoguirlande," + color6 + ',' + str(velocity) )
 						
@@ -275,7 +361,7 @@ try:
 				#send mqtt commmande
 				pass
 
-			elif groupe_touche== 230 : #1st Do
+			elif groupe_touche== 230 : ##Color7 fader
 				#send mqtt commmande
 				send_message(7, "cosmoguirlande," + color7 + ',' + str(velocity) )
 						
@@ -297,7 +383,7 @@ try:
 				#send mqtt commmande
 				pass
 
-			elif groupe_touche== 231 : #1st Do
+			elif groupe_touche== 231 : #Color8 fader
 				#send mqtt commmande
 				send_message(8, "cosmoguirlande," + color8 + ',' + str(velocity) )
 						
@@ -312,6 +398,9 @@ try:
 			elif groupe_touche== 144 and touche == 7 and velocity>0: #B8
 				#send mqtt commmande
 				color8 = 'B'
+
+			previous_velocity = velocity
+			previous_timer = timer
 
 
 except KeyboardInterrupt:
