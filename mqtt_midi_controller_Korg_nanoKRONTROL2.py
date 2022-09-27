@@ -204,7 +204,9 @@ try:
 
 			elif groupe_touche== 176 and touche == 16: #1st Do
 				#send mqtt commmande
-				pass
+				send_message(1,"cosmoguirlande,R,0")
+				send_message(1,"cosmoguirlande,G,0")
+				send_message(1,"cosmoguirlande,B,0")
 
 			elif groupe_touche== 224 : #Color1 fader
 				#send mqtt commmande
@@ -214,7 +216,7 @@ try:
 					send_message_sync("cosmoguirlande," + color1 + ',' + str(velocity*2) )
 
 					#reduce latency by emptying midi message buffer, to be improved
-					if velocity >0 or velocity<127:
+					if velocity !=0 or velocity!=127:
 						for i in range(15):
 							msg = midiin.get_message()
 
@@ -237,7 +239,9 @@ try:
 
 			elif groupe_touche== 176 and touche == 17: #1st Do
 				#send mqtt commmande
-				pass
+				send_message(2,"cosmoguirlande,R,0")
+				send_message(2,"cosmoguirlande,G,0")
+				send_message(2,"cosmoguirlande,B,0")
 
 			elif groupe_touche== 225 : #Color2 fader
 				#send mqtt commmande
@@ -259,7 +263,9 @@ try:
 
 			elif groupe_touche== 176 and touche == 18: #1st Do
 				#send mqtt commmande
-				pass
+				send_message(3,"cosmoguirlande,R,0")
+				send_message(3,"cosmoguirlande,G,0")
+				send_message(3,"cosmoguirlande,B,0")
 
 			elif groupe_touche== 226 : #Color3 fader
 				#send mqtt commmande
@@ -281,8 +287,10 @@ try:
 
 			elif groupe_touche== 176 and touche == 19: #1st Do
 				#send mqtt commmande
-				pass
-
+				send_message(4,"cosmoguirlande,R,0")
+				send_message(4,"cosmoguirlande,G,0")
+				send_message(4,"cosmoguirlande,B,0")
+				
 			elif groupe_touche== 227 : #Color4 fader
 				#send mqtt commmande
 				send_message(4, "cosmoguirlande," + color4 + ',' + str(velocity*2) )
@@ -303,7 +311,9 @@ try:
 
 			elif groupe_touche== 176 and touche == 20: #1st Do
 				#send mqtt commmande
-				pass
+				send_message(5,"cosmoguirlande,R,0")
+				send_message(5,"cosmoguirlande,G,0")
+				send_message(5,"cosmoguirlande,B,0")
 
 			elif groupe_touche== 228 : #Color5 fader
 				#send mqtt commmande
@@ -325,7 +335,9 @@ try:
 
 			elif groupe_touche== 176 and touche == 21: #1st Do
 				#send mqtt commmande
-				pass
+				send_message(6,"cosmoguirlande,R,0")
+				send_message(6,"cosmoguirlande,G,0")
+				send_message(6,"cosmoguirlande,B,0")
 
 			elif groupe_touche== 229 : #Color6 fader
 				#send mqtt commmande
@@ -347,7 +359,9 @@ try:
 
 			elif groupe_touche== 176 and touche == 22: #1st Do
 				#send mqtt commmande
-				pass
+				send_message(7,"cosmoguirlande,R,0")
+				send_message(7,"cosmoguirlande,G,0")
+				send_message(7,"cosmoguirlande,B,0")
 
 			elif groupe_touche== 230 : ##Color7 fader
 				#send mqtt commmande
@@ -369,7 +383,13 @@ try:
 
 			elif groupe_touche== 176 and touche == 23: #1st Do
 				#send mqtt commmande
-				pass
+				send_message(8,"cosmoguirlande,R,0")
+				send_message(8,"cosmoguirlande,G,0")
+				send_message(8,"cosmoguirlande,B,0")
+				
+				send_message(9,"cosmoguirlande,R,0")
+				send_message(9,"cosmoguirlande,G,0")
+				send_message(9,"cosmoguirlande,B,0")
 
 			elif groupe_touche== 231 : #Color8 fader
 				#send mqtt commmande
