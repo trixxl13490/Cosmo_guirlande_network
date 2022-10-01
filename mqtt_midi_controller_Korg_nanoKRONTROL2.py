@@ -204,9 +204,17 @@ try:
 
 			elif groupe_touche== 176 and touche == 16: #1st Do
 				#send mqtt commmande
-				send_message(1,"cosmoguirlande,R,0")
-				send_message(1,"cosmoguirlande,G,0")
-				send_message(1,"cosmoguirlande,B,0")
+				if sync :					
+					send_message_sync("cosmoguirlande,R,0")
+					send_message_sync("cosmoguirlande,G,0")
+					send_message_sync("cosmoguirlande,B,0")
+					if velocity !=0 or velocity!=127:
+						for i in range(5):
+							msg = midiin.get_message()
+				else: 
+					send_message(1,"cosmoguirlande,R,0")
+					send_message(1,"cosmoguirlande,G,0")
+					send_message(1,"cosmoguirlande,B,0")				
 
 			elif groupe_touche== 224 : #Color1 fader
 				#send mqtt commmande
