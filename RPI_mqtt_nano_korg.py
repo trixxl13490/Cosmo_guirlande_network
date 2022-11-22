@@ -13,7 +13,6 @@ import json
 import paho.mqtt.client as mqtt
 from rtmidi.midiutil import open_midiinput
 import subprocess
-import pandas
 
 """identification des touches
     Mapping des touches / boutons / faders aux messages à envoye0r
@@ -35,11 +34,9 @@ import pandas
 '''----------------------------------------
 Méthode détection & connexion Guirlande:
 ----------------------------------------'''
+device = []
 conf_file = open('IP_configuration.json')
 strip_configuration = json.load(conf_file)
-device = []
-objs=[]
-
 i = 0
 for elt in strip_configuration["guirlande"]:
 	print("i :", i)
@@ -70,38 +67,6 @@ for i, elt in enumerate(device):
 	print("À l'indice {} se trouve {}.".format(i, elt))
 		#====================================================================fin test
 	
-
-def restart(device):
-	i = 0
-	for elt in strip_configuration["guirlande"]:
-		print("i :", i)
-		#get IPs from JSON
-		print("IP : ", elt["IP"])
-		objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
-		
-		try:
-			objs[i].connect(elt["IP"],1883,60)
-			print("publish blackout")
-			device.append(elt["IP"])
-			objs[i].publish('test1', "cosmoguirlande,blackout")
-						
-			
-		except:
-			print("could not connect to :  ", elt["IP"])
-			#====================================================================test
-			print("elt['IP']", elt["IP"])
-			#del strip_configuration["guirlande"][i]
-			#objs.remove(objs[i])
-			try:
-				device.remove(elt["IP"])
-			except ValueError:
-				pass
-		i = i+1
-
-	for i, elt in enumerate(device):
-		print("À l'indice {} se trouve {}.".format(i, elt))
-			#====================================================================fin test
-		
 
 '''----------------------------------------
 Méthode envoi message :
@@ -149,17 +114,12 @@ color8 = ''
 previous_velocity = 0
 previous_timer = 0
 latency_flag = True
-latency_list = []
-latency = 0.0
 
 # Prompts user for MIDI input port, unless a valid port number or name
 # is given as the first argument on the command line.
 # API backend defaults to ALSA on Linux.
 #port = sys.argv[1] if len(sys.argv) > 1 else None
-port = 0
-
-#Launch Rpi program
-restart(device)
+port = 1
 
 try:
     midiin, port_name = open_midiinput(port)
@@ -173,23 +133,16 @@ try:
 		msg = midiin.get_message()
 
 		if msg:
-			latency_timer_1 = time.time()
 			message, deltatime = msg
-
 			timer += deltatime
 			print("[%s] @%0.6f %r" % (port_name, timer, message))
 
 			groupe_touche, touche, velocity = message
 
 			latency_flag = True
-            #if latency too big bypass message midi
-			if latency > 0.1: #1st Do
-				for i in range(10):
-				    msg = midiin.get_message()
-			        #delete doublons from message queue and keep the last    
 
 			#-----------------------------------------------------------------------------Anti rebond fin de course fader pour sync mode
-			elif (groupe_touche == 224 or groupe_touche == 225  or groupe_touche == 226  or groupe_touche == 227 
+			if (groupe_touche == 224 or groupe_touche == 225  or groupe_touche == 226  or groupe_touche == 227 
 			 or groupe_touche == 228  or groupe_touche == 229  or groupe_touche == 230  or groupe_touche == 231 ) and abs(velocity - previous_velocity) > 10:
 				latency_flag = False
 				print("too big step between former and new value")
@@ -244,8 +197,6 @@ try:
 			elif groupe_touche== 144 and touche == 95 and velocity == 127: #1st Do
 				#send mqtt commmande
 				send_message_sync("cosmoguirlande,restart")
-				restart(device)
-
 				#FONCTION RESTART HERE
 				subprocess.Popen(args='python Thread_start_display_remote_ssh.py', shell=True)
 				subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
@@ -258,7 +209,7 @@ try:
 					send_message_sync("cosmoguirlande,G,0")
 					send_message_sync("cosmoguirlande,B,0")
 					if velocity !=0 or velocity!=127:
-						for i in range(15):
+						for i in range(5):
 							msg = midiin.get_message()
 				else: 
 					send_message(1,"cosmoguirlande,R,0")
@@ -439,50 +390,34 @@ try:
 			#-----------------------------------------------------------------------------column8
 
 			elif groupe_touche== 176 and touche == 23: #1st Do
-				try:
 				#send mqtt commmande
-					send_message(8,"cosmoguirlande,R,0")
-					send_message(8,"cosmoguirlande,G,0")
-					send_message(8,"cosmoguirlande,B,0")
-				except IndexError:
-					pass
-				try:
-					send_message(9,"cosmoguirlande,R,0")
-					send_message(9,"cosmoguirlande,G,0")
-					send_message(9,"cosmoguirlande,B,0")
-				except IndexError:
-					pass
-
+				send_message(8,"cosmoguirlande,R,0")
+				send_message(8,"cosmoguirlande,G,0")
+				send_message(8,"cosmoguirlande,B,0")
+				
+				send_message(9,"cosmoguirlande,R,0")
+				send_message(9,"cosmoguirlande,G,0")
+				send_message(9,"cosmoguirlande,B,0")
 
 			elif groupe_touche== 231 : #Color8 fader
 				#send mqtt commmande
-				try:
-					send_message(8, "cosmoguirlande," + color8 + ',' + str(velocity*2) )
-					send_message(9, "cosmoguirlande," + color8 + ',' + str(velocity*2) )
-				except IndexError:
-					pass
+				send_message(8, "cosmoguirlande," + color8 + ',' + str(velocity*2) )
+				send_message(9, "cosmoguirlande," + color8 + ',' + str(velocity*2) )
 						
 			elif groupe_touche== 144 and touche == 15 and velocity>0: #R8
 				#send mqtt commmande
 				color8 = 'R'
-				color9 = 'R'
 
 			elif groupe_touche== 144 and touche == 23 and velocity>0: #G8
 				#send mqtt commmande
 				color8 = 'G'
-				color9 = 'G'
 
 			elif groupe_touche== 144 and touche == 7 and velocity>0: #B8
 				#send mqtt commmande
 				color8 = 'B'
-				color9 = 'B'
 
 			previous_velocity = velocity
 			previous_timer = timer
-			latency_timer_2 = time.time()
-			latency = latency_timer_2-latency_timer_1
-			latency_list.append([latency,groupe_touche,velocity])
-			#print("latency: ", latency)
 
 
 except KeyboardInterrupt:
@@ -491,5 +426,3 @@ finally:
     print("Exit.")
     midiin.close_port()
     del midiin
-    pd = pandas.DataFrame(latency_list)
-    pd.to_csv("mylist4.csv")
