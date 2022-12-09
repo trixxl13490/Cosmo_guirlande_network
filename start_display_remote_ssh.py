@@ -68,7 +68,7 @@ except socket.timeout:
 try:
     ssh3 = paramiko.SSHClient()
     ssh3.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh3.connect(hostname='192.168.1.78', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh3.connect(hostname='192.168.1.60', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
     # kill GUI if running
@@ -96,7 +96,7 @@ except socket.timeout:
 try:
     ssh4 = paramiko.SSHClient()
     ssh4.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh4.connect(hostname='192.168.0.8', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh4.connect(hostname='192.168.1.62', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
     # kill GUI if running
@@ -123,7 +123,7 @@ except socket.timeout:
 try:
     ssh5 = paramiko.SSHClient()
     ssh5.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh5.connect(hostname='192.168.0.9', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh5.connect(hostname='192.168.1.91', username='pi', password='vbcgxb270694', timeout=5, port=22)
     time.sleep(.5)
 
     # kill GUI if running
