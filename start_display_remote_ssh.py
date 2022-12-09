@@ -54,7 +54,7 @@ try:
 
     stdin2.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 60 192.168.1.45 50002 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 144 192.168.1.45 50002 1024 RGBW'
       ''')
 
     #print(stdout1.read())
@@ -85,7 +85,7 @@ try:
 
     stdin3.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 56 192.168.0.20 50003 1024 RGB'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 144 192.168.0.20 50003 1024 RGBW'
       ''')
     print("ss3 passed")
     stdout3.close()
@@ -112,7 +112,7 @@ try:
 
     stdin4.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 4 70 192.168.0.20 50004 1024 RGB'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 4 144 192.168.0.20 50004 1024 RGBW'
       ''')
     print("ss4 passed")
     stdout4.close()
@@ -138,7 +138,7 @@ try:
 
     stdin5.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 5 60 192.168.0.20 50005 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 5 144 192.168.0.20 50005 1024 RGBW'
       ''')
     print("ss5 passed")
     stdout5.close()
