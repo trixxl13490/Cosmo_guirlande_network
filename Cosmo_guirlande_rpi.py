@@ -1356,7 +1356,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.state = "getMacAdress"
                     print(gma())
                     self.newSocket_mqtt.publish('test1/mac', gma())
-
                     #time.sleep(0.3)
 
                 elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,strombo") :

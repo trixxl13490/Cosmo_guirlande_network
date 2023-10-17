@@ -7,6 +7,7 @@ import time
 You need first to setup Pi with:
 '''
 
+
 #All args here: args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size
 #Get Server (this computer) IP address
 h_name = socket.gethostname()

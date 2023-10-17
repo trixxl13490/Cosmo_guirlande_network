@@ -57,7 +57,6 @@ for elt in strip_configuration["guirlande"]:
 		
 	except:
 		print("could not connect to :  ", elt["IP"])
-		#====================================================================test
 		print("elt['IP']", elt["IP"])
 		#del strip_configuration["guirlande"][i]
 		#objs.remove(objs[i])
@@ -69,8 +68,13 @@ for elt in strip_configuration["guirlande"]:
 
 for i, elt in enumerate(device):
 	print("À l'indice {} se trouve {}.".format(i, elt))
-		#====================================================================fin test
-	
+
+#Here we are listening to a topic to get Mac Addresses of our devices, 
+# in order to configure it properly & automatically	
+def on_message(client, userdata, msg):
+	x = msg.payload.decode('utf-8')
+	print(str(msg))
+	print(str(x))
 
 def restart(device):
 	i = 0
