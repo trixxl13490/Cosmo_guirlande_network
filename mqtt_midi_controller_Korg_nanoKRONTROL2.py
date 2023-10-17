@@ -14,6 +14,7 @@ import paho.mqtt.client as mqtt
 from rtmidi.midiutil import open_midiinput
 import subprocess
 import pandas
+from getmac import get_mac_address as gma
 
 """identification des touches
     Mapping des touches / boutons / faders aux messages à envoye0r

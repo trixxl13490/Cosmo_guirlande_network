@@ -16,7 +16,7 @@ IP_addres = socket.gethostbyname(h_name)
 try:
     ssh1 = paramiko.SSHClient()
     ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh1.connect(hostname='192.168.1.78', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh1.connect(hostname='192.168.0.3', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
     # kill GUI if running
@@ -29,7 +29,7 @@ try:
 
     stdin1.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.1.45 50001 1024 RGB'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 70 192.168.1.45 50001 1024 RGBW'
       ''')
     print("ss1 passed")
     stdout1.close()
@@ -41,7 +41,7 @@ try:
     #Create SSH connection with paramiko
     ssh2 = paramiko.SSHClient()
     ssh2.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh2.connect(hostname='192.168.1.43', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh2.connect(hostname='192.168.0.4', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
     # kill GUI if running
     ssh_stdin2, ssh_stdout2, ssh_stderr2 = ssh2.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
@@ -54,7 +54,7 @@ try:
 
     stdin2.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 144 192.168.1.45 50002 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 2 60 192.168.1.45 50002 1024 RGBW'
       ''')
 
     #print(stdout1.read())
@@ -68,7 +68,7 @@ except socket.timeout:
 try:
     ssh3 = paramiko.SSHClient()
     ssh3.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh3.connect(hostname='192.168.1.60', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh3.connect(hostname='192.168.0.5', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
     # kill GUI if running
@@ -85,7 +85,7 @@ try:
 
     stdin3.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 144 192.168.0.20 50003 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 3 70 192.168.0.20 50003 1024 RGB'
       ''')
     print("ss3 passed")
     stdout3.close()
@@ -96,7 +96,7 @@ except socket.timeout:
 try:
     ssh4 = paramiko.SSHClient()
     ssh4.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh4.connect(hostname='192.168.1.62', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh4.connect(hostname='192.168.0.7', username='pi', password='vbcgxb270694', timeout=5, port=22)
 
 
     # kill GUI if running
@@ -123,7 +123,7 @@ except socket.timeout:
 try:
     ssh5 = paramiko.SSHClient()
     ssh5.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh5.connect(hostname='192.168.1.91', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh5.connect(hostname='192.168.0.9', username='pi', password='vbcgxb270694', timeout=5, port=22)
     time.sleep(.5)
 
     # kill GUI if running
@@ -165,7 +165,7 @@ try:
 
     stdin6.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 6 55 192.168.1.16 50006 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 6 144 192.168.1.16 50006 1024 RGBW'
       ''')
     print("ss6 passed")
     stdout6.close()
@@ -176,7 +176,7 @@ except socket.timeout:
 try:
     ssh6 = paramiko.SSHClient()
     ssh6.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh6.connect(hostname='192.168.0.11', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh6.connect(hostname='192.168.0.8', username='pi', password='vbcgxb270694', timeout=5, port=22)
     time.sleep(.5)
 
 
@@ -194,17 +194,17 @@ try:
       export XAUTHORITY=/home/pi/.Xauthority
       DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 6 144 192.168.1.16 50006 1024 RGBW'
       ''')
-    print("ss6 passed")
+    print("ss7 passed")
     stdout6.close()
     stdin6.close()
 except socket.timeout:
-    print("ss6 timeout")
+    print("ss7 timeout")
 #----------------------------------------------------------------------------------------------------------------------
 #----------------------------------------------------------------------------------------------------------------------#----------------------------------------------------------------------------------------------------------------------
 try:
     ssh6 = paramiko.SSHClient()
     ssh6.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh6.connect(hostname='192.168.0.13', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh6.connect(hostname='192.168.0.12', username='pi', password='vbcgxb270694', timeout=5, port=22)
     time.sleep(.5)
 
 
@@ -220,18 +220,18 @@ try:
 
     stdin6.write('''
       export XAUTHORITY=/home/pi/.Xauthority
-      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 6 70 192.168.1.16 50006 1024 RGBW'
+      DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 6 70 192.168.1.16 50006 1024 RGB'
       ''')
-    print("ss6 passed")
+    print("ss8 passed")
     stdout6.close()
     stdin6.close()
 except socket.timeout:
-    print("ss6 timeout")
+    print("ss8 timeout")
 #----------------------------------------------------------------------------------------------------------------------
 try:
     ssh7 = paramiko.SSHClient()
     ssh7.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    ssh7.connect(hostname='192.168.0.3', username='pi', password='vbcgxb270694', timeout=5, port=22)
+    ssh7.connect(hostname='192.168.0.13', username='pi', password='vbcgxb270694', timeout=5, port=22)
     time.sleep(.5)
 
     # kill GUI if running
@@ -250,12 +250,12 @@ try:
 
       
 
-    print("ss7 passed")
+    print("ss9 passed")
     time.sleep(.5)
     stdout7.close()
     stdin7.close()
 except socket.timeout:
-    print("ss7 timeout")
+    print("ss9 timeout")
 
 #----------------------------------------------------------------------------------------------------------------------
 

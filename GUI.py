@@ -68,6 +68,8 @@ class MainWin(QWidget):
         #get color from JSON
         print("color : ", elt["color"])'''
         objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
+
+        #get mac address to configure RPis
         
 
     #for i in range(len(strip_configuration['guirlande'])):

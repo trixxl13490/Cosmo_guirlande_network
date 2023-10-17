@@ -26,6 +26,7 @@ from adafruit_led_animation.color import JADE,MAGENTA,OLD_LACE,ORANGE,PINK,PURPL
 from adafruit_led_animation.color import RGBW_WHITE_RGBW,RGBW_WHITE_W,TEAL,WHITE,YELLOW
 import random
 from RPi_mqtt_socket import RPi_mqtt_socket
+from getmac import get_mac_address as gma
 
 #Recorder for beat detection
 #from recorder import *
@@ -1349,6 +1350,13 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 ######################################################################################################################
                 if self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,manual") :
                     print("manual control, do nothing while checkbox is on")
+                    #time.sleep(0.3)
+                
+                elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,getMacAdress") :
+                    self.state = "getMacAdress"
+                    print(gma())
+                    self.newSocket_mqtt.publish('test1/mac', gma())
+
                     #time.sleep(0.3)
 
                 elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,strombo") :
