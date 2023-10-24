@@ -2,10 +2,17 @@
 import paho.mqtt.client as mqtt
 import threading
 import json
+import socket
 #Don't forget to install "sudo apt-get install -y mosquitto mosquitto-clients"
+from getmac import get_mac_address as gma
 
 class RPi_mqtt_socket(threading.Thread):
     cosmoguirlande=mqtt.Client()
+
+    #Get Mac Address
+    macAdress = ""
+    macAdress = gma()
+    print(macAdress)
 
     def __init__(self):
         threading.Thread.__init__(self)
@@ -17,10 +24,20 @@ class RPi_mqtt_socket(threading.Thread):
 
     def on_message(self, client, userdata, msg):
         x = msg.payload.decode('utf-8')
-        print(str(msg))
-        print(str(x))
         self.data_rcv = x
         print("self.data_rcv: ", self.data_rcv)
+        #____________________________________________________________________code test here for mac adress sending
+
+        if self.data_rcv.startswith("getMacAdress"):
+            cmd, ip = self.data_rcv.split(',')
+            print("cmd :", cmd)
+            print("ip :", ip)
+            
+            #Send Mac address
+            self.cosmoguirlande.connect("localhost",1883,60)
+            result = client.publish("test1", "ip," + socket.gethostbyname(socket.gethostname()) + ",mac_address," + self.macAdress)
+            print("mac_ip published ")
+        #____________________________________________________________________end test
 
     def on_subscribe(self, mosq, obj, mid, granted_qos):
         print("Subscribed: " + str(mid) + " " + str(granted_qos))

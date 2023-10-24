@@ -27,6 +27,7 @@ from adafruit_led_animation.color import RGBW_WHITE_RGBW,RGBW_WHITE_W,TEAL,WHITE
 import random
 from RPi_mqtt_socket import RPi_mqtt_socket
 from getmac import get_mac_address as gma
+import subprocess
 
 #Recorder for beat detection
 #from recorder import *
@@ -157,6 +158,8 @@ class Cosmo_guirlande_rpi(threading.Thread):
         self.watchdog_count = 0
         self.state = ""
         self.previous_state = ""
+
+        self.mac = gma()
 
     def wheel(self, pos):
         # Input a value 0 to 255 to get a color value.
@@ -1766,6 +1769,11 @@ class Cosmo_guirlande_rpi(threading.Thread):
                     self.state = "BPM"
                     function_type, function = self.newSocket_mqtt.data_rcv.split(',')
                     self.bpm(self.PartyColors_p, 0, 50)
+                  
+                elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,configure")  :
+                    self.state = "configure"
+                    subprocess.Popen(args='python start_thread_arg.py' + self.mac, shell=True)
+
                   
                 elif self.state == "nothing":
                     #increse count if last states are "main"

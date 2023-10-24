@@ -14,6 +14,7 @@ import paramiko
 import subprocess
 import paho.mqtt.client as mqtt
 import json
+from RPi_mqtt_socket import RPi_mqtt_socket
 
 #Load config files with IP, port & LED number
 conf_file = open('IP_configuration.json')

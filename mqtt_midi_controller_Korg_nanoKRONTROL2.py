@@ -15,6 +15,8 @@ from rtmidi.midiutil import open_midiinput
 import subprocess
 import pandas
 from getmac import get_mac_address as gma
+from PC_mqtt_socket import PC_mqtt_socket
+import threading 
 
 """identification des touches
     Mapping des touches / boutons / faders aux messages à envoye0r
@@ -41,41 +43,52 @@ strip_configuration = json.load(conf_file)
 device = []
 objs=[]
 
+#Here we are listening to a topic to get Mac Addresses of our devices, 
+# in order to configure it properly & automatically	
+
+"""Subscribe here to get Mac Addresses to topic test1/mac
+print("start mqtt subscrier for mac @")
+newSocket_mqtt = PC_mqtt_socket()
+newSocket_mqtt.start()"""
 i = 0
+
 for elt in strip_configuration["guirlande"]:
 	print("i :", i)
 	#get IPs from JSON
 	print("IP : ", elt["IP"])
+
+	#create Clients to send command and client to hear answers
 	objs = [mqtt.Client() for i in range(len(strip_configuration['guirlande']))]
-	
+	#channel_config_objs = [PC_mqtt_socket() for i in range(len(strip_configuration['guirlande']))]
+	#channel_config_objs = []
+
 	try:
+		#config client
 		objs[i].connect(elt["IP"],1883,60)
-		print("publish blackout")
 		device.append(elt["IP"])
 		objs[i].publish('test1', "cosmoguirlande,blackout")
-					
+
+		#config channel to hear client answer
+		#PC_mqtt_socket(elt["IP"]).start()
+		#channel_config_objs.start()
+		print("publish blackout")			
 		
-	except:
+	except ConnectionRefusedError:
 		print("could not connect to :  ", elt["IP"])
-		print("elt['IP']", elt["IP"])
 		#del strip_configuration["guirlande"][i]
 		#objs.remove(objs[i])
-		try:
+		"""try:
 			device.remove(elt["IP"])
 		except ValueError:
-			pass
+			pass"""
 	i = i+1
 
 for i, elt in enumerate(device):
 	print("À l'indice {} se trouve {}.".format(i, elt))
 
-#Here we are listening to a topic to get Mac Addresses of our devices, 
-# in order to configure it properly & automatically	
-def on_message(client, userdata, msg):
-	x = msg.payload.decode('utf-8')
-	print(str(msg))
-	print(str(x))
-
+'''----------------------------------------
+Méthode restart :
+----------------------------------------'''
 def restart(device):
 	i = 0
 	for elt in strip_configuration["guirlande"]:
@@ -489,12 +502,12 @@ try:
 			latency_list.append([latency,groupe_touche,velocity])
 			#print("latency: ", latency)
 
-
+		#print("newSocket_mqtt.data_rcv : ", newSocket_mqtt.data_rcv)
 except KeyboardInterrupt:
     print('')
 finally:
     print("Exit.")
     midiin.close_port()
     del midiin
-    pd = pandas.DataFrame(latency_list)
-    pd.to_csv("mylist4.csv")
+    #pd = pandas.DataFrame(latency_list)
+    #pd.to_csv("mylist4.csv")
