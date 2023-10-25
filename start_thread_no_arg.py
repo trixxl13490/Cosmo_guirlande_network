@@ -104,5 +104,5 @@ if __name__ == "__main__":
     # Process arguments
     mac = gma()
     print("no args")
-    newThread = Thread_start_display_MAC(mac)
+    newThread = Thread_start_display_MAC()
     newThread.start()
