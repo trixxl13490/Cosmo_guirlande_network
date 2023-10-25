@@ -16,8 +16,12 @@ b8:27:eb:c2:e9:2b - 35  RGB  (stick)
 b8:27:eb:d0:01:ff - 50  RGBW (stick)
 b8:27:eb:ed:90:54 - 144 RGBW
 
+!!!!!!!!!
+export XAUTHORITY=/home/pi/.Xauthority
+XAUTHORITY=/home/pi/.Xauthority
+sudo cp ~/.Xauthority ~root/
+!!!!!!!!!
 '''
-
 #All args here: args.guirlande_number, args.num_pixel, args.server_tcp_ip, args.tcp_port, args.buffer_size
 #Get Server (this computer) IP address
 h_name = socket.gethostname()
