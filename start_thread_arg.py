@@ -154,7 +154,7 @@ class Thread_start_display_MAC(threading.Thread):
         else:
            print("no matching MAC, basic config 144 RGBW")
         #----------------------------------------------
-        print("ssh passed : ", self.ip)
+        print("ssh passed : ", self.mac)
         """print('stdout.read()' , repr(stdout.read()))
         stdout.close()
         stdin.close()"""
