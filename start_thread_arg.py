@@ -57,9 +57,12 @@ class Thread_start_display_MAC(threading.Thread):
         channel = ssh1.invoke_shell()
         stdin = channel.makefile('wb')
         stdout = channel.makefile('rb')"""
+        try:
+          subprocess.Popen(args = "sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9", shell=True)
+          print("former term killed")
+        except:
+           print("no active guirlande python term")
 
-        subprocess.Popen(args = "sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9", shell=True)
-        print("former term killed")
         print("mac = ", self.mac)
 
         #----------------------------------------------case 1 : config RGBW 144 LEDs
@@ -155,14 +158,14 @@ class Thread_start_display_MAC(threading.Thread):
            print("no matching MAC, basic config 144 RGBW")
         #----------------------------------------------
         print("ssh passed : ", self.mac)
+
         """print('stdout.read()' , repr(stdout.read()))
         stdout.close()
         stdin.close()"""
 
       except socket.timeout:
           print("ss1 timeout")
-      #except:
-      #  time.sleep(1)
+
 
 if __name__ == "__main__":
     # Process arguments
