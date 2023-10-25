@@ -59,7 +59,7 @@ class Thread_start_display_remote_ssh(threading.Thread):
         if self.mac == "74:da:38:f6:dd:ef":
             ssh.exec_command('''
               export XAUTHORITY=/home/pi/.Xauthority
-              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
+              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 42 192.168.0.20 50001 1024 RGB'
               ''')
         #----------------------------------------------case 2 : config RGBW 144 LEDs
         elif self.mac == "b8:27:eb:04:77:43":
@@ -77,7 +77,7 @@ class Thread_start_display_remote_ssh(threading.Thread):
         elif self.mac == "b8:27:eb:a4:fd:a8":
             ssh.exec_command('''
               export XAUTHORITY=/home/pi/.Xauthority
-              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
+              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.20 50001 1024 RGBW'
               ''')        
         #----------------------------------------------case 5 : config RGBW 144 LEDs
         elif self.mac == "b8:27:eb:bf:ac:3a":
@@ -89,13 +89,13 @@ class Thread_start_display_remote_ssh(threading.Thread):
         elif self.mac == "b8:27:eb:c2:e9:2b":
             ssh.exec_command('''
               export XAUTHORITY=/home/pi/.Xauthority
-              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
+              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 35 192.168.0.20 50001 1024 RGB'
               ''')        
         #----------------------------------------------case 7 : config RGBW 144 LEDs
         elif self.mac == "b8:27:eb:d0:01:ff":
             ssh.exec_command('''
               export XAUTHORITY=/home/pi/.Xauthority
-              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
+              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 50 192.168.0.20 50001 1024 RGBW'
               ''')
         #----------------------------------------------case 8 : config RGBW 144 LEDs
         elif self.mac == "b8:27:eb:ed:90:54":
