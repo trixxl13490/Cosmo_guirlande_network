@@ -157,7 +157,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
 
         #Launc thread to configure and start pi
         self.mac = gma()
-        subprocess.Popen(args='sudo python3 /home/pi/Cosmo_guirlande_network/start_thread_arg.py ' + self.mac, shell=True)
+        #subprocess.Popen(args='sudo python3 /home/pi/Cosmo_guirlande_network/start_thread_arg.py ' + self.mac, shell=True)
 
         #Watchdog
         self.watchdog_count = 0
@@ -1350,7 +1350,6 @@ class Cosmo_guirlande_rpi(threading.Thread):
                 print("Cosmoguirlande class run")
                 print("state :", self.state)
                 print("previous state :", self.state)
-                #print('self.newSocket.data_rcv :', self.newSocket.data_rcv)
                 print('self.newSocket_mqtt.data_rcv :', self.newSocket_mqtt.data_rcv)
                 self.previous_state = self.state
 
