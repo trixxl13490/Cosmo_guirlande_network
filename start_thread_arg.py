@@ -56,6 +56,9 @@ class Thread_start_display_remote_ssh(threading.Thread):
         channel = ssh1.invoke_shell()
         stdin = channel.makefile('wb')
         stdout = channel.makefile('rb')"""
+
+                    subprocess.Popen(args = "sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9", shell=True))
+
         #----------------------------------------------case 1 : config RGBW 144 LEDs
         if self.mac == "74:da:38:f6:dd:ef":
             """ssh.exec_command('''
