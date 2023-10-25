@@ -3,7 +3,7 @@ import json
 import socket
 import time
 import threading
-
+import subprocess
 '''
 You need first to setup Pi with:
 
@@ -40,23 +40,17 @@ class Thread_start_display_remote_ssh(threading.Thread):
 
         ssh = paramiko.SSHClient()
         ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
         ssh.connect(hostname=self.ip, username='pi', password='vbcgxb270694', timeout=5, port=22)
 
         # Start GUI again on rpi
-        channel = ssh1.invoke_shell()
+        channel = ssh.invoke_shell()
         stdin = channel.makefile('wb')
         stdout = channel.makefile('rb')
 
-        """ssh.exec_command('''
-          export XAUTHORITY=/home/pi/.Xauthority
-          DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
-          ''')"""
-        
-        ssh.exec_command('''
-          export XAUTHORITY=/home/pi/.Xauthority
-          DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/start_thread_no_arg.py'
-          ''')
-        
+        #ssh.exec_command("DISPLAY=:0  sudo python3  /home/pi/Cosmo_guirlande_network/start_thread_no_arg.py")
+
+        ssh.exec_command("sudo python3  /home/pi/Cosmo_guirlande_network/start_thread_no_arg.py")
 
         print("ssh passed : ", self.ip)
         
