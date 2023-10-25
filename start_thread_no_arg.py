@@ -48,13 +48,13 @@ class Thread_start_display_MAC(threading.Thread):
         if self.mac == "74:da:38:f6:dd:ef":
             subprocess.Popen(args='''
               export XAUTHORITY=/home/pi/.Xauthority
-              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 42 192.168.0.20 50001 1024 RGB'
+              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
               ''', shell=True)
         #----------------------------------------------case 2 : config RGBW 144 LEDs
         elif self.mac == "b8:27:eb:04:77:43":
             subprocess.Popen(args='''
               export XAUTHORITY=/home/pi/.Xauthority
-              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
+              DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 42 192.168.0.20 50001 1024 RGB'
               ''', shell=True)
         #----------------------------------------------case 3 : config RGBW 144 LEDs
         elif self.mac == "b8:27:eb:5d:3d:de":

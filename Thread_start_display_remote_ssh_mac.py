@@ -54,7 +54,7 @@ class Thread_start_display_remote_ssh(threading.Thread):
         
         ssh.exec_command('''
           export XAUTHORITY=/home/pi/.Xauthority
-          DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/start_thread_arg.py'
+          DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/start_thread_no_arg.py'
           ''')
         
 
