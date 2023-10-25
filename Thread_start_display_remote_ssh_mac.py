@@ -50,6 +50,11 @@ class Thread_start_display_remote_ssh(threading.Thread):
 
         #ssh.exec_command("DISPLAY=:0  sudo python3  /home/pi/Cosmo_guirlande_network/start_thread_no_arg.py")
 
+        """ssh.exec_command('''
+          export XAUTHORITY=/home/pi/.Xauthority
+          DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/start_thread_no_arg'
+        ''')"""
+
         ssh.exec_command("sudo python3  /home/pi/Cosmo_guirlande_network/start_thread_no_arg.py")
 
         print("ssh passed : ", self.ip)
