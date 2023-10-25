@@ -36,8 +36,8 @@ class Thread_start_display_MAC(threading.Thread):
 
   def run(self):
       try:
-        subprocess.Popen(args = "sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9", shell=True)
-        print("former term killed")
+        #subprocess.Popen(args = "sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9", shell=True)
+        print("supposed to kill former term")
 
       except socket.timeout:
           print("ss1 timeout")

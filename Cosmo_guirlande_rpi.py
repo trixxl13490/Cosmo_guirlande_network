@@ -32,6 +32,7 @@ import subprocess
 #Recorder for beat detection
 #from recorder import *
 
+#former class for TCP communication - replaces by MQTT sockets
 class Cosmo_Communication(threading.Thread):
 
     def __init__(self, guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size):
@@ -1772,7 +1773,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                   
                 elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,configure")  :
                     self.state = "configure"
-                    subprocess.Popen(args='python3 /home/pi/Cosmo_guirlande_metwork/start_thread_arg.py ' + self.mac, shell=True)
+                    subprocess.Popen(args='sudo python3 /home/pi/Cosmo_guirlande_metwork/start_thread_arg.py ' + self.mac, shell=True)
 
                   
                 elif self.state == "nothing":
