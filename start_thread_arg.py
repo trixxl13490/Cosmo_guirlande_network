@@ -60,7 +60,7 @@ class Thread_start_display_remote_ssh(threading.Thread):
         subprocess.Popen(args = "sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9", shell=True)
 
         #----------------------------------------------case 1 : config RGBW 144 LEDs
-        if self.mac == "74:da:38:f6:dd:ef":
+        if str(self.mac) == "74:da:38:f6:dd:ef":
             """ssh.exec_command('''
               export XAUTHORITY=/home/pi/.Xauthority
               DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 42 192.168.0.20 50001 1024 RGB'
