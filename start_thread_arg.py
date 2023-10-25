@@ -28,7 +28,7 @@ conf_file = open('IP_configuration.json')
 strip_configuration = json.load(conf_file)
 
   
-class Thread_start_display_remote_ssh(threading.Thread):
+class Thread_start_display_MAC(threading.Thread):
 
   def __init__(self,  mac):
     threading.Thread.__init__(self)
@@ -171,3 +171,6 @@ if __name__ == "__main__":
     parser.add_argument('mac_address', metavar='mac_address', type=str, help='mac_address')
     args = parser.parse_args()
   
+    
+    newThread = Thread_start_display_MAC()
+    newThread.start()
