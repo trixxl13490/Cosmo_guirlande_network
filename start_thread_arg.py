@@ -24,10 +24,6 @@ b8:27:eb:ed:90:54 - 144 RGBW
 h_name = socket.gethostname()
 IP_addres = socket.gethostbyname(h_name)
 
-conf_file = open('IP_configuration.json')
-strip_configuration = json.load(conf_file)
-
-  
 class Thread_start_display_MAC(threading.Thread):
 
   def __init__(self,  mac):
