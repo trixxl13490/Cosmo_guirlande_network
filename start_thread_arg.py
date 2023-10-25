@@ -30,11 +30,12 @@ strip_configuration = json.load(conf_file)
   
 class Thread_start_display_remote_ssh(threading.Thread):
 
-  def __init__(self, message,  mac):
+  def __init__(self,  mac):
     threading.Thread.__init__(self)
-    self.message = message
     #self.ip = ip
-    self.mac = mac
+    print("mac, ", mac)
+    print("type mac, ", type(mac))
+    self.mac = str(mac)
 
   def run(self):
       try:
