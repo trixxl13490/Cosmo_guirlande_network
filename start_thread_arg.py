@@ -172,5 +172,5 @@ if __name__ == "__main__":
     args = parser.parse_args()
   
     
-    newThread = Thread_start_display_MAC()
+    newThread = Thread_start_display_MAC(args.mac_address)
     newThread.start()
