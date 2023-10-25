@@ -5,6 +5,7 @@ import time
 import threading
 import argparse
 import subprocess
+from getmac import get_mac_address as gma
 
 '''
 You need first to setup Pi with:
@@ -106,7 +107,11 @@ if __name__ == "__main__":
     parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
     parser.add_argument('mac_address', metavar='mac_address', type=str, help='mac_address')
     args = parser.parse_args()
-  
-    
-    newThread = Thread_start_display_MAC(args.mac_address)
-    newThread.start()
+    mac = gma()
+
+    try:
+      newThread = Thread_start_display_MAC(args.mac_address)
+      newThread.start()
+    except:
+      newThread = Thread_start_display_MAC(mac)
+      newThread.start()
