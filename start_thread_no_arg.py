@@ -108,11 +108,11 @@ class Thread_start_display_MAC(threading.Thread):
 
               print("guirlande 6")
 
-              os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 35 192.168.0.20 50001 1024 RGBW'")
+              os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 35 192.168.0.20 50001 1024 RGB'")
 
               subprocess.Popen(args='''
                 export XAUTHORITY=/home/pi/.Xauthority
-                DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 35 192.168.0.20 50001 1024 RGBW'
+                DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 35 192.168.0.20 50001 1024 RGB'
                 ''', shell=True)
           #----------------------------------------------case 7 : config RGBW 144 LEDs
           elif self.mac == "b8:27:eb:d0:01:ff":
