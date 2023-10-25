@@ -57,11 +57,12 @@ class Thread_start_display_MAC(threading.Thread):
         channel = ssh1.invoke_shell()
         stdin = channel.makefile('wb')
         stdout = channel.makefile('rb')"""
-        try:
+        
+        """try:
           subprocess.Popen(args = "sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9", shell=True)
           print("former term killed")
         except:
-           print("no active guirlande python term")
+           print("no active guirlande python term")"""
 
         print("mac = ", self.mac)
 
