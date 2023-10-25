@@ -5,7 +5,7 @@ import time
 import threading
 import subprocess
 from getmac import get_mac_address as gma
-import paramiko
+#import paramiko
 '''
 You need first to setup Pi with:
 74:da:38:f6:dd:ef - 144 RGBW
