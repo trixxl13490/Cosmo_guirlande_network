@@ -32,9 +32,6 @@ class Thread_start_display_MAC(threading.Thread):
 
   def __init__(self,  mac):
     threading.Thread.__init__(self)
-    #self.ip = ip
-    print("mac, ", mac)
-    print("type mac, ", type(mac))
     self.mac = str(mac)
 
   def run(self):
@@ -44,11 +41,11 @@ class Thread_start_display_MAC(threading.Thread):
 
       except socket.timeout:
           print("ss1 timeout")
-          
+
       except:
           print("no active guirlande python term")
+
       finally:
-          
         print("mac = ", self.mac)
 
         #----------------------------------------------case 1 : config RGBW 144 LEDs
