@@ -113,5 +113,6 @@ if __name__ == "__main__":
       newThread = Thread_start_display_MAC(args.mac_address)
       newThread.start()
     except:
+      print("no args")
       newThread = Thread_start_display_MAC(mac)
       newThread.start()

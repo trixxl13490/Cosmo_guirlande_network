@@ -51,6 +51,7 @@ class Thread_start_display_remote_ssh(threading.Thread):
           export XAUTHORITY=/home/pi/.Xauthority
           DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
           ''')
+        
         print("ssh passed : ", self.ip)
         
         print('stdout.read()' , repr(stdout.read()))
