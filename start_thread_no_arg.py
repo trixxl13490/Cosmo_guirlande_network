@@ -8,7 +8,7 @@ import os
 '''
 You need first to setup Pi with:
 74:da:38:f6:dd:ef - 144 RGBW
-b8:27:eb:04:77:43 - 42  RGB  (string)
+b8:27:eb:04:77:43 - 56  RGB  (string)
 b8:27:eb:5d:3d:de - 144 RGBW
 b8:27:eb:a4:fd:a8 - 30  RGBW
 b8:27:eb:bf:ac:3a - 144 RGBW
@@ -63,11 +63,11 @@ class Thread_start_display_MAC(threading.Thread):
               
               print("guirlande 2")
 
-              os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 42 192.168.0.20 50001 1024 RGB'")
+              os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 56 192.168.0.20 50001 1024 RGB'")
 
               subprocess.Popen(args='''
                 export XAUTHORITY=/home/pi/.Xauthority
-                DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 42 192.168.0.20 50001 1024 RGB'
+                DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 56 192.168.0.20 50001 1024 RGB'
                 ''', shell=True)
           #----------------------------------------------case 3 : config RGBW 144 LEDs
           elif self.mac == "b8:27:eb:5d:3d:de":
@@ -108,11 +108,11 @@ class Thread_start_display_MAC(threading.Thread):
 
               print("guirlande 6")
 
-              os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 35 192.168.0.20 50001 1024 RGB'")
+              os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 35 192.168.0.20 50001 1024 RGBW'")
 
               subprocess.Popen(args='''
                 export XAUTHORITY=/home/pi/.Xauthority
-                DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 35 192.168.0.20 50001 1024 RGB'
+                DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 35 192.168.0.20 50001 1024 RGBW'
                 ''', shell=True)
           #----------------------------------------------case 7 : config RGBW 144 LEDs
           elif self.mac == "b8:27:eb:d0:01:ff":
