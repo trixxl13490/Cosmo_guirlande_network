@@ -2219,7 +2219,7 @@ class MainWin(QWidget):
                 print("publish blackout")
                 self.device.append(elt["IP"])
                 self.objs[i].publish('test1', "cosmoguirlande,blackout")
-                self.objs[i].publish('test1', "cosmoguirlande,configure")
+                #self.objs[i].publish('test1', "cosmoguirlande,configure")
                             
                 
             except:

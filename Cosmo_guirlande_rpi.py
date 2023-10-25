@@ -154,7 +154,8 @@ class Cosmo_guirlande_rpi(threading.Thread):
         #Create Socket to communicate
         #self.newSocket = Cosmo_Communication(guirlande_number, pixel_number, tcp_ip, tcp_port, buffer_size)
         self.newSocket_mqtt = RPi_mqtt_socket()
-        
+        subprocess.Popen(args='sudo python3 /home/pi/Cosmo_guirlande_network/start_thread_arg.py ' + self.mac, shell=True)
+
         #Watchdog
         self.watchdog_count = 0
         self.state = ""
