@@ -76,6 +76,9 @@ if __name__ == "__main__":
     ssh[i].start()
     i = i+1
   #last one don't start
-  '''ssh[i-1] = Thread_start_display_remote_ssh("message",elt["IP"])
-  ssh[i-1].start()'''
+  """ssh[i-1] = Thread_start_display_remote_ssh("message",elt["IP"])
+  ssh[i-1].start() """
+  #last one don't start
+  """ssh[0] = Thread_start_display_remote_ssh("message",elt["IP"])
+  ssh[0].start()"""
   

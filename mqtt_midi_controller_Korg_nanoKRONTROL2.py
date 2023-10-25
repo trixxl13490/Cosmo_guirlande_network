@@ -265,8 +265,8 @@ try:
 				restart(device)
 
 				#FONCTION RESTART HERE
-				subprocess.Popen(args='python Thread_start_display_remote_ssh.py', shell=True)
-				subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
+				subprocess.Popen(args='python Thread_start_display_remote_ssh_mac.py', shell=True)
+				#subprocess.Popen(args='python start_display_remote_ssh.py', shell=True)
 			#-----------------------------------------------------------------------------column1
 
 			elif groupe_touche== 176 and touche == 16: #1st Do
