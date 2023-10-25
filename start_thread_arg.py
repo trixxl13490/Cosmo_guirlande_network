@@ -59,9 +59,11 @@ class Thread_start_display_remote_ssh(threading.Thread):
         stdout = channel.makefile('rb')"""
 
         subprocess.Popen(args = "sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9", shell=True)
+        print("former term killed")
+        print("mac = ", self.mac)
 
         #----------------------------------------------case 1 : config RGBW 144 LEDs
-        if str(self.mac) == "74:da:38:f6:dd:ef":
+        if self.mac == "74:da:38:f6:dd:ef":
             """ssh.exec_command('''
               export XAUTHORITY=/home/pi/.Xauthority
               DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 42 192.168.0.20 50001 1024 RGB'
@@ -78,7 +80,7 @@ class Thread_start_display_remote_ssh(threading.Thread):
               DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
               ''')"""
             
-            ssh.exec_command('''
+            subprocess.Popen(args='''
               export XAUTHORITY=/home/pi/.Xauthority
               DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
               ''', shell=True)
@@ -148,6 +150,7 @@ class Thread_start_display_remote_ssh(threading.Thread):
               export XAUTHORITY=/home/pi/.Xauthority
               DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
               ''', shell=True)
+        #----------------------------------------------case 9 : config RGBW 144 LEDnot known
         else:
            print("no matching MAC, basic config 144 RGBW")
         #----------------------------------------------
