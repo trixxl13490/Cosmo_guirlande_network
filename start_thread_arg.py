@@ -165,6 +165,6 @@ if __name__ == "__main__":
     # Process arguments
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--clear', action='store_true', help='clear the display on exit')
-    parser.add_argument('mac_address', metavar='mac_address', type=int, help='mac_address')
+    parser.add_argument('mac_address', metavar='mac_address', type=str, help='mac_address')
     args = parser.parse_args()
   
