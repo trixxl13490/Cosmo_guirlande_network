@@ -64,7 +64,8 @@ class Thread_start_display_MAC(threading.Thread):
               ''')"""
               print("guirlande 1")
               os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'")
-
+              list_files = subprocess.run(["DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'"])
+              print("The exit code was: %d" % list_files.returncode)
               subprocess.Popen(args='''
                 export XAUTHORITY=/home/pi/.Xauthority
                 DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
@@ -77,6 +78,9 @@ class Thread_start_display_MAC(threading.Thread):
                 DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 42 192.168.0.20 50001 1024 RGB'
               ''')"""
               print("guirlande 2")
+              list_files = subprocess.run(["DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'"])
+              print("The exit code was: %d" % list_files.returncode)
+
               os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'")
 
               subprocess.Popen(args='''
@@ -91,6 +95,9 @@ class Thread_start_display_MAC(threading.Thread):
                 DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
             ''')"""
               print("guirlande 3")
+              list_files = subprocess.run(["DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'"])
+              print("The exit code was: %d" % list_files.returncode)
+
               os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'")
 
               subprocess.Popen(args='''
@@ -105,6 +112,10 @@ class Thread_start_display_MAC(threading.Thread):
                 DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 30 192.168.0.20 50001 1024 RGBW'
             ''')"""
               print("guirlande 4")
+
+              list_files = subprocess.run(["DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'"])
+              print("The exit code was: %d" % list_files.returncode)
+
               os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'")
 
               subprocess.Popen(args='''
@@ -119,6 +130,9 @@ class Thread_start_display_MAC(threading.Thread):
                 DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
             ''')"""
               print("guirlande 5")
+
+              list_files = subprocess.run(["DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'"])
+              print("The exit code was: %d" % list_files.returncode)
 
               subprocess.Popen(args='''
                 export XAUTHORITY=/home/pi/.Xauthority
@@ -135,6 +149,10 @@ class Thread_start_display_MAC(threading.Thread):
                 DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 35 192.168.0.20 50001 1024 RGB'
             ''')"""
               print("guirlande 6")
+
+              list_files = subprocess.run(["DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'"])
+              print("The exit code was: %d" % list_files.returncode)
+
               os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'")
 
 
@@ -150,6 +168,10 @@ class Thread_start_display_MAC(threading.Thread):
                 DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 50 192.168.0.20 50001 1024 RGBW'
             ''')"""
               print("guirlande 7")
+
+              list_files = subprocess.run(["DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'"])
+              print("The exit code was: %d" % list_files.returncode)
+
               os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'")
 
               subprocess.Popen(args='''
@@ -164,6 +186,10 @@ class Thread_start_display_MAC(threading.Thread):
                 DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'
             ''')"""
               print("guirlande 8")
+
+              list_files = subprocess.run(["DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'"])
+              print("The exit code was: %d" % list_files.returncode)
+              
               os.system("DISPLAY=:0  /usr/bin/lxterm -e 'sudo python3 /home/pi/Cosmo_guirlande_network/gui_rpi.py 1 144 192.168.0.20 50001 1024 RGBW'")
 
               subprocess.Popen(args='''
