@@ -1773,7 +1773,7 @@ class Cosmo_guirlande_rpi(threading.Thread):
                   
                 elif self.newSocket_mqtt.data_rcv.startswith("cosmoguirlande,configure")  :
                     self.state = "configure"
-                    subprocess.Popen(args='sudo python3 /home/pi/Cosmo_guirlande_metwork/start_thread_arg.py ' + self.mac, shell=True)
+                    subprocess.Popen(args='sudo python3 /home/pi/Cosmo_guirlande_network/start_thread_arg.py ' + self.mac, shell=True)
 
                   
                 elif self.state == "nothing":
