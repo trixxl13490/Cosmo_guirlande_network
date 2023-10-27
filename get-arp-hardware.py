@@ -67,45 +67,56 @@ IP_MAC_df["MAC"] = MAC
 IP_MAC_df["IP"] = IP
 #print("IP_MAC_df : ", IP_MAC_df.to_string())  
 
+i=0
 #find if hardwares match
 for elt1 in MAC_RPi:
   for elt2 in IP_MAC_df['MAC']:
     if elt1 == elt2:
       print("match")
+      print("IP_MAC_df['IP'][i]",IP_MAC_df["IP"][i])
+      print(type(elt2[i]))
+      print("elt1",elt1)
+      print(type(elt1))
       #try to connect & configure
       mqtt_cli = mqtt.Client() 
-      mqtt_cli.connect(elt2["IP"],1883,60)
-      mqtt_cli.publish('test1', "cosmoguirlande,blackout")
+      try:
+        mqtt_cli.connect((IP_MAC_df["IP"][i]),1883,60)
+        mqtt_cli.publish('test1', "cosmoguirlande,blackout")
 
-      #launch command to start scipt
-      ssh1 = paramiko.SSHClient()
-      ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-      ssh1.connect(hostname=elt2["IP"], username='pi', password='vbcgxb270694', timeout=5, port=22)
+        #launch command to start scipt
+        ssh1 = paramiko.SSHClient()
+        ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh1.connect(hostname=IP_MAC_df["IP"][i], username='pi', password='vbcgxb270694', timeout=5, port=22)
 
-      # kill GUI if running
-      ssh_stdin, ssh_stdout, ssh_stderr = ssh1.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+        # kill GUI if running
+        ssh_stdin, ssh_stdout, ssh_stderr = ssh1.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
 
-      ssh = paramiko.SSHClient()
-      ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        ssh = paramiko.SSHClient()
+        ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-      ssh.connect(hostname=elt2["IP"], username='pi', password='vbcgxb270694', timeout=5, port=22)
+        ssh.connect(hostname=(IP_MAC_df["IP"][i]), username='pi', password='vbcgxb270694', timeout=5, port=22)
 
-      # Start GUI again on rpi
-      channel = ssh.invoke_shell()
-      stdin = channel.makefile('wb')
-      stdout = channel.makefile('rb')
+        # Start GUI again on rpi
+        channel = ssh.invoke_shell()
+        stdin = channel.makefile('wb')
+        stdout = channel.makefile('rb')
 
-      ssh.exec_command("sudo python3 start_thread_arg.py " + elt2["MAC"]")
-      print("sudo python3 start_thread_arg.py " + elt2["MAC"]")
+        ssh.exec_command("sudo python3 /home/pi/Cosmo_guirlande_network/start_thread_arg.py " + elt1)
+        print("sudo python3 start_thread_arg.py " + elt1)
 
-      print("ssh passed : ", elt2["IP"])
+        print("ssh passed : ", elt1)
+        
+        # print('stdout.read()' , repr(stdout.read()))
+        stdout.close()
+        stdin.close()
+      except TimeoutError:
+        print("TimeoutError, IP: ", IP_MAC_df["IP"][i])
+      except ConnectionRefusedError:
+        print("ConnectionRefusedError, IP: ", IP_MAC_df["IP"][i])
       
-      print('stdout.read()' , repr(stdout.read()))
-      stdout.close()
-      stdin.close()
-
+      i=i+1
       #add on file for other scipts
-
+i=0
 #check in config.json file for IPs
 
 #try to connect
