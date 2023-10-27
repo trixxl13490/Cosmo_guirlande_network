@@ -3,6 +3,7 @@ import pandas as pd
 import json
 import paho.mqtt.client as mqtt
 import subprocess
+import paramiko
 
 #get known Hardware
 MAC_RPi =[
@@ -13,8 +14,8 @@ MAC_RPi =[
   "b8:27:eb:bf:ac:3a", # - 144 RGBW
   "b8:27:eb:c2:e9:2b", # - 35  RGB  (stick)
   "b8:27:eb:d0:01:ff", # - 50  RGBW (stick ring)
-  "b8:27:eb:ed:90:54",  # - 144 RGBW
-  "01:00:5e:00:00:fc"
+  "b8:27:eb:ed:90:54", # - 144 RGBW
+  "01:00:5e:00:00:fc"  #for testing
 ]
 #get arp table
 proc = subprocess.Popen(["arp", "-a"], stdout=subprocess.PIPE, shell=True)
@@ -75,8 +76,34 @@ for elt1 in MAC_RPi:
       mqtt_cli = mqtt.Client() 
       mqtt_cli.connect(elt2["IP"],1883,60)
       mqtt_cli.publish('test1', "cosmoguirlande,blackout")
+
       #launch command to start scipt
-      subprocess.Popen(args="sudo python3 start_thread_arg.py " + elt2["MAC"], shell=True)
+      ssh1 = paramiko.SSHClient()
+      ssh1.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+      ssh1.connect(hostname=elt2["IP"], username='pi', password='vbcgxb270694', timeout=5, port=22)
+
+      # kill GUI if running
+      ssh_stdin, ssh_stdout, ssh_stderr = ssh1.exec_command("sudo ps aux | grep gui_rpi.py | awk '{print $2}' | xargs sudo kill -9")
+
+      ssh = paramiko.SSHClient()
+      ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+
+      ssh.connect(hostname=elt2["IP"], username='pi', password='vbcgxb270694', timeout=5, port=22)
+
+      # Start GUI again on rpi
+      channel = ssh.invoke_shell()
+      stdin = channel.makefile('wb')
+      stdout = channel.makefile('rb')
+
+      ssh.exec_command("sudo python3 start_thread_arg.py " + elt2["MAC"]")
+      print("sudo python3 start_thread_arg.py " + elt2["MAC"]")
+
+      print("ssh passed : ", elt2["IP"])
+      
+      print('stdout.read()' , repr(stdout.read()))
+      stdout.close()
+      stdin.close()
+
       #add on file for other scipts
 
 #check in config.json file for IPs
